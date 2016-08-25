@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83A0414BE0755A9E9E79783C /* Pods_CanDo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */; };
 		938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBC31D64729200B2D070 /* AppDelegate.swift */; };
 		938FDBD01D64729200B2D070 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBCF1D64729200B2D070 /* Views */; };
 		938FDBD21D64729200B2D070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD11D64729200B2D070 /* ViewController.swift */; };
@@ -14,9 +15,45 @@
 		938FDBD81D64729200B2D070 /* CanDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD61D64729200B2D070 /* CanDo.xcdatamodeld */; };
 		938FDBDA1D64729200B2D070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBD91D64729200B2D070 /* Assets.xcassets */; };
 		938FDBDD1D64729200B2D070 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBDB1D64729200B2D070 /* LaunchScreen.storyboard */; };
+		938FDBEE1D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBE81D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf */; };
+		938FDBEF1D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBE91D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf */; };
+		938FDBF01D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBEA1D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf */; };
+		938FDBF11D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBEB1D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf */; };
+		938FDBF21D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBEC1D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf */; };
+		938FDBF31D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBED1D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf */; };
+		938FDBF51D648C6600B2D070 /* FacebookSignupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBF41D648C6600B2D070 /* FacebookSignupButton.swift */; };
+		938FDBF91D649BCC00B2D070 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938FDBF61D649BCC00B2D070 /* FBSDKCoreKit.framework */; };
+		938FDBFA1D649BCC00B2D070 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938FDBF71D649BCC00B2D070 /* FBSDKLoginKit.framework */; };
+		938FDBFB1D649BCC00B2D070 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938FDBF81D649BCC00B2D070 /* FBSDKShareKit.framework */; };
+		938FDC021D649FA200B2D070 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938FDC011D649FA200B2D070 /* Bolts.framework */; };
+		938FDC0C1D64AD1100B2D070 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC0B1D64AD1100B2D070 /* SignUpViewController.swift */; };
+		938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC0D1D64AD4A00B2D070 /* DashboardViewController.swift */; };
+		938FDC101D6592AD00B2D070 /* DashboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC0F1D6592AD00B2D070 /* DashboardTableViewCell.swift */; };
+		938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC121D65A5EF00B2D070 /* TodoViewController.swift */; };
+		938FDC151D65B09200B2D070 /* BaseTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC141D65B09200B2D070 /* BaseTabBarViewController.swift */; };
+		938FDC191D65B47300B2D070 /* UIImage+TabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */; };
+		938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC1B1D65C8C600B2D070 /* CalendarViewController.swift */; };
+		938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC201D65E0F600B2D070 /* NotificationsViewController.swift */; };
+		938FDC231D65E10200B2D070 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC221D65E10200B2D070 /* AccountViewController.swift */; };
+		938FDC251D65E10E00B2D070 /* TipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC241D65E10E00B2D070 /* TipsViewController.swift */; };
+		938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC261D65EEAE00B2D070 /* AddListButton.swift */; };
+		938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC281D65EFB500B2D070 /* SuggestionsButton.swift */; };
+		938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */; };
+		938FDC2E1D674E3300B2D070 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC2D1D674E3300B2D070 /* CodeViewController.swift */; };
+		938FDC311D6B15B800B2D070 /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC301D6B15B800B2D070 /* SetPasswordViewController.swift */; };
+		938FDC341D6C401C00B2D070 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC331D6C401C00B2D070 /* LoginViewController.swift */; };
+		938FDC361D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */; };
+		938FDC391D6C837A00B2D070 /* SuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC381D6C837A00B2D070 /* SuggestionsViewController.swift */; };
+		938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC3A1D6C8E8D00B2D070 /* Sugestion.swift */; };
+		938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC3C1D6C8F3300B2D070 /* SuggestionsItem.swift */; };
+		938FDC3F1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC3E1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift */; };
+		938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC401D6CC35200B2D070 /* SuggestionsItemCell.swift */; };
+		938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */; };
+		938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04A8A8A52B77DDD8B7C9D6E0 /* Pods-CanDo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.release.xcconfig"; sourceTree = "<group>"; };
 		938FDBC01D64729200B2D070 /* CanDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938FDBC31D64729200B2D070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		938FDBD11D64729200B2D070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,6 +62,45 @@
 		938FDBD91D64729200B2D070 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		938FDBDC1D64729200B2D070 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		938FDBDE1D64729200B2D070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		938FDBE81D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-100.otf"; sourceTree = "<group>"; };
+		938FDBE91D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-300.otf"; sourceTree = "<group>"; };
+		938FDBEA1D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-500.otf"; sourceTree = "<group>"; };
+		938FDBEB1D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-700.otf"; sourceTree = "<group>"; };
+		938FDBEC1D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-900.otf"; sourceTree = "<group>"; };
+		938FDBED1D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "exljbris - MuseoSansRounded-1000.otf"; sourceTree = "<group>"; };
+		938FDBF41D648C6600B2D070 /* FacebookSignupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookSignupButton.swift; path = Views/FacebookSignupButton.swift; sourceTree = "<group>"; };
+		938FDBF61D649BCC00B2D070 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		938FDBF71D649BCC00B2D070 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		938FDBF81D649BCC00B2D070 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		938FDBFD1D649D1F00B2D070 /* CanDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CanDo-Bridging-Header.h"; sourceTree = "<group>"; };
+		938FDC011D649FA200B2D070 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		938FDC041D64AA2000B2D070 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		938FDC0B1D64AD1100B2D070 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		938FDC0D1D64AD4A00B2D070 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		938FDC0F1D6592AD00B2D070 /* DashboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardTableViewCell.swift; path = Views/DashboardTableViewCell.swift; sourceTree = "<group>"; };
+		938FDC121D65A5EF00B2D070 /* TodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoViewController.swift; sourceTree = "<group>"; };
+		938FDC141D65B09200B2D070 /* BaseTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTabBarViewController.swift; sourceTree = "<group>"; };
+		938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+TabbarItem.swift"; sourceTree = "<group>"; };
+		938FDC1B1D65C8C600B2D070 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		938FDC201D65E0F600B2D070 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		938FDC221D65E10200B2D070 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		938FDC241D65E10E00B2D070 /* TipsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipsViewController.swift; sourceTree = "<group>"; };
+		938FDC261D65EEAE00B2D070 /* AddListButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddListButton.swift; path = Views/AddListButton.swift; sourceTree = "<group>"; };
+		938FDC281D65EFB500B2D070 /* SuggestionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SuggestionsButton.swift; path = Views/SuggestionsButton.swift; sourceTree = "<group>"; };
+		938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
+		938FDC2D1D674E3300B2D070 /* CodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
+		938FDC301D6B15B800B2D070 /* SetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
+		938FDC331D6C401C00B2D070 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScreen+DeviceScreenSize.swift"; sourceTree = "<group>"; };
+		938FDC381D6C837A00B2D070 /* SuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionsViewController.swift; sourceTree = "<group>"; };
+		938FDC3A1D6C8E8D00B2D070 /* Sugestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugestion.swift; sourceTree = "<group>"; };
+		938FDC3C1D6C8F3300B2D070 /* SuggestionsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionsItem.swift; sourceTree = "<group>"; };
+		938FDC3E1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
+		938FDC401D6CC35200B2D070 /* SuggestionsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionsItemCell.swift; sourceTree = "<group>"; };
+		938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectSuggestionButton.swift; path = Views/SelectSuggestionButton.swift; sourceTree = "<group>"; };
+		938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllItemsSelectedCell.swift; sourceTree = "<group>"; };
+		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
+		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +108,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				938FDC021D649FA200B2D070 /* Bolts.framework in Frameworks */,
+				938FDBFB1D649BCC00B2D070 /* FBSDKShareKit.framework in Frameworks */,
+				83A0414BE0755A9E9E79783C /* Pods_CanDo.framework in Frameworks */,
+				938FDBF91D649BCC00B2D070 /* FBSDKCoreKit.framework in Frameworks */,
+				938FDBFA1D649BCC00B2D070 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +124,8 @@
 			children = (
 				938FDBC21D64729200B2D070 /* CanDo */,
 				938FDBC11D64729200B2D070 /* Products */,
+				9EDF5999D4B744598A8943C3 /* Pods */,
+				F22AC1953261799720C81644 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,7 +140,11 @@
 		938FDBC21D64729200B2D070 /* CanDo */ = {
 			isa = PBXGroup;
 			children = (
-				938FDBC31D64729200B2D070 /* AppDelegate.swift */,
+				938FDC011D649FA200B2D070 /* Bolts.framework */,
+				938FDBF61D649BCC00B2D070 /* FBSDKCoreKit.framework */,
+				938FDBF71D649BCC00B2D070 /* FBSDKLoginKit.framework */,
+				938FDBF81D649BCC00B2D070 /* FBSDKShareKit.framework */,
+				938FDBE71D64808000B2D070 /* Fonts */,
 				938FDBD11D64729200B2D070 /* ViewController.swift */,
 				938FDBD31D64729200B2D070 /* Main.storyboard */,
 				938FDBD91D64729200B2D070 /* Assets.xcassets */,
@@ -65,6 +152,7 @@
 				938FDBDE1D64729200B2D070 /* Info.plist */,
 				938FDBD61D64729200B2D070 /* CanDo.xcdatamodeld */,
 				938FDBC51D64729200B2D070 /* Sample */,
+				938FDBFD1D649D1F00B2D070 /* CanDo-Bridging-Header.h */,
 			);
 			path = CanDo;
 			sourceTree = "<group>";
@@ -86,6 +174,7 @@
 		938FDBC61D64729200B2D070 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				938FDBC31D64729200B2D070 /* AppDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -93,6 +182,17 @@
 		938FDBC71D64729200B2D070 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				938FDC371D6C836400B2D070 /* Suggestions */,
+				938FDC321D6C400C00B2D070 /* Login */,
+				938FDC2F1D6B154D00B2D070 /* SetPassword */,
+				938FDC2C1D674E1E00B2D070 /* Code */,
+				938FDC1D1D65E0E600B2D070 /* Account */,
+				938FDC1E1D65E0E600B2D070 /* Notifications */,
+				938FDC1F1D65E0E600B2D070 /* Tips */,
+				938FDC1A1D65C8A100B2D070 /* Calendar */,
+				938FDC111D65A5DC00B2D070 /* ToDo */,
+				938FDC051D64AC9700B2D070 /* Dashboard */,
+				938FDBE41D64739B00B2D070 /* SignUp */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -124,6 +224,7 @@
 		938FDBCB1D64729200B2D070 /* BaseClasses */ = {
 			isa = PBXGroup;
 			children = (
+				938FDC141D65B09200B2D070 /* BaseTabBarViewController.swift */,
 			);
 			path = BaseClasses;
 			sourceTree = "<group>";
@@ -131,6 +232,7 @@
 		938FDBCC1D64729200B2D070 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				938FDC041D64AA2000B2D070 /* Constants.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -138,6 +240,9 @@
 		938FDBCD1D64729200B2D070 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */,
+				938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */,
+				938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -145,6 +250,8 @@
 		938FDBCE1D64729200B2D070 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				938FDC3A1D6C8E8D00B2D070 /* Sugestion.swift */,
+				938FDC3C1D6C8F3300B2D070 /* SuggestionsItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -152,8 +259,134 @@
 		938FDBCF1D64729200B2D070 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				938FDBF41D648C6600B2D070 /* FacebookSignupButton.swift */,
+				938FDC0F1D6592AD00B2D070 /* DashboardTableViewCell.swift */,
+				938FDC261D65EEAE00B2D070 /* AddListButton.swift */,
+				938FDC281D65EFB500B2D070 /* SuggestionsButton.swift */,
+				938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		938FDBE41D64739B00B2D070 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC0B1D64AD1100B2D070 /* SignUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		938FDBE71D64808000B2D070 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				938FDBE81D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf */,
+				938FDBE91D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf */,
+				938FDBEA1D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf */,
+				938FDBEB1D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf */,
+				938FDBEC1D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf */,
+				938FDBED1D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		938FDC051D64AC9700B2D070 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC0D1D64AD4A00B2D070 /* DashboardViewController.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		938FDC111D65A5DC00B2D070 /* ToDo */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC121D65A5EF00B2D070 /* TodoViewController.swift */,
+			);
+			path = ToDo;
+			sourceTree = "<group>";
+		};
+		938FDC1A1D65C8A100B2D070 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC1B1D65C8C600B2D070 /* CalendarViewController.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		938FDC1D1D65E0E600B2D070 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC221D65E10200B2D070 /* AccountViewController.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		938FDC1E1D65E0E600B2D070 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC201D65E0F600B2D070 /* NotificationsViewController.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		938FDC1F1D65E0E600B2D070 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC241D65E10E00B2D070 /* TipsViewController.swift */,
+			);
+			path = Tips;
+			sourceTree = "<group>";
+		};
+		938FDC2C1D674E1E00B2D070 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC2D1D674E3300B2D070 /* CodeViewController.swift */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		938FDC2F1D6B154D00B2D070 /* SetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC301D6B15B800B2D070 /* SetPasswordViewController.swift */,
+			);
+			path = SetPassword;
+			sourceTree = "<group>";
+		};
+		938FDC321D6C400C00B2D070 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC331D6C401C00B2D070 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		938FDC371D6C836400B2D070 /* Suggestions */ = {
+			isa = PBXGroup;
+			children = (
+				938FDC381D6C837A00B2D070 /* SuggestionsViewController.swift */,
+				938FDC3E1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift */,
+				938FDC401D6CC35200B2D070 /* SuggestionsItemCell.swift */,
+				938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */,
+			);
+			path = Suggestions;
+			sourceTree = "<group>";
+		};
+		9EDF5999D4B744598A8943C3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */,
+				04A8A8A52B77DDD8B7C9D6E0 /* Pods-CanDo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F22AC1953261799720C81644 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,9 +396,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 938FDBE11D64729200B2D070 /* Build configuration list for PBXNativeTarget "CanDo" */;
 			buildPhases = (
+				BB2D5A4F8B3B10C4C5D15722 /* [CP] Check Pods Manifest.lock */,
 				938FDBBC1D64729200B2D070 /* Sources */,
 				938FDBBD1D64729200B2D070 /* Frameworks */,
 				938FDBBE1D64729200B2D070 /* Resources */,
+				98BFB8B246E3BDD154CD79DA /* [CP] Embed Pods Frameworks */,
+				4DC58AED3409CBAC1D6DF7D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -216,21 +452,100 @@
 			files = (
 				938FDBD01D64729200B2D070 /* Views in Resources */,
 				938FDBDD1D64729200B2D070 /* LaunchScreen.storyboard in Resources */,
+				938FDBF21D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf in Resources */,
+				938FDBEE1D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf in Resources */,
 				938FDBDA1D64729200B2D070 /* Assets.xcassets in Resources */,
 				938FDBD51D64729200B2D070 /* Main.storyboard in Resources */,
+				938FDBF11D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf in Resources */,
+				938FDBEF1D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf in Resources */,
+				938FDBF31D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf in Resources */,
+				938FDBF01D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4DC58AED3409CBAC1D6DF7D4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CanDo/Pods-CanDo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98BFB8B246E3BDD154CD79DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CanDo/Pods-CanDo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB2D5A4F8B3B10C4C5D15722 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		938FDBBC1D64729200B2D070 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				938FDC361D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift in Sources */,
+				938FDC191D65B47300B2D070 /* UIImage+TabbarItem.swift in Sources */,
+				938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */,
+				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
+				938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */,
+				938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */,
+				938FDC3F1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift in Sources */,
+				938FDC251D65E10E00B2D070 /* TipsViewController.swift in Sources */,
+				938FDC231D65E10200B2D070 /* AccountViewController.swift in Sources */,
+				938FDC0C1D64AD1100B2D070 /* SignUpViewController.swift in Sources */,
+				938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */,
+				938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */,
+				938FDC341D6C401C00B2D070 /* LoginViewController.swift in Sources */,
+				938FDC391D6C837A00B2D070 /* SuggestionsViewController.swift in Sources */,
+				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,
+				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
 				938FDBD81D64729200B2D070 /* CanDo.xcdatamodeld in Sources */,
 				938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */,
+				938FDC311D6B15B800B2D070 /* SetPasswordViewController.swift in Sources */,
+				938FDBF51D648C6600B2D070 /* FacebookSignupButton.swift in Sources */,
+				938FDC101D6592AD00B2D070 /* DashboardTableViewCell.swift in Sources */,
+				938FDC2E1D674E3300B2D070 /* CodeViewController.swift in Sources */,
+				938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */,
+				938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */,
+				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,
+				938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */,
+				938FDC151D65B09200B2D070 /* BaseTabBarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,23 +658,40 @@
 		};
 		938FDBE21D64729200B2D070 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CanDo",
+				);
 				INFOPLIST_FILE = CanDo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		938FDBE31D64729200B2D070 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04A8A8A52B77DDD8B7C9D6E0 /* Pods-CanDo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CanDo",
+				);
 				INFOPLIST_FILE = CanDo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -382,6 +714,7 @@
 				938FDBE31D64729200B2D070 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

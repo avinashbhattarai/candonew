@@ -1,0 +1,19 @@
+//
+//  UIViewController+HideKeyboard.swift
+//  CanDo
+//
+//  Created by Svyat Zubyak MacBook on 19.08.16.
+//  Copyright © 2016 Svyat Zubyak MacBook. All rights reserved.
+//
+
+import Foundation
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
