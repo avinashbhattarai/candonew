@@ -45,12 +45,78 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         if self.codeTextField.text?.characters.count == 6 {
              print("textfield \(self.codeTextField.text)")
             self.codeTextField.resignFirstResponder()
-            performSegueWithIdentifier("toSetPasswordViewController", sender: self)
+            runVerificateUserRequest()
         }else{
             SVProgressHUD.showErrorWithStatus("Entered code is not valid")
             
         }
     }
+    
+    
+    func runVerificateUserRequest() {
+        
+        SVProgressHUD.show()
+        let code :Int = Int(self.codeTextField.text!)!
+        let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+       
+        provider.request(.VerificateUser(code: code, email: email)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = self.nsdataToJSON(moyaResponse.data) as? [String: AnyObject],
+                        let secretCode = json["code"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                     SVProgressHUD.dismiss()
+                     Helper.UserDefaults.kStandardUserDefaults.setObject(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
+                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                     self.performSegueWithIdentifier(Helper.SegueKey.kToSetPasswordViewController, sender: self)
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    
+                    
+                    
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+    }
+    
+    
+    func nsdataToJSON(data: NSData) -> AnyObject? {
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+        } catch let myJSONError {
+            print(myJSONError)
+        }
+        return nil
+    }
+
+    
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }

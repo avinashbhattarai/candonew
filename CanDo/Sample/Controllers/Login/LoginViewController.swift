@@ -183,7 +183,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 print("User Email is: \(userEmail)")
                 
-               // self.performSegueWithIdentifier("toDashboardViewController", sender: self)
+               // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
             }
         })
     }
@@ -243,7 +243,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
          }
         
         
-     //   performSegueWithIdentifier("toCodeViewController", sender: self)
+     //   performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
           configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
 
         

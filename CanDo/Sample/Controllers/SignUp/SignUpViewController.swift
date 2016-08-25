@@ -10,6 +10,8 @@ import UIKit
 import SVProgressHUD
 import NVActivityIndicatorView
 import IQKeyboardManagerSwift
+import Moya
+
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
    
@@ -123,11 +125,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
    
     @IBAction func loginButtonTapped(sender: AnyObject) {
-          performSegueWithIdentifier("toLoginViewController", sender: self)
+          performSegueWithIdentifier(Helper.SegueKey.kToLoginViewController, sender: self)
     }
     @IBAction func signUpButtonTapped(sender: UIButton) {
         
-        /*
+        
         if !isValidEmail(self.emailTextfield.text!) {
             SVProgressHUD.showErrorWithStatus("Entered email is not valid")
                  return
@@ -140,12 +142,72 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             SVProgressHUD.showErrorWithStatus("Last name field is empty")
             return
         }
- */
  
-        performSegueWithIdentifier("toCodeViewController", sender: self)
-     //   configureSignUpButton(sender,showSpinner: true)
+       
+        runSignUpRequest(sender)
+        
+        
         
     }
+    func runSignUpRequest(sender:UIButton) {
+        
+        configureSignUpButton(sender,showSpinner: true)
+        provider.request(.CreateUser(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, email: self.emailTextfield.text!)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+               
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    
+                    self.configureSignUpButton(sender,showSpinner: false)
+                    self.performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
+                    
+                }
+                catch {
+                 
+                    
+                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                    let message = item["message"] as? String else {
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    self.configureSignUpButton(sender,showSpinner: false)
+                    
+
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+               print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                self.configureSignUpButton(sender,showSpinner: false)
+
+            }
+        }    }
+    
+    
+    func nsdataToJSON(data: NSData) -> AnyObject? {
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+        } catch let myJSONError {
+            print(myJSONError)
+        }
+        return nil
+    }
+
+    
     func configureSignUpButton(button:UIButton,showSpinner:Bool)  {
         if showSpinner {
             
@@ -203,7 +265,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             }
         }
  */
-         self.performSegueWithIdentifier("toDashboardViewController", sender: self)
+         self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
         
         
     }
@@ -227,7 +289,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 print("User Email is: \(userEmail)")
                 
-                self.performSegueWithIdentifier("toDashboardViewController", sender: self)
+                self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
             }
         })
     }

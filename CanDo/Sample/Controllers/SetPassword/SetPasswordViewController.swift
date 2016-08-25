@@ -82,12 +82,75 @@ class SetPasswordViewController: UIViewController {
             SVProgressHUD.showErrorWithStatus("Password field is empty")
             return
         }
-
-        configureSignUpButton(sender, showSpinner: true)
         self.passwordTextField.resignFirstResponder()
-       // self.performSegueWithIdentifier("toDashboardViewController", sender: self)
+     runSetPasswordForUserRequest(sender)
 
     }
+    func runSetPasswordForUserRequest(sender:UIButton) {
+        
+        configureSignUpButton(sender, showSpinner: true)
+        let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserSecretCode) as! String)!
+        let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+        
+        provider.request(.SetPasswordForUser(password: self.passwordTextField.text!, code:code, email: email)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = self.nsdataToJSON(moyaResponse.data) as? [String: AnyObject]else {
+                       // let secretCode = json["code"] as? String
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                   print(json)
+                    self.configureSignUpButton(sender,showSpinner: false)
+                    //Helper.UserDefaults.kStandardUserDefaults.setObject(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
+                    //Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    //  self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    self.configureSignUpButton(sender,showSpinner: false)
+                    
+                    
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                self.configureSignUpButton(sender,showSpinner: false)
+                
+            }
+        }
+    }
+
+    func nsdataToJSON(data: NSData) -> AnyObject? {
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+        } catch let myJSONError {
+            print(myJSONError)
+        }
+        return nil
+    }
+
+    
+    
     /*
     // MARK: - Navigation
 

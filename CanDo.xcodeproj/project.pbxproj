@@ -50,6 +50,8 @@
 		938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC401D6CC35200B2D070 /* SuggestionsItemCell.swift */; };
 		938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */; };
 		938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */; };
+		938FDC491D6F085800B2D070 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC481D6F085800B2D070 /* NetworkingService.swift */; };
+		939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54A1D6F6A4500CE3751 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +76,6 @@
 		938FDBF81D649BCC00B2D070 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		938FDBFD1D649D1F00B2D070 /* CanDo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CanDo-Bridging-Header.h"; sourceTree = "<group>"; };
 		938FDC011D649FA200B2D070 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		938FDC041D64AA2000B2D070 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		938FDC0B1D64AD1100B2D070 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		938FDC0D1D64AD4A00B2D070 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		938FDC0F1D6592AD00B2D070 /* DashboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardTableViewCell.swift; path = Views/DashboardTableViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +100,8 @@
 		938FDC401D6CC35200B2D070 /* SuggestionsItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionsItemCell.swift; sourceTree = "<group>"; };
 		938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectSuggestionButton.swift; path = Views/SelectSuggestionButton.swift; sourceTree = "<group>"; };
 		938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllItemsSelectedCell.swift; sourceTree = "<group>"; };
+		938FDC481D6F085800B2D070 /* NetworkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		939DE54A1D6F6A4500CE3751 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -232,7 +235,8 @@
 		938FDBCC1D64729200B2D070 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				938FDC041D64AA2000B2D070 /* Constants.h */,
+				938FDC481D6F085800B2D070 /* NetworkingService.swift */,
+				939DE54A1D6F6A4500CE3751 /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -520,8 +524,10 @@
 			files = (
 				938FDC361D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift in Sources */,
 				938FDC191D65B47300B2D070 /* UIImage+TabbarItem.swift in Sources */,
+				938FDC491D6F085800B2D070 /* NetworkingService.swift in Sources */,
 				938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */,
 				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
+				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
 				938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */,
 				938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */,
 				938FDC3F1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift in Sources */,

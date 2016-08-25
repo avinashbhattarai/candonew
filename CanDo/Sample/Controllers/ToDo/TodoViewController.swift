@@ -39,7 +39,7 @@ class TodoViewController: UIViewController {
     }
     
     @IBAction func suggestionButtonTapped(sender: AnyObject) {
-        performSegueWithIdentifier("toSuggestionsViewController", sender: self)
+        performSegueWithIdentifier(Helper.SegueKey.kToSuggestionsViewController, sender: self)
     }
     
     

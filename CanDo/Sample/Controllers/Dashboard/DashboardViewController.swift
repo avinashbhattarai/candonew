@@ -115,7 +115,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
       
         
         
-        performSegueWithIdentifier("toTodoViewController", sender: self)
+        performSegueWithIdentifier(Helper.SegueKey.kToTodoViewController, sender: self)
     }
     
     // if tableView is set in attribute inspector with selection to multiple Selection it should work.
