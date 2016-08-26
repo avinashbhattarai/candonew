@@ -22,6 +22,7 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //test
         
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
@@ -78,10 +79,10 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
         // Get the reference to the header view
         let tblHeaderView = self.notificationTableView.tableHeaderView
         // Animate the height change
-      //  UIView.animateWithDuration(0.0, animations: { () -> Void in
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
             tblHeaderView?.frame = newRect!
             self.notificationTableView.tableHeaderView = tblHeaderView
-        //})
+        })
     }
     
     // MARK: - ImagePickerDelegate
