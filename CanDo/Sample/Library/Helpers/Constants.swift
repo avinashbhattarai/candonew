@@ -41,6 +41,7 @@ struct Helper {
         static let kUserLastName = "user_last_name"
         static let kUserEmail = "user_email"
         static let kUserSecretCode = "user_secret_code"
+        static let kUserToken = "user_token"
         }
     
 

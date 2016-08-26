@@ -15,6 +15,8 @@ public enum NetworkingService {
     case CreateUser(firstName: String, lastName: String, email: String)
     case VerificateUser(code: Int, email: String)
     case SetPasswordForUser(password: String, code: Int, email: String)
+    case LoginUser(password: String, email: String)
+    case ForgotPassword(email: String)
 }
 
 let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingService> in
@@ -48,6 +50,10 @@ extension NetworkingService: TargetType {
             return "/user/verification"
         case .SetPasswordForUser(_, _,_):
             return "/user/set-password"
+        case .LoginUser(_, _):
+            return "/user/login"
+        case .ForgotPassword(_):
+            return "/user/forgot"
         }
     }
     public var method: Moya.Method {
@@ -57,6 +63,10 @@ extension NetworkingService: TargetType {
         case .VerificateUser:
             return .POST
         case .SetPasswordForUser:
+            return .POST
+        case .LoginUser:
+            return .POST
+        case .ForgotPassword:
             return .POST
         }
     }
@@ -70,6 +80,13 @@ extension NetworkingService: TargetType {
             
         case .SetPasswordForUser(let password, let code, let email):
             return ["password": password, "code": code, "email": email]
+            
+        case .LoginUser(let password, let email):
+            return ["password": password, "email": email]
+            
+        case .ForgotPassword(let email):
+            return ["email": email]
+            
         }
     }
     public var sampleData: NSData {
@@ -82,6 +99,11 @@ extension NetworkingService: TargetType {
             
         case .SetPasswordForUser(let code, let email, let password ):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
+            
+        case .LoginUser(let password, let email):
+            return "{\"password\": \"\(password)\", \"email\": \"\(email)\"}".UTF8EncodedData
+        case .ForgotPassword(let email):
+             return "{\"email\": \"\(email)\"}".UTF8EncodedData
         }
     }
     public var multipartBody: [MultipartFormData]? {

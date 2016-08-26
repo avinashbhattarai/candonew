@@ -29,6 +29,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
      self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
         self.hideKeyboardWhenTappedAround()
+        
+        if self.isUserLogined() {
+            performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+        }
+        
+        
       self.emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
          self.firstNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
          self.lastNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
@@ -172,9 +178,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 catch {
                  
                     
-                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                     let message = item["message"] as? String else {
+                        self.configureSignUpButton(sender,showSpinner: false)
                         SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
@@ -195,18 +202,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 self.configureSignUpButton(sender,showSpinner: false)
 
             }
-        }    }
-    
-    
-    func nsdataToJSON(data: NSData) -> AnyObject? {
-        do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-        } catch let myJSONError {
-            print(myJSONError)
         }
-        return nil
     }
-
+    
+    
+  
     
     func configureSignUpButton(button:UIButton,showSpinner:Bool)  {
         if showSpinner {

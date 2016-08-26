@@ -16,4 +16,14 @@ extension UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func isUserLogined() -> Bool {
+        guard (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserToken) != nil) &&
+            (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserId) != nil)
+            else {
+                return false
+        }
+
+      return true
+    }
 }

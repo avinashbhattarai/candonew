@@ -27,6 +27,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         self.helloLabel.alpha = 0;
         fadeViewInThenOut(self.helloLabel, delay: 0.5)
         
+        self.helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
+        
         self.dashboardTableView.delegate = self;
         self.dashboardTableView.dataSource = self;
         self.dashboardTableView.alwaysBounceVertical = false

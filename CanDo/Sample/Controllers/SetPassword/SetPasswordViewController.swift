@@ -99,8 +99,9 @@ class SetPasswordViewController: UIViewController {
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = self.nsdataToJSON(moyaResponse.data) as? [String: AnyObject]else {
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]else {
                        // let secretCode = json["code"] as? String
+                            self.configureSignUpButton(sender,showSpinner: false)
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
@@ -114,9 +115,10 @@ class SetPasswordViewController: UIViewController {
                 catch {
                     
                     
-                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
+                            self.configureSignUpButton(sender,showSpinner: false)
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
@@ -138,15 +140,6 @@ class SetPasswordViewController: UIViewController {
                 
             }
         }
-    }
-
-    func nsdataToJSON(data: NSData) -> AnyObject? {
-        do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-        } catch let myJSONError {
-            print(myJSONError)
-        }
-        return nil
     }
 
     

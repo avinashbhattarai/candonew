@@ -220,10 +220,72 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
  
         self.view.endEditing(true)
-        //configureSignUpButton(sender as! UIButton,showSpinner: true ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
-        showSuccessView()
+       
+        runForgotPasswordRequest(sender as! UIButton)
         
     }
+    func runForgotPasswordRequest(sender:UIButton) {
+        
+         configureSignUpButton(sender,showSpinner: true ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
+        
+        provider.request(.ForgotPassword(email: self.resetPasswordTextField.text!)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    /*
+                     
+                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
+                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
+                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
+                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                     
+                     */
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]else {
+                        // let secretCode = json["code"] as? String
+                        self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    print(json)
+                    self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
+                    self.showSuccessView()
+                   // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
+                    
+                    
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                
+            }
+        }
+    }
+
     
     
     func showSuccessView(){
@@ -244,11 +306,79 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         
      //   performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
-          configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
-
+        
+       runLoginUserRequest(sender)
         
         
     }
+    
+    func runLoginUserRequest(sender:UIButton) {
+        
+         configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+        
+        provider.request(.LoginUser(password: self.passwordTextField.text!, email: self.emailTextField.text!)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
+                        let email = json["email"] as? String,
+                        let id = json["id"] as? Int,
+                        let last_name = json["last_name"] as? String,
+                        let first_name = json["first_name"] as? String,
+                        let token = json["token"] as? String
+                        
+                    else {
+                        
+                        self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(first_name, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    
+                    
+                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                    self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                    
+                    
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                
+            }
+        }
+    }
+
   
     @IBAction func forgotPasswordTapped(sender: AnyObject) {
         self.view.endEditing(true)

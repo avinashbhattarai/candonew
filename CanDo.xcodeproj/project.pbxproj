@@ -52,6 +52,9 @@
 		938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */; };
 		938FDC491D6F085800B2D070 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDC481D6F085800B2D070 /* NetworkingService.swift */; };
 		939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54A1D6F6A4500CE3751 /* Constants.swift */; };
+		939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */; };
+		939DE54F1D7065CE00CE3751 /* PostUpdateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */; };
+		939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE5501D7071F300CE3751 /* AddPhotoButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +105,9 @@
 		938FDC441D6CD19600B2D070 /* AllItemsSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllItemsSelectedCell.swift; sourceTree = "<group>"; };
 		938FDC481D6F085800B2D070 /* NetworkingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		939DE54A1D6F6A4500CE3751 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSdata+JSON.swift"; sourceTree = "<group>"; };
+		939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostUpdateButton.swift; path = Views/PostUpdateButton.swift; sourceTree = "<group>"; };
+		939DE5501D7071F300CE3751 /* AddPhotoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPhotoButton.swift; path = Views/AddPhotoButton.swift; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -247,6 +253,7 @@
 				938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */,
 				938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */,
 				938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */,
+				939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -268,6 +275,8 @@
 				938FDC261D65EEAE00B2D070 /* AddListButton.swift */,
 				938FDC281D65EFB500B2D070 /* SuggestionsButton.swift */,
 				938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */,
+				939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */,
+				939DE5501D7071F300CE3751 /* AddPhotoButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -530,10 +539,12 @@
 				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
 				938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */,
 				938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */,
+				939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */,
 				938FDC3F1D6CAA7800B2D070 /* CollapsibleTableViewHeader.swift in Sources */,
 				938FDC251D65E10E00B2D070 /* TipsViewController.swift in Sources */,
 				938FDC231D65E10200B2D070 /* AccountViewController.swift in Sources */,
 				938FDC0C1D64AD1100B2D070 /* SignUpViewController.swift in Sources */,
+				939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */,
 				938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */,
 				938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */,
 				938FDC341D6C401C00B2D070 /* LoginViewController.swift in Sources */,
@@ -543,6 +554,7 @@
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
 				938FDBD81D64729200B2D070 /* CanDo.xcdatamodeld in Sources */,
 				938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */,
+				939DE54F1D7065CE00CE3751 /* PostUpdateButton.swift in Sources */,
 				938FDC311D6B15B800B2D070 /* SetPasswordViewController.swift in Sources */,
 				938FDBF51D648C6600B2D070 /* FacebookSignupButton.swift in Sources */,
 				938FDC101D6592AD00B2D070 /* DashboardTableViewCell.swift in Sources */,

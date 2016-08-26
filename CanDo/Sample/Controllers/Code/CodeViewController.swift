@@ -66,7 +66,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = self.nsdataToJSON(moyaResponse.data) as? [String: AnyObject],
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let secretCode = json["code"] as? String else {
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                             return;
@@ -80,7 +80,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
                 catch {
                     
                     
-                    guard let json = self.nsdataToJSON(moyaResponse.data) as? NSArray,
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
@@ -107,15 +107,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func nsdataToJSON(data: NSData) -> AnyObject? {
-        do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-        } catch let myJSONError {
-            print(myJSONError)
-        }
-        return nil
-    }
-
+    
     
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

@@ -6,7 +6,12 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="exljbris - MuseoSansRounded-100.otf">
+            <string>MuseoSansRounded-100</string>
+        </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-300.otf">
+            <string>MuseoSansRounded-300</string>
+            <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
@@ -42,6 +47,7 @@
             <string>MuseoSansRounded-500</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-700.otf">
+            <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
@@ -426,7 +432,7 @@ receive a verification email :)</string>
                         <viewControllerLayoutGuide type="bottom" id="sjD-Zv-a9X"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FZN-pN-ZAd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="1400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoCando" translatesAutoresizingMaskIntoConstraints="NO" id="McW-Va-VKs">
@@ -445,7 +451,7 @@ how can we help today?</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wp1-W2-IYs">
-                                <rect key="frame" x="0.0" y="319" width="600" height="681"/>
+                                <rect key="frame" x="0.0" y="319" width="600" height="1081"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -490,7 +496,7 @@ how can we help today?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JPH-Z9-bfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1138" y="213"/>
+            <point key="canvasLocation" x="1208" y="85"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="UID-kT-BTG">
@@ -501,15 +507,17 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="xh4-V7-CcF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pGJ-En-a2E">
-                        <rect key="frame" x="0.0" y="64" width="600" height="887"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="DDW-e1-f48"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2q-Oz-9lo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3528" y="607"/>
+            <point key="canvasLocation" x="3508" y="313"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="hVJ-BD-CfQ">
@@ -520,15 +528,136 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="Dj7-YM-tXa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JRE-Ah-KL7">
-                        <rect key="frame" x="0.0" y="64" width="600" height="887"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="goF-WI-xpZ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="Ap9-6G-CHm">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g8U-nj-jy7">
+                                            <rect key="frame" x="0.0" y="258" width="600" height="2"/>
+                                            <color key="backgroundColor" red="0.89411764709999997" green="0.94509803920000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="7Er-lz-adF"/>
+                                            </constraints>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageChatRachael" translatesAutoresizingMaskIntoConstraints="NO" id="vlh-fs-yn2">
+                                            <rect key="frame" x="20" y="20" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="BZt-pW-A6m"/>
+                                                <constraint firstAttribute="width" constant="50" id="Vcc-O9-9qP"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9V-6L-P3U" customClass="PostUpdateButton" customModule="CanDo" customModuleProvider="target">
+                                            <rect key="frame" x="83" y="9" width="509" height="73"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="73" id="wOZ-Wv-ilU"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
+                                            <color key="tintColor" red="0.39607843139999999" green="0.90196078430000004" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Post an update" image="iconMenuHelpT">
+                                                <color key="titleColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="postUpdateButtonTapped:" destination="fqo-Ic-DhS" eventType="touchUpInside" id="J2y-kp-ife"/>
+                                            </connections>
+                                        </button>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sBn-Ju-Trh">
+                                            <rect key="frame" x="20" y="90" width="560" height="100"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="sKe-vQ-e5j"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDn-iL-KMu">
+                                            <rect key="frame" x="539" y="210" width="41" height="36"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="20"/>
+                                            <state key="normal" title="Post">
+                                                <color key="titleColor" red="0.25490196078431371" green="0.81176470588235294" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="postButtonTapped:" destination="fqo-Ic-DhS" eventType="touchUpInside" id="YcI-qN-Q8D"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZW7-Ht-kzS" customClass="AddPhotoButton" customModule="CanDo" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="210" width="200" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="200" id="6E2-XB-2HP"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
+                                            <color key="tintColor" red="0.75294117647058822" green="0.85098039215686272" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Add a photo" image="iconMenuHelpT">
+                                                <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addPhotoTapped:" destination="fqo-Ic-DhS" eventType="touchUpInside" id="kdV-CX-ab9"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="vlh-fs-yn2" firstAttribute="top" secondItem="Ap9-6G-CHm" secondAttribute="top" constant="20" id="2KE-GK-eOo"/>
+                                        <constraint firstAttribute="trailing" secondItem="g8U-nj-jy7" secondAttribute="trailing" id="65j-Qy-rX0"/>
+                                        <constraint firstItem="ZW7-Ht-kzS" firstAttribute="top" secondItem="sBn-Ju-Trh" secondAttribute="bottom" constant="20" id="6zU-tz-n7J"/>
+                                        <constraint firstItem="g8U-nj-jy7" firstAttribute="leading" secondItem="Ap9-6G-CHm" secondAttribute="leading" id="DEJ-lt-Z67"/>
+                                        <constraint firstItem="E9V-6L-P3U" firstAttribute="top" secondItem="Ap9-6G-CHm" secondAttribute="top" constant="9" id="DPS-ZC-0XH"/>
+                                        <constraint firstItem="sBn-Ju-Trh" firstAttribute="top" secondItem="vlh-fs-yn2" secondAttribute="bottom" constant="20" id="HRe-gG-YDp"/>
+                                        <constraint firstAttribute="trailing" secondItem="E9V-6L-P3U" secondAttribute="trailing" constant="8" id="Vfb-6G-jga"/>
+                                        <constraint firstItem="ZW7-Ht-kzS" firstAttribute="leading" secondItem="Ap9-6G-CHm" secondAttribute="leading" constant="20" id="ZOK-lb-UZl"/>
+                                        <constraint firstItem="sBn-Ju-Trh" firstAttribute="leading" secondItem="Ap9-6G-CHm" secondAttribute="leading" constant="20" id="ajF-Rf-fMl"/>
+                                        <constraint firstItem="vlh-fs-yn2" firstAttribute="leading" secondItem="Ap9-6G-CHm" secondAttribute="leading" constant="20" id="b8A-ri-Teo"/>
+                                        <constraint firstAttribute="bottom" secondItem="g8U-nj-jy7" secondAttribute="bottom" id="jGZ-9S-rQo"/>
+                                        <constraint firstItem="E9V-6L-P3U" firstAttribute="leading" secondItem="vlh-fs-yn2" secondAttribute="trailing" constant="13" id="oyU-y4-Pxk"/>
+                                        <constraint firstAttribute="trailing" secondItem="sDn-iL-KMu" secondAttribute="trailing" constant="20" id="q3R-HS-MMg"/>
+                                        <constraint firstAttribute="trailing" secondItem="sBn-Ju-Trh" secondAttribute="trailing" constant="20" id="qdq-Yy-ViA"/>
+                                        <constraint firstItem="sDn-iL-KMu" firstAttribute="top" secondItem="sBn-Ju-Trh" secondAttribute="bottom" constant="20" id="tFC-Ea-bSM"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Qdg-Ex-4pq">
+                                        <rect key="frame" x="0.0" y="118" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qdg-Ex-4pq" id="FZo-8l-buV">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="goF-WI-xpZ" firstAttribute="leading" secondItem="JRE-Ah-KL7" secondAttribute="leading" id="44K-9L-aDU"/>
+                            <constraint firstItem="Dj7-YM-tXa" firstAttribute="top" secondItem="goF-WI-xpZ" secondAttribute="bottom" id="CqF-f2-0Xx"/>
+                            <constraint firstAttribute="trailing" secondItem="goF-WI-xpZ" secondAttribute="trailing" id="E2o-YO-QMD"/>
+                            <constraint firstItem="goF-WI-xpZ" firstAttribute="top" secondItem="SCn-O0-mvU" secondAttribute="bottom" id="jEy-lo-ObJ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="oN9-Hv-13y"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="headerView" destination="Ap9-6G-CHm" id="uhH-DG-uhF"/>
+                        <outlet property="notificationTableView" destination="goF-WI-xpZ" id="NXE-3z-TT4"/>
+                        <outlet property="postTextView" destination="sBn-Ju-Trh" id="XEB-B9-nyn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lot-Z2-ip7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3528" y="1356"/>
+            <point key="canvasLocation" x="3522" y="1002"/>
         </scene>
         <!--Account-->
         <scene sceneID="jZt-yM-e3T">
@@ -539,7 +668,7 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="67n-9I-1tM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Lzm-r9-0mK">
-                        <rect key="frame" x="0.0" y="64" width="600" height="887"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="1287"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -558,7 +687,7 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="ktb-bL-0rf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vXq-lQ-s6h">
-                        <rect key="frame" x="0.0" y="64" width="600" height="887"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="1287"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -659,7 +788,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -721,7 +850,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
@@ -757,7 +886,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="148" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zjN-yo-Vpe" id="teA-Kk-eK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pCl-YV-yC7" customClass="SelectSuggestionButton" customModule="CanDo" customModuleProvider="target">
@@ -1272,11 +1401,12 @@ receive a password reset email</string>
                         <outlet property="resetPasswordTextField" destination="iQM-Vu-1iv" id="5Pl-bD-DhC"/>
                         <outlet property="signUpButton" destination="DTV-YB-VAc" id="eK4-8v-9rT"/>
                         <outlet property="successContainer" destination="6CS-uc-7AO" id="SXf-cb-KgZ"/>
+                        <segue destination="LLK-r1-CeK" kind="show" identifier="toDashboardViewController" id="qO6-7u-NnB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Www-9d-iz7" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="366" y="-1033"/>
+            <point key="canvasLocation" x="388" y="-1051"/>
         </scene>
     </scenes>
     <resources>
@@ -1290,9 +1420,10 @@ receive a password reset email</string>
         <image name="iconMenuTips" width="24" height="40"/>
         <image name="iconTodoSuggestions" width="20" height="19"/>
         <image name="iconTodoTick01" width="30" height="26"/>
+        <image name="imageChatRachael" width="51" height="50"/>
         <image name="logoCando" width="257" height="111"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bzo-zy-hhf"/>
+        <segue reference="qO6-7u-NnB"/>
     </inferredMetricsTieBreakers>
 </document>
