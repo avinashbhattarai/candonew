@@ -99,17 +99,30 @@ class SetPasswordViewController: UIViewController {
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]else {
-                       // let secretCode = json["code"] as? String
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
+                        let email = json["email"] as? String,
+                        let id = json["id"] as? Int,
+                        let last_name = json["last_name"] as? String,
+                        let first_name = json["first_name"] as? String,
+                        let token = json["token"] as? String
+                        
+                        else {
+                            
                             self.configureSignUpButton(sender,showSpinner: false)
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                   print(json)
+                    
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(first_name, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    
+                    
                     self.configureSignUpButton(sender,showSpinner: false)
-                    //Helper.UserDefaults.kStandardUserDefaults.setObject(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
-                    //Helper.UserDefaults.kStandardUserDefaults.synchronize()
-                    //  self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
                     
                 }
                 catch {
