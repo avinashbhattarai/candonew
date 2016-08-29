@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		83A0414BE0755A9E9E79783C /* Pods_CanDo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */; };
+		93142E1C1D745B6400CAC387 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E1B1D745B6400CAC387 /* List.swift */; };
+		93142E1E1D745BC200CAC387 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E1D1D745BC200CAC387 /* Todo.swift */; };
+		93142E201D745C0800CAC387 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E1F1D745C0800CAC387 /* Person.swift */; };
+		93142E221D74641500CAC387 /* todoResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 93142E211D74641500CAC387 /* todoResponse.json */; };
+		93142E261D7478C700CAC387 /* TodoListSectionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */; };
+		93142E281D747CBD00CAC387 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */; };
 		938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBC31D64729200B2D070 /* AppDelegate.swift */; };
 		938FDBD01D64729200B2D070 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBCF1D64729200B2D070 /* Views */; };
 		938FDBD21D64729200B2D070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD11D64729200B2D070 /* ViewController.swift */; };
@@ -59,6 +65,12 @@
 
 /* Begin PBXFileReference section */
 		04A8A8A52B77DDD8B7C9D6E0 /* Pods-CanDo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.release.xcconfig"; sourceTree = "<group>"; };
+		93142E1B1D745B6400CAC387 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		93142E1D1D745BC200CAC387 /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
+		93142E1F1D745C0800CAC387 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		93142E211D74641500CAC387 /* todoResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = todoResponse.json; sourceTree = "<group>"; };
+		93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TodoListSectionTextField.swift; path = Views/TodoListSectionTextField.swift; sourceTree = "<group>"; };
+		93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
 		938FDBC01D64729200B2D070 /* CanDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938FDBC31D64729200B2D070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		938FDBD11D64729200B2D070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +161,7 @@
 		938FDBC21D64729200B2D070 /* CanDo */ = {
 			isa = PBXGroup;
 			children = (
+				93142E211D74641500CAC387 /* todoResponse.json */,
 				938FDC011D649FA200B2D070 /* Bolts.framework */,
 				938FDBF61D649BCC00B2D070 /* FBSDKCoreKit.framework */,
 				938FDBF71D649BCC00B2D070 /* FBSDKLoginKit.framework */,
@@ -263,6 +276,9 @@
 			children = (
 				938FDC3A1D6C8E8D00B2D070 /* Sugestion.swift */,
 				938FDC3C1D6C8F3300B2D070 /* SuggestionsItem.swift */,
+				93142E1B1D745B6400CAC387 /* List.swift */,
+				93142E1D1D745BC200CAC387 /* Todo.swift */,
+				93142E1F1D745C0800CAC387 /* Person.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +293,7 @@
 				938FDC421D6CC9BD00B2D070 /* SelectSuggestionButton.swift */,
 				939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */,
 				939DE5501D7071F300CE3751 /* AddPhotoButton.swift */,
+				93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -314,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC121D65A5EF00B2D070 /* TodoViewController.swift */,
+				93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -466,6 +484,7 @@
 				938FDBD01D64729200B2D070 /* Views in Resources */,
 				938FDBDD1D64729200B2D070 /* LaunchScreen.storyboard in Resources */,
 				938FDBF21D64809B00B2D070 /* exljbris - MuseoSansRounded-900.otf in Resources */,
+				93142E221D74641500CAC387 /* todoResponse.json in Resources */,
 				938FDBEE1D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf in Resources */,
 				938FDBDA1D64729200B2D070 /* Assets.xcassets in Resources */,
 				938FDBD51D64729200B2D070 /* Main.storyboard in Resources */,
@@ -534,9 +553,11 @@
 				938FDC361D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift in Sources */,
 				938FDC191D65B47300B2D070 /* UIImage+TabbarItem.swift in Sources */,
 				938FDC491D6F085800B2D070 /* NetworkingService.swift in Sources */,
+				93142E281D747CBD00CAC387 /* TodoTableViewCell.swift in Sources */,
 				938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */,
 				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
 				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
+				93142E201D745C0800CAC387 /* Person.swift in Sources */,
 				938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */,
 				938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */,
 				939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */,
@@ -545,6 +566,7 @@
 				938FDC231D65E10200B2D070 /* AccountViewController.swift in Sources */,
 				938FDC0C1D64AD1100B2D070 /* SignUpViewController.swift in Sources */,
 				939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */,
+				93142E1E1D745BC200CAC387 /* Todo.swift in Sources */,
 				938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */,
 				938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */,
 				938FDC341D6C401C00B2D070 /* LoginViewController.swift in Sources */,
@@ -552,6 +574,7 @@
 				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
+				93142E1C1D745B6400CAC387 /* List.swift in Sources */,
 				938FDBD81D64729200B2D070 /* CanDo.xcdatamodeld in Sources */,
 				938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */,
 				939DE54F1D7065CE00CE3751 /* PostUpdateButton.swift in Sources */,
@@ -559,6 +582,7 @@
 				938FDBF51D648C6600B2D070 /* FacebookSignupButton.swift in Sources */,
 				938FDC101D6592AD00B2D070 /* DashboardTableViewCell.swift in Sources */,
 				938FDC2E1D674E3300B2D070 /* CodeViewController.swift in Sources */,
+				93142E261D7478C700CAC387 /* TodoListSectionTextField.swift in Sources */,
 				938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */,
 				938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */,
 				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,

@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIView {
+    
     func rotate(toValue: CGFloat, duration: CFTimeInterval = 0.2, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.toValue = toValue

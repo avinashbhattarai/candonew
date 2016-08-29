@@ -253,7 +253,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func facebookLoginButtonTapped(sender: AnyObject) {
         
         //commented for debug
-        /*
+        
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         fbLoginManager.logInWithReadPermissions(["email"], fromViewController: self) { (result, error) -> Void in
             if (error == nil){
@@ -264,8 +264,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
- */
-         self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+ 
+        
         
         
     }
@@ -289,7 +289,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 let userEmail : NSString = result.valueForKey("email") as! NSString
                 print("User Email is: \(userEmail)")
                 
-                self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+               // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
             }
         })
     }

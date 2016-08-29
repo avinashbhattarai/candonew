@@ -1,0 +1,37 @@
+{
+  
+    "lists": [
+      {
+        "name": "Shopping",
+        "todos": [
+          {
+            "name": "Weekly groceries",
+            "finished": false,
+            "person": "Estelle F"
+          },
+          {
+            "name": "Chemist goods",
+            "finished": false,
+            "person": "Estelle F"
+          }
+      ]
+        },
+        {
+          "name": "Household",
+          "todos": [
+            {
+              "name": "Laundry fold & put away",
+              "finished": false,
+              "person": "Estelle F"
+            },
+            {
+              "name": "Changing bedsheets",
+              "finished": false,
+              "person": "Estelle F"
+            }
+            ]
+          }
+        ]
+      
+    
+  }

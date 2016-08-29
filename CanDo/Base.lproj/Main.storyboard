@@ -8,8 +8,11 @@
     <customFonts key="customFonts">
         <mutableArray key="exljbris - MuseoSansRounded-100.otf">
             <string>MuseoSansRounded-100</string>
+            <string>MuseoSansRounded-100</string>
+            <string>MuseoSansRounded-100</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-300.otf">
+            <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
@@ -45,8 +48,10 @@
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
+            <string>MuseoSansRounded-500</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-700.otf">
+            <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
@@ -742,17 +747,123 @@ how can we help today?</string>
                                 <state key="normal" title="Add list" image="iconMenuHelpT">
                                     <color key="titleColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addLIstButtonTaped:" destination="YdY-9S-KG1" eventType="touchUpInside" id="tKj-pY-e5j"/>
+                                </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Lfe-Zh-EuY">
+                                <rect key="frame" x="0.0" y="76" width="600" height="811"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="b9P-Q9-Ybz">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfd-f7-vJh">
+                                            <rect key="frame" x="543" y="64" width="37" height="36"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="20"/>
+                                            <state key="normal" title="Add">
+                                                <color key="titleColor" red="0.25490196079999999" green="0.81176470590000005" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addNewListTapped:" destination="YdY-9S-KG1" eventType="touchUpInside" id="dMX-lO-aS2"/>
+                                                <action selector="postButtonTapped:" destination="fqo-Ic-DhS" eventType="touchUpInside" id="cVD-pw-xAL"/>
+                                            </connections>
+                                        </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="underlineTodoList" translatesAutoresizingMaskIntoConstraints="NO" id="4HO-WO-KaD">
+                                            <rect key="frame" x="20" y="55" width="560" height="2"/>
+                                        </imageView>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-h6-cki">
+                                            <rect key="frame" x="20" y="23" width="560" height="29"/>
+                                            <color key="textColor" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="24"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="tintColor" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="4HO-WO-KaD" secondAttribute="trailing" constant="20" id="3U5-Il-aHI"/>
+                                        <constraint firstAttribute="trailing" secondItem="JIA-h6-cki" secondAttribute="trailing" constant="20" id="J6e-m4-cUC"/>
+                                        <constraint firstItem="4HO-WO-KaD" firstAttribute="top" secondItem="b9P-Q9-Ybz" secondAttribute="top" constant="55" id="L4d-Bo-qWW"/>
+                                        <constraint firstAttribute="bottom" secondItem="Zfd-f7-vJh" secondAttribute="bottom" id="LnM-pO-ikv"/>
+                                        <constraint firstItem="JIA-h6-cki" firstAttribute="top" secondItem="b9P-Q9-Ybz" secondAttribute="top" constant="23" id="PHT-ef-cKN"/>
+                                        <constraint firstAttribute="trailing" secondItem="Zfd-f7-vJh" secondAttribute="trailing" constant="20" id="S5c-gK-IMG"/>
+                                        <constraint firstItem="JIA-h6-cki" firstAttribute="leading" secondItem="b9P-Q9-Ybz" secondAttribute="leading" constant="20" id="fo6-7c-gud"/>
+                                        <constraint firstItem="4HO-WO-KaD" firstAttribute="leading" secondItem="b9P-Q9-Ybz" secondAttribute="leading" constant="20" id="gLu-W5-eHq"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="100" id="V8Z-y5-sFi" customClass="TodoTableViewCell" customModule="CanDo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP">
+                                                    <rect key="frame" x="20" y="20" width="34" height="34"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="34" id="aQs-DY-RyM"/>
+                                                        <constraint firstAttribute="height" constant="34" id="wVA-rn-r5F"/>
+                                                    </constraints>
+                                                </button>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Weekly groceries" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jPP-TD-74K">
+                                                    <rect key="frame" x="74" y="15" width="506" height="24"/>
+                                                    <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DX-7o-P9P">
+                                                    <rect key="frame" x="74" y="42" width="72" height="36"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <state key="normal" title="Estelle F">
+                                                        <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-RU-EDi">
+                                                    <rect key="frame" x="431" y="46" width="149" height="34"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
+                                                    <state key="normal" title="8:30pm Tue, Sep 4">
+                                                        <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="6h4-RU-EDi" secondAttribute="trailing" constant="20" id="96k-DQ-a0O"/>
+                                                <constraint firstItem="jPP-TD-74K" firstAttribute="top" secondItem="byU-zX-MHb" secondAttribute="top" constant="15" id="AgC-4I-4C9"/>
+                                                <constraint firstItem="6h4-RU-EDi" firstAttribute="top" secondItem="jPP-TD-74K" secondAttribute="bottom" constant="7" id="SfF-hy-YSS"/>
+                                                <constraint firstAttribute="trailing" secondItem="jPP-TD-74K" secondAttribute="trailing" constant="20" id="TBA-ad-rlg"/>
+                                                <constraint firstItem="jPP-TD-74K" firstAttribute="leading" secondItem="TeI-hU-CHP" secondAttribute="trailing" constant="20" id="aJn-Eo-C1w"/>
+                                                <constraint firstItem="0DX-7o-P9P" firstAttribute="leading" secondItem="TeI-hU-CHP" secondAttribute="trailing" constant="20" id="dJ9-wR-hYD"/>
+                                                <constraint firstItem="TeI-hU-CHP" firstAttribute="top" secondItem="byU-zX-MHb" secondAttribute="top" constant="20" id="kOQ-UR-Gr3"/>
+                                                <constraint firstItem="0DX-7o-P9P" firstAttribute="top" secondItem="jPP-TD-74K" secondAttribute="bottom" constant="3" id="pad-SQ-OCc"/>
+                                                <constraint firstItem="TeI-hU-CHP" firstAttribute="leading" secondItem="byU-zX-MHb" secondAttribute="leading" constant="20" id="y9w-c4-Kvf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="assignedPersonButton" destination="0DX-7o-P9P" id="9Rf-AX-Vgi"/>
+                                            <outlet property="dateButton" destination="6h4-RU-EDi" id="BQG-hv-wYO"/>
+                                            <outlet property="selectedButton" destination="TeI-hU-CHP" id="122-xW-vZA"/>
+                                            <outlet property="titleTextField" destination="jPP-TD-74K" id="5ra-9L-SKO"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Y9J-vB-OFu" firstAttribute="top" secondItem="Lfe-Zh-EuY" secondAttribute="bottom" id="CRJ-yR-Ode"/>
                             <constraint firstAttribute="trailing" secondItem="Qvf-LE-W03" secondAttribute="trailing" id="Ex7-QW-htp"/>
                             <constraint firstItem="DiT-2p-PXC" firstAttribute="leading" secondItem="Zfg-eU-sgi" secondAttribute="leading" id="Pqr-KH-IGP"/>
                             <constraint firstAttribute="trailing" secondItem="UXM-1P-54k" secondAttribute="trailing" id="SVL-f9-YYA"/>
                             <constraint firstItem="DiT-2p-PXC" firstAttribute="top" secondItem="UGQ-2f-CDt" secondAttribute="bottom" id="VRD-nh-MGI"/>
                             <constraint firstItem="DiT-2p-PXC" firstAttribute="width" secondItem="Qvf-LE-W03" secondAttribute="width" id="X9o-kI-fLk"/>
+                            <constraint firstAttribute="trailing" secondItem="Lfe-Zh-EuY" secondAttribute="trailing" id="XHD-Mt-LKj"/>
                             <constraint firstItem="UXM-1P-54k" firstAttribute="top" secondItem="UGQ-2f-CDt" secondAttribute="bottom" constant="74" id="YME-FK-oi8"/>
                             <constraint firstItem="Qvf-LE-W03" firstAttribute="top" secondItem="UGQ-2f-CDt" secondAttribute="bottom" id="Zf6-Vo-Ell"/>
+                            <constraint firstItem="Lfe-Zh-EuY" firstAttribute="leading" secondItem="Zfg-eU-sgi" secondAttribute="leading" id="fzW-jy-SIf"/>
+                            <constraint firstItem="Lfe-Zh-EuY" firstAttribute="top" secondItem="DiT-2p-PXC" secondAttribute="bottom" constant="3" id="jT1-sH-lc9"/>
                             <constraint firstItem="Qvf-LE-W03" firstAttribute="leading" secondItem="DiT-2p-PXC" secondAttribute="trailing" id="p5I-xs-67H"/>
                             <constraint firstItem="UXM-1P-54k" firstAttribute="leading" secondItem="Zfg-eU-sgi" secondAttribute="leading" id="sbY-lz-gwG"/>
                         </constraints>
@@ -761,12 +872,15 @@ how can we help today?</string>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
+                        <outlet property="headerView" destination="b9P-Q9-Ybz" id="iQ4-KE-CWK"/>
+                        <outlet property="listTextField" destination="JIA-h6-cki" id="ikj-eL-ogW"/>
+                        <outlet property="toDoTableView" destination="Lfe-Zh-EuY" id="1pS-dQ-qNe"/>
                         <segue destination="Bns-1B-Fxf" kind="show" identifier="toSuggestionsViewController" id="jxm-5n-M4W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2pW-Jl-oSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3508" y="-514"/>
+            <point key="canvasLocation" x="3466" y="-681"/>
         </scene>
         <!--Suggestions View Controller-->
         <scene sceneID="Dq0-kg-0Ot">
@@ -1422,6 +1536,7 @@ receive a password reset email</string>
         <image name="iconTodoTick01" width="30" height="26"/>
         <image name="imageChatRachael" width="51" height="50"/>
         <image name="logoCando" width="257" height="111"/>
+        <image name="underlineTodoList" width="334" height="2"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qO6-7u-NnB"/>
