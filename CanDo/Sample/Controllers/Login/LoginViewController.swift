@@ -24,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var forgotPassword: UIButton!
     var isKeyboardOpened = false
     var activityIndicatorView: NVActivityIndicatorView?
+    var facebookId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,16 +175,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             {
                 // Process error
                 print("Error: \(error)")
+                SVProgressHUD.showErrorWithStatus("\(error)")
             }
             else
             {
                 print("fetched user: \(result)")
-                let userName : NSString = result.valueForKey("name") as! NSString
-                print("User Name is: \(userName)")
-                let userEmail : NSString = result.valueForKey("email") as! NSString
-                print("User Email is: \(userEmail)")
-                
-               // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                guard let userId = result.valueForKey("id") as? String
+                    else{
+                        
+                        SVProgressHUD.showErrorWithStatus("Can not get all needed data from Facebook")
+                        
+                        return;
+                }
+                self.facebookId = userId
+                self.runLoginUserRequest(UIButton())
             }
         })
     }
@@ -305,7 +310,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
          }
         
         
-     //   performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
+       facebookId = nil
         
        runLoginUserRequest(sender)
         
@@ -314,9 +319,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func runLoginUserRequest(sender:UIButton) {
         
-         configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
         
-        provider.request(.LoginUser(password: self.passwordTextField.text!, email: self.emailTextField.text!)) { result in
+        
+         if((facebookId) == nil){
+            configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+         }else{
+            SVProgressHUD.show()
+        }
+        
+        provider.request(.LoginUser(password: (self.passwordTextField.text!.isEmpty ? nil : self.passwordTextField.text!), email: (self.emailTextField.text!.isEmpty ? nil : self.emailTextField.text!), facebookId: facebookId)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -344,7 +355,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
-                    
+                    SVProgressHUD.dismiss()
                     self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
                     self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
                     

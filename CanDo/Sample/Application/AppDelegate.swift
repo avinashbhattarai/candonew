@@ -40,7 +40,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.dismiss()
     }
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        if url.scheme == "cando" {
+             print("Launched with URL: \(url.absoluteString)")
+            let userDict = self.urlPathToDictionary(url.absoluteString)
+            print("userDict \(userDict)")
+            
+            return true
+            
+        }
+        
       return  FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func urlPathToDictionary(path:String) -> [String:String]? {
+        //Get the string everything after the :// of the URL.
+        let stringNoPrefix = path.componentsSeparatedByString("://").last
+        //Get all the parts of the url
+        if var parts = stringNoPrefix?.componentsSeparatedByString("/") {
+            //Make sure the last object isn't empty
+            if parts.last == "" {
+                parts.removeLast()
+            }
+            if parts.count % 2 != 0 { //Make sure that the array has an even number
+                return nil
+            }
+            var dict = [String:String]()
+            var key:String = ""
+            //Add all our parts to the dictionary
+            
+            for (index, part) in parts.enumerate() {
+                if index % 2 == 0 {
+                    key = part
+                    
+                } else {
+                    dict[key] = part
+                }
+            }
+            
+            return dict
+            
+            
+        }
+        return nil
     }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

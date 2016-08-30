@@ -12,10 +12,10 @@ import Moya
 
 
 public enum NetworkingService {
-    case CreateUser(firstName: String, lastName: String, email: String)
+    case CreateUser(firstName: String, lastName: String, email: String, facebookId: String?)
     case VerificateUser(code: Int, email: String)
     case SetPasswordForUser(password: String, code: Int, email: String)
-    case LoginUser(password: String, email: String)
+    case LoginUser(password: String?, email: String?, facebookId: String?)
     case ForgotPassword(email: String)
 }
 
@@ -44,13 +44,13 @@ extension NetworkingService: TargetType {
     public var path: String {
         switch self {
         
-        case .CreateUser(_, _, _):
+        case .CreateUser(_, _, _, _):
             return "/user/register"
         case .VerificateUser(_, _):
             return "/user/verification"
         case .SetPasswordForUser(_, _,_):
             return "/user/set-password"
-        case .LoginUser(_, _):
+        case .LoginUser(_, _, _):
             return "/user/login"
         case .ForgotPassword(_):
             return "/user/forgot"
@@ -72,8 +72,13 @@ extension NetworkingService: TargetType {
     }
     public var parameters: [String: AnyObject]? {
         switch self {
-        case .CreateUser(let firstName, let lastName, let email):
-            return ["first_name": firstName, "last_name": lastName, "email": email]
+        case .CreateUser(let firstName, let lastName, let email, let facebookId):
+            var params: [String : AnyObject] = [:]
+            params["first_name"] = firstName
+            params["last_name"] = lastName
+            params["email"] = email
+            params["facebook_id"] = facebookId
+            return params
             
         case .VerificateUser(let code, let email):
             return ["code": code, "email": email]
@@ -81,18 +86,24 @@ extension NetworkingService: TargetType {
         case .SetPasswordForUser(let password, let code, let email):
             return ["password": password, "code": code, "email": email]
             
-        case .LoginUser(let password, let email):
-            return ["password": password, "email": email]
+        case .LoginUser(let password, let email, let facebookId):
+            var params: [String : AnyObject] = [:]
+            params["email"] = email
+            params["password"] = password
+            params["facebook_id"] = facebookId
+            return params
             
         case .ForgotPassword(let email):
             return ["email": email]
+            
+        
             
         }
     }
     public var sampleData: NSData {
         switch self {
-        case .CreateUser(let firstName, let lastName, let email):
-            return "{\"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\", \"email\": \"\(email)\"}".UTF8EncodedData
+        case .CreateUser(let firstName, let lastName, let email, let facebookId):
+            return "{\"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
             
         case .VerificateUser(let code, let email):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\"}".UTF8EncodedData
@@ -100,8 +111,8 @@ extension NetworkingService: TargetType {
         case .SetPasswordForUser(let code, let email, let password ):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
-        case .LoginUser(let password, let email):
-            return "{\"password\": \"\(password)\", \"email\": \"\(email)\"}".UTF8EncodedData
+        case .LoginUser(let password, let email, let facebookId):
+            return "{\"password\": \"\(password)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
         case .ForgotPassword(let email):
              return "{\"email\": \"\(email)\"}".UTF8EncodedData
         }

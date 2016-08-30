@@ -113,6 +113,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let contentView: UIView = UIView(frame: CGRectMake(0 , 0, self.view.frame.width, 60))
+        contentView.backgroundColor = UIColor.whiteColor()
         let listTitle: TodoListSectionTextField = TodoListSectionTextField(frame: CGRectMake(20 , 0, self.view.frame.width-40, 29))
         listTitle.center = CGPointMake(listTitle.center.x, contentView.frame.size.height/2)
         listTitle.text = lists[section].name

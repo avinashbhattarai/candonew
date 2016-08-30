@@ -22,6 +22,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var answerLabel: UILabel!
     var isKeyboardOpened = false
+    var facebookData : NSDictionary?
     var activityIndicatorView: NVActivityIndicatorView?
     
     override func viewDidLoad() {
@@ -33,6 +34,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         if self.isUserLogined() {
             performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
         }
+        
+       
         
         
       self.emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
@@ -46,9 +49,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.firstNameTextField.alpha = 0;
      fadeViewInThenOut(self.answerLabel, delay: 0.5)
         
-        
-        
-        
+
     }
     func cleanTextFields() {
         self.emailTextfield.text = ""
@@ -61,6 +62,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
@@ -149,7 +151,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             return
         }
  
-       
+        facebookData = nil
         runSignUpRequest(sender)
         
         
@@ -158,7 +160,27 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func runSignUpRequest(sender:UIButton) {
         
         configureSignUpButton(sender,showSpinner: true)
-        provider.request(.CreateUser(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, email: self.emailTextfield.text!)) { result in
+        var firstName: String?
+        var lastName: String?
+        var email: String?
+        var facebookId: String?
+        
+        if((self.facebookData) == nil){
+            firstName = firstNameTextField.text
+            lastName = lastNameTextField.text
+            email = emailTextfield.text
+            facebookId = nil
+        }else{
+            firstName = self.facebookData?.valueForKey("first_name") as? String
+            lastName = self.facebookData?.valueForKey("last_name") as? String
+            email = self.facebookData?.valueForKey("email") as? String
+            facebookId = self.facebookData?.valueForKey("id") as? String
+            SVProgressHUD.show()
+            
+        }
+       
+        
+        provider.request(.CreateUser(firstName: firstName!, lastName: lastName!, email: email!, facebookId:facebookId)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -166,6 +188,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     
+                    if((facebookId) == nil){
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
@@ -173,6 +196,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     
                     self.configureSignUpButton(sender,showSpinner: false)
                     self.performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
+                        SVProgressHUD.dismiss()
+                    }else{
+                        
+                        print("Login via facebook")
+                        
+                        self.runLoginUserViaFacebookRequest()
+                    }
                     
                 }
                 catch {
@@ -205,7 +235,72 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    func runLoginUserViaFacebookRequest() {
+        
+        
+        var facebookId: String?
+        if((self.facebookData) != nil){
+            facebookId = self.facebookData?.valueForKey("id") as? String
+        }
+        
+        provider.request(.LoginUser(password: nil, email: nil, facebookId: facebookId)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
+                        let email = json["email"] as? String,
+                        let id = json["id"] as? Int,
+                        let last_name = json["last_name"] as? String,
+                        let first_name = json["first_name"] as? String,
+                        let token = json["token"] as? String
+                        
+                        else {
+                            
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(first_name, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    
+                    SVProgressHUD.dismiss()
+                   
+                    self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                   }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+    }
+
   
     
     func configureSignUpButton(button:UIButton,showSpinner:Bool)  {
@@ -273,21 +368,33 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
       
     func returnUserData()
     {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,first_name, last_name"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil)
             {
                 // Process error
                 print("Error: \(error)")
+                SVProgressHUD.showErrorWithStatus("\(error)")
             }
             else
             {
                 print("fetched user: \(result)")
-                let userName : NSString = result.valueForKey("name") as! NSString
-                print("User Name is: \(userName)")
-                let userEmail : NSString = result.valueForKey("email") as! NSString
-                print("User Email is: \(userEmail)")
+                
+                guard let userId = result.valueForKey("id") as? String,
+                let userFirstName  = result.valueForKey("first_name") as? String,
+                let userLastName  = result.valueForKey("last_name") as? String,
+                let userEmail = result.valueForKey("email") as? String else{
+                 
+                    SVProgressHUD.showErrorWithStatus("Can not get all needed data from Facebook")
+                
+                        return;
+                }
+                self.facebookData = ["id":userId,"first_name":userFirstName,"last_name":userLastName,"email":userEmail]
+               self.runSignUpRequest(UIButton())
+
+                
+                
                 
                // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
             }
