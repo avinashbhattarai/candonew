@@ -11,6 +11,9 @@ import CoreData
 import IQKeyboardManagerSwift
 import SVProgressHUD
 import Moya
+import Fabric
+import Crashlytics
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.Black)
         SVProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.Flat)
          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.hideProgressHud), name: SVProgressHUDDidReceiveTouchEventNotification, object: nil)
+       // Fabric.sharedSDK().debug = true
+        Fabric.with([Crashlytics.self])
+
         
         //test
         return true
@@ -41,9 +47,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         if url.scheme == "cando" {
-             print("Launched with URL: \(url.absoluteString)")
+            
             let userDict = self.urlPathToDictionary(url.absoluteString)
+            
             print("userDict \(userDict)")
+            
+            if userDict!["action"] == "register" {
+                
+                if let navigationController = window?.rootViewController as? BaseAuthNavigationController{
+                    if let topViewController =  navigationController.topViewController as? CodeViewController{
+                        
+                        print("top vc 2 \(topViewController)")
+                        
+                        
+                        topViewController.runVerificateUserRequest(userDict!["email"]!, code: userDict!["code"]!)
+                        
+                    }else{
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewControllerWithIdentifier("codeViewController") as! CodeViewController
+                        
+                        navigationController.pushViewController(vc, animated: true){
+                            print("Code View Controller was shown")
+                            vc.runVerificateUserRequest(userDict!["email"]!, code: userDict!["code"]!)
+                        }
+                        
+                        
+                    }
+                }
+
+            }else if userDict!["action"] == "resetPassword"{
+                
+                if let navigationController = window?.rootViewController as? BaseAuthNavigationController{
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewControllerWithIdentifier("newPasswordViewController") as! SetNewPasswordViewController
+                    
+                    navigationController.pushViewController(vc, animated: true){
+                        print("Set New Password Controller was shown")
+                        Helper.UserDefaults.kStandardUserDefaults.setObject(userDict!["code"]!, forKey: Helper.UserDefaults.kUserSecretCode)
+                        Helper.UserDefaults.kStandardUserDefaults.setObject(userDict!["email"]!, forKey: Helper.UserDefaults.kUserEmail)
+                        Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                        
+                    }
+                }
+            }
             
             return true
             

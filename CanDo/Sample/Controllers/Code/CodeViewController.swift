@@ -45,7 +45,9 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         if self.codeTextField.text?.characters.count == 6 {
              print("textfield \(self.codeTextField.text)")
             self.codeTextField.resignFirstResponder()
-            runVerificateUserRequest()
+            let code :String = self.codeTextField.text!
+            let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+            runVerificateUserRequest(email, code: code)
         }else{
             SVProgressHUD.showErrorWithStatus("Entered code is not valid")
             
@@ -53,11 +55,12 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func runVerificateUserRequest() {
+    func runVerificateUserRequest(email: String, code :String) {
         
         SVProgressHUD.show()
-        let code :Int = Int(self.codeTextField.text!)!
-        let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+      
+        let code :Int = Int(code)!
+        let email: String = email
        
         provider.request(.VerificateUser(code: code, email: email)) { result in
             switch result {

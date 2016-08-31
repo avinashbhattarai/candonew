@@ -15,6 +15,7 @@ public enum NetworkingService {
     case CreateUser(firstName: String, lastName: String, email: String, facebookId: String?)
     case VerificateUser(code: Int, email: String)
     case SetPasswordForUser(password: String, code: Int, email: String)
+    case ResetPasswordForUser(password: String, code: Int, email: String)
     case LoginUser(password: String?, email: String?, facebookId: String?)
     case ForgotPassword(email: String)
 }
@@ -50,6 +51,8 @@ extension NetworkingService: TargetType {
             return "/user/verification"
         case .SetPasswordForUser(_, _,_):
             return "/user/set-password"
+        case .ResetPasswordForUser(_, _,_):
+            return "/user/reset"
         case .LoginUser(_, _, _):
             return "/user/login"
         case .ForgotPassword(_):
@@ -63,6 +66,8 @@ extension NetworkingService: TargetType {
         case .VerificateUser:
             return .POST
         case .SetPasswordForUser:
+            return .POST
+        case .ResetPasswordForUser:
             return .POST
         case .LoginUser:
             return .POST
@@ -84,6 +89,9 @@ extension NetworkingService: TargetType {
             return ["code": code, "email": email]
             
         case .SetPasswordForUser(let password, let code, let email):
+            return ["password": password, "code": code, "email": email]
+            
+        case .ResetPasswordForUser(let password, let code, let email):
             return ["password": password, "code": code, "email": email]
             
         case .LoginUser(let password, let email, let facebookId):
@@ -109,6 +117,9 @@ extension NetworkingService: TargetType {
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\"}".UTF8EncodedData
             
         case .SetPasswordForUser(let code, let email, let password ):
+            return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
+            
+        case .ResetPasswordForUser(let code, let email, let password ):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
         case .LoginUser(let password, let email, let facebookId):

@@ -13,6 +13,6 @@ pod 'NVActivityIndicatorView'
 pod 'Moya'
 pod 'Alamofire', '~> 3.4'
 pod 'ImagePicker'
-pod 'Lightbox', git: 'https://github.com/hyperoslo/Lightbox.git'
-
+pod 'Fabric'
+pod 'Crashlytics'
 end

@@ -51,6 +51,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
 
     }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        
+    }
+    
     func cleanTextFields() {
         self.emailTextfield.text = ""
         self.firstNameTextField.text = ""
@@ -353,6 +358,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         fbLoginManager.logInWithReadPermissions(["email"], fromViewController: self) { (result, error) -> Void in
             if (error == nil){
                 let fbloginresult : FBSDKLoginManagerLoginResult = result
+                if result.isCancelled {
+                    return
+                }
+                
                 if(fbloginresult.grantedPermissions.contains("email"))
                 {
                     self.returnUserData()

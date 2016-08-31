@@ -49,6 +49,8 @@
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
+            <string>MuseoSansRounded-500</string>
+            <string>MuseoSansRounded-500</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-700.otf">
             <string>MuseoSansRounded-700</string>
@@ -63,7 +65,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SignUpViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signUpViewController" id="BYZ-38-t0r" customClass="SignUpViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -275,7 +277,7 @@
         <!--Code View Controller-->
         <scene sceneID="z6d-W1-INU">
             <objects>
-                <viewController id="pV2-0o-deO" customClass="CodeViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="codeViewController" id="pV2-0o-deO" customClass="CodeViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NGk-NO-oA3"/>
                         <viewControllerLayoutGuide type="bottom" id="Oge-0G-OSX"/>
@@ -405,7 +407,6 @@ receive a verification email :)</string>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="passwordActionTapped:" destination="gUu-xy-FeS" eventType="touchUpInside" id="2bn-od-fWC"/>
-                                    <action selector="signUpButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U8b-hL-CtP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -675,11 +676,28 @@ how can we help today?</string>
                     <view key="view" contentMode="scaleToFill" id="Lzm-r9-0mK">
                         <rect key="frame" x="0.0" y="64" width="600" height="887"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfv-hn-ceJ">
+                                <rect key="frame" x="274" y="90" width="52" height="30"/>
+                                <state key="normal" title="Log out"/>
+                                <connections>
+                                    <action selector="logoutButtonTapped:" destination="SMS-eY-IEL" eventType="touchUpInside" id="0va-wJ-iOb"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jfv-hn-ceJ" firstAttribute="centerX" secondItem="Lzm-r9-0mK" secondAttribute="centerX" id="UcX-uO-UCq"/>
+                            <constraint firstItem="Jfv-hn-ceJ" firstAttribute="top" secondItem="wPa-4W-qDp" secondAttribute="bottom" constant="90" id="Y6z-PB-69R"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Account" id="Gcn-V1-WiZ"/>
+                    <connections>
+                        <segue destination="NVO-V5-Qub" kind="unwind" identifier="unwindToSignUpViewController" unwindAction="prepareForUnwind:" id="iqq-lC-12g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vpp-n9-5Yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="NVO-V5-Qub" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3522" y="2111"/>
         </scene>
@@ -1063,10 +1081,10 @@ how can we help today?</string>
             </objects>
             <point key="canvasLocation" x="1940" y="213"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Auth Navigation Controller-->
         <scene sceneID="zF3-rn-yXx">
             <objects>
-                <navigationController storyboardIdentifier="mainNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="sXV-SE-Blq" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="mainNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="sXV-SE-Blq" customClass="BaseAuthNavigationController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZQa-4X-JzN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1516,11 +1534,80 @@ receive a password reset email</string>
                         <outlet property="signUpButton" destination="DTV-YB-VAc" id="eK4-8v-9rT"/>
                         <outlet property="successContainer" destination="6CS-uc-7AO" id="SXf-cb-KgZ"/>
                         <segue destination="LLK-r1-CeK" kind="show" identifier="toDashboardViewController" id="qO6-7u-NnB"/>
+                        <segue destination="jBb-dE-Bcf" kind="show" identifier="toSetNewPasswordViewController" id="jgD-aa-RMC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Www-9d-iz7" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="388" y="-1051"/>
+        </scene>
+        <!--Set New Password View Controller-->
+        <scene sceneID="vGe-2X-LuW">
+            <objects>
+                <viewController storyboardIdentifier="newPasswordViewController" id="jBb-dE-Bcf" customClass="SetNewPasswordViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="z7j-dw-49I"/>
+                        <viewControllerLayoutGuide type="bottom" id="YqB-jw-ykq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bK3-3m-H58">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create New Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BI8-hd-DtV">
+                                <rect key="frame" x="30" y="104" width="540" height="54"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="oCP-jt-0Vc"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQ2-bo-f0R">
+                                <rect key="frame" x="30" y="198" width="540" height="54"/>
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.34901960780000002" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="u3p-FD-c9k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="26"/>
+                                <state key="normal" title="Set New Password">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="newPasswordTapped:" destination="jBb-dE-Bcf" eventType="touchUpInside" id="LzO-16-QAC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BI8-hd-DtV" secondAttribute="trailing" constant="30" id="77Q-ul-j5P"/>
+                            <constraint firstItem="yQ2-bo-f0R" firstAttribute="top" secondItem="BI8-hd-DtV" secondAttribute="bottom" constant="40" id="X3O-Iu-cJa"/>
+                            <constraint firstItem="BI8-hd-DtV" firstAttribute="top" secondItem="z7j-dw-49I" secondAttribute="bottom" constant="40" id="csR-RQ-aAU"/>
+                            <constraint firstItem="BI8-hd-DtV" firstAttribute="leading" secondItem="bK3-3m-H58" secondAttribute="leading" constant="30" id="oKN-NL-9Id"/>
+                            <constraint firstAttribute="trailing" secondItem="yQ2-bo-f0R" secondAttribute="trailing" constant="30" id="v7I-hE-88h"/>
+                            <constraint firstItem="yQ2-bo-f0R" firstAttribute="leading" secondItem="bK3-3m-H58" secondAttribute="leading" constant="30" id="yot-PA-i6U"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="newPassword" destination="BI8-hd-DtV" id="OjP-o3-xOD"/>
+                        <segue destination="LLK-r1-CeK" kind="show" identifier="toDashboardViewController" id="cEN-xL-er6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jw9-oe-22D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1158" y="-1437"/>
         </scene>
     </scenes>
     <resources>

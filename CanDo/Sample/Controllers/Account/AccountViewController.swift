@@ -28,6 +28,28 @@ class AccountViewController: UIViewController {
         nc.popViewControllerAnimated(true)
     }
 
+    @IBAction func logoutButtonTapped(sender: AnyObject) {
+        
+        cleanUserDefaults()
+        
+        self.performSegueWithIdentifier("unwindToSignUpViewController", sender: self)
+        
+        
+        
+    }
+    
+    func cleanUserDefaults() {
+        
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserEmail)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserFirstName)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserId)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserLastName)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserSecretCode)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserToken)
+        
+        Helper.UserDefaults.kStandardUserDefaults.synchronize()
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

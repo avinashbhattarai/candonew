@@ -14,6 +14,9 @@
 		93142E221D74641500CAC387 /* todoResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 93142E211D74641500CAC387 /* todoResponse.json */; };
 		93142E261D7478C700CAC387 /* TodoListSectionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */; };
 		93142E281D747CBD00CAC387 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */; };
+		93142E2B1D76EB0600CAC387 /* BaseAuthNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E2A1D76EB0600CAC387 /* BaseAuthNavigationController.swift */; };
+		93142E2D1D76EB3C00CAC387 /* UINavigationController+Completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E2C1D76EB3C00CAC387 /* UINavigationController+Completion.swift */; };
+		93142E2F1D76FEA300CAC387 /* SetNewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E2E1D76FEA300CAC387 /* SetNewPasswordViewController.swift */; };
 		938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBC31D64729200B2D070 /* AppDelegate.swift */; };
 		938FDBD01D64729200B2D070 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBCF1D64729200B2D070 /* Views */; };
 		938FDBD21D64729200B2D070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD11D64729200B2D070 /* ViewController.swift */; };
@@ -71,6 +74,9 @@
 		93142E211D74641500CAC387 /* todoResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = todoResponse.json; sourceTree = "<group>"; };
 		93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TodoListSectionTextField.swift; path = Views/TodoListSectionTextField.swift; sourceTree = "<group>"; };
 		93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
+		93142E2A1D76EB0600CAC387 /* BaseAuthNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAuthNavigationController.swift; sourceTree = "<group>"; };
+		93142E2C1D76EB3C00CAC387 /* UINavigationController+Completion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Completion.swift"; sourceTree = "<group>"; };
+		93142E2E1D76FEA300CAC387 /* SetNewPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetNewPasswordViewController.swift; sourceTree = "<group>"; };
 		938FDBC01D64729200B2D070 /* CanDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938FDBC31D64729200B2D070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		938FDBD11D64729200B2D070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC141D65B09200B2D070 /* BaseTabBarViewController.swift */,
+				93142E2A1D76EB0600CAC387 /* BaseAuthNavigationController.swift */,
 			);
 			path = BaseClasses;
 			sourceTree = "<group>";
@@ -267,6 +274,7 @@
 				938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */,
 				938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */,
 				939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */,
+				93142E2C1D76EB3C00CAC387 /* UINavigationController+Completion.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -380,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC301D6B15B800B2D070 /* SetPasswordViewController.swift */,
+				93142E2E1D76FEA300CAC387 /* SetNewPasswordViewController.swift */,
 			);
 			path = SetPassword;
 			sourceTree = "<group>";
@@ -433,6 +442,7 @@
 				938FDBBE1D64729200B2D070 /* Resources */,
 				98BFB8B246E3BDD154CD79DA /* [CP] Embed Pods Frameworks */,
 				4DC58AED3409CBAC1D6DF7D4 /* [CP] Copy Pods Resources */,
+				93142E291D76D43E00CAC387 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -514,6 +524,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CanDo/Pods-CanDo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		93142E291D76D43E00CAC387 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" fb17355368307a18f7aa74afd73e33a09513420b 98d60225e58ea55face7d60c895810361594da5b4cd189e7e31ea506efb61926";
+		};
 		98BFB8B246E3BDD154CD79DA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -552,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938FDC361D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift in Sources */,
+				93142E2F1D76FEA300CAC387 /* SetNewPasswordViewController.swift in Sources */,
 				938FDC191D65B47300B2D070 /* UIImage+TabbarItem.swift in Sources */,
 				938FDC491D6F085800B2D070 /* NetworkingService.swift in Sources */,
 				93142E281D747CBD00CAC387 /* TodoTableViewCell.swift in Sources */,
@@ -559,6 +583,7 @@
 				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
 				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
 				93142E201D745C0800CAC387 /* Person.swift in Sources */,
+				93142E2B1D76EB0600CAC387 /* BaseAuthNavigationController.swift in Sources */,
 				938FDC131D65A5EF00B2D070 /* TodoViewController.swift in Sources */,
 				938FDC451D6CD19600B2D070 /* AllItemsSelectedCell.swift in Sources */,
 				939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */,
@@ -575,6 +600,7 @@
 				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
+				93142E2D1D76EB3C00CAC387 /* UINavigationController+Completion.swift in Sources */,
 				93142E1C1D745B6400CAC387 /* List.swift in Sources */,
 				938FDBD81D64729200B2D070 /* CanDo.xcdatamodeld in Sources */,
 				938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */,
@@ -713,12 +739,14 @@
 					"$(PROJECT_DIR)/CanDo",
 				);
 				INFOPLIST_FILE = CanDo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -729,18 +757,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
 				);
 				INFOPLIST_FILE = CanDo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

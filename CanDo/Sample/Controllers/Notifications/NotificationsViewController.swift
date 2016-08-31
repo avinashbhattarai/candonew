@@ -8,7 +8,7 @@
 
 import UIKit
 import ImagePicker
-import Lightbox
+//import Lightbox
 
 class NotificationsViewController: UIViewController, ImagePickerDelegate {
 
@@ -92,6 +92,7 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
     }
     
     func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
+        /*
         guard images.count > 0 else { return }
         
         let lightboxImages = images.map {
@@ -100,7 +101,9 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
         
         let lightbox = LightboxController(images: lightboxImages, startIndex: 0)
         imagePicker.presentViewController(lightbox, animated: true, completion: nil)
+ */
     }
+ 
     
     func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
