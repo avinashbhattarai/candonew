@@ -106,7 +106,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
                 print(indexPath)
                 cell.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
             }else{
-                cell.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCop"), forState: .Normal)
+                cell.selectedButton .setImage(UIImage(), forState: .Normal)
             }
             cell.selectedButton.addTarget(self, action: #selector(SuggestionsViewController.selectSuggestionsItem), forControlEvents: .TouchUpInside)
             cell.selectionStyle = UITableViewCellSelectionStyle.None

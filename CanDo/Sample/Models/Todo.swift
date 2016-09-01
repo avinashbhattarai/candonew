@@ -22,12 +22,10 @@ class Todo {
     
     // MARK: Initialization
     
-    init(name: String, list: List, finished: Bool = false , assignedPerson: Person, date:NSDate ) {
+    init(name: String, list: List, finished: Bool = false  ) {
         self.name = name
         self.list = list
         self.finished = finished
-        self.assignedPerson = assignedPerson
-        self.date = date
     }
     
 }

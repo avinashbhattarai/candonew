@@ -6,7 +6,7 @@
         "todos": [
           {
             "name": "Weekly groceries",
-            "finished": false,
+            "finished": true,
             "person": "Estelle F"
           },
           {
@@ -21,7 +21,7 @@
           "todos": [
             {
               "name": "Laundry fold & put away",
-              "finished": false,
+              "finished": true,
               "person": "Estelle F"
             },
             {
