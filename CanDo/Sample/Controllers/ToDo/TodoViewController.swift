@@ -17,6 +17,8 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var selectedIndex: NSInteger?
     var isHeaderOpened:Bool = false
+    var currentTodo: Todo?
+    
     
     var lists = [List]()
 
@@ -126,10 +128,11 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let contentView: UIView = UIView(frame: CGRectMake(0 , 0, self.view.frame.width, 60))
-        contentView.backgroundColor = UIColor.whiteColor()
+        contentView.backgroundColor = Helper.Colors.RGBCOLOR(250, green: 255, blue: 254)
         let listTitle: TodoListSectionTextField = TodoListSectionTextField(frame: CGRectMake(20 , 0, self.view.frame.width-40, 29))
         listTitle.center = CGPointMake(listTitle.center.x, contentView.frame.size.height/2)
         listTitle.text = lists[section].name
+        listTitle.placeholder = "List title"
         listTitle.tag = section
         listTitle.delegate = self
         listTitle.returnKeyType = .Done
@@ -142,8 +145,10 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell = self.toDoTableView.dequeueReusableHeaderFooterViewWithIdentifier("TodoSectionFooter")
         let footer = cell as! TodoTableSectionFooter
         footer.addTodoButton.tag = section
+        footer.dateButton.tag = section
         footer.titleTextField.tag = section
         footer.titleTextField.delegate = self
+        footer.dateButton.addTarget(self, action:#selector(TodoViewController.dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
         footer.addTodoButton.addTarget(self, action:#selector(TodoViewController.addTodoTapped(_:)), forControlEvents: .TouchUpInside)
         return footer
  
@@ -165,11 +170,37 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.titleTextField.indexPath = indexPath
         cell.titleTextField.delegate = self
         cell.selectedButton.indexPath = indexPath
+        cell.dateButton.indexPath = indexPath
+        cell.dateButton.addTarget(self, action: #selector(TodoViewController.dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
         cell.selectedButton.addTarget(self, action: #selector(TodoViewController.selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
         cell.assignedPersonButton.setTitle(todo.assignedPerson?.name, forState: .Normal)
 
         return cell
     }
+    
+    
+    func dateNewTodoButtonTapped(sender: DateUnderlineButton) {
+        
+        currentTodo = nil
+        let section :Int = sender.tag
+        let list = lists[section]
+        print(list)
+        performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+        
+    }
+
+    
+    
+    func dateButtonTapped(sender: SelectSuggestionButton) {
+        let section :Int = sender.indexPath!.section
+        let row: Int = sender.indexPath!.row
+        let list = lists[section]
+        currentTodo = list.todos![row]
+       print(currentTodo)
+        performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+        
+    }
+
     
     func selectedButtonTapped(sender: SelectSuggestionButton) {
         let section :Int = sender.indexPath!.section
@@ -330,14 +361,25 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == Helper.SegueKey.kToSelectTodoDateViewController {
+            let viewController:SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
+            if (currentTodo != nil) {
+                viewController.currentTodo = currentTodo
+            }
+            
+            
+        }
+
+        
     }
-    */
+    
 
 }

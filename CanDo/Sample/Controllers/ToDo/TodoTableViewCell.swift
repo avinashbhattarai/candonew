@@ -10,7 +10,7 @@ import UIKit
 
 class TodoTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var dateButton: SelectSuggestionButton!
     @IBOutlet weak var assignedPersonButton: UIButton!
     @IBOutlet weak var titleTextField: TodoNameTextField!
     @IBOutlet weak var selectedButton: SelectSuggestionButton!

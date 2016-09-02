@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [
             NSFontAttributeName: UIFont(name: "MuseoSansRounded-700", size: 28)!, NSForegroundColorAttributeName : UIColor.whiteColor()
         ]
+        let barAppearace = UIBarButtonItem.appearance()
+        barAppearace.setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), forBarMetrics:UIBarMetrics.Default)
 
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.Black)
         SVProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.Flat)
