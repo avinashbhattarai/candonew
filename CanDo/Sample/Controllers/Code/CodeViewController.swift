@@ -21,6 +21,8 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         self.codeTextField.delegate = self
       
         self.codeTextField.addDoneOnKeyboardWithTarget(self, action: #selector(CodeViewController.doneButtonTapped))
+        
+        
      
         // Do any additional setup after loading the view.
     }
@@ -56,6 +58,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     
     
     func runVerificateUserRequest(email: String, code :String) {
+        
         
         SVProgressHUD.show()
       

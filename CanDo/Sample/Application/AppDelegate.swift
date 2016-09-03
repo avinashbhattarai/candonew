@@ -69,9 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = storyboard.instantiateViewControllerWithIdentifier("codeViewController") as! CodeViewController
                         
-                        navigationController.pushViewController(vc, animated: true){
+                        navigationController.pushViewController(vc, animated: false){
                             print("Code View Controller was shown")
                             vc.runVerificateUserRequest(userDict!["email"]!, code: userDict!["code"]!)
+                           
                         }
                         
                         
