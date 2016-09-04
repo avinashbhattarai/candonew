@@ -14,7 +14,7 @@ class SelectTodoDateViewController: UIViewController {
     var selectedDate: NSDate = NSDate()
     
     @IBOutlet weak var todoTitle: UILabel!
-    @IBOutlet weak var anyTimeButton: SelectSuggestionButton!
+    @IBOutlet weak var anyTimeButton: ButtonWithIndexPath!
     @IBOutlet weak var datePicker: UIDatePicker!
     
     override func viewDidLoad() {
@@ -73,7 +73,7 @@ class SelectTodoDateViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func anyTimeButtonTapped(sender: SelectSuggestionButton) {
+    @IBAction func anyTimeButtonTapped(sender: ButtonWithIndexPath) {
         sender.selected = !sender.selected
         if sender.selected {
             self.datePicker.datePickerMode = .Date

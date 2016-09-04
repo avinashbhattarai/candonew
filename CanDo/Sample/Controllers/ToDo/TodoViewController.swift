@@ -149,6 +149,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         footer.titleTextField.tag = section
         footer.titleTextField.delegate = self
         footer.dateButton.addTarget(self, action:#selector(TodoViewController.dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.assignTodoButton.addTarget(self, action:#selector(TodoViewController.assignNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
         footer.addTodoButton.addTarget(self, action:#selector(TodoViewController.addTodoTapped(_:)), forControlEvents: .TouchUpInside)
         return footer
  
@@ -171,12 +172,39 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.titleTextField.delegate = self
         cell.selectedButton.indexPath = indexPath
         cell.dateButton.indexPath = indexPath
+        cell.assignedPersonButton.indexPath = indexPath
+        
         cell.dateButton.addTarget(self, action: #selector(TodoViewController.dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
         cell.selectedButton.addTarget(self, action: #selector(TodoViewController.selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
         cell.assignedPersonButton.setTitle(todo.assignedPerson?.name, forState: .Normal)
+        cell.assignedPersonButton.addTarget(self, action: #selector(TodoViewController.assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
 
         return cell
     }
+    
+    
+    func assignNewTodoButtonTapped(sender: DateUnderlineButton) {
+        
+        currentTodo = nil
+        let section :Int = sender.tag
+        let list = lists[section]
+        print(list)
+        performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        
+    }
+
+    
+    
+    func assignTodoButtonTapped(sender: ButtonWithIndexPath) {
+        let section :Int = sender.indexPath!.section
+        let row: Int = sender.indexPath!.row
+        let list = lists[section]
+        currentTodo = list.todos![row]
+        print(currentTodo)
+        performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        
+    }
+
     
     
     func dateNewTodoButtonTapped(sender: DateUnderlineButton) {
@@ -191,7 +219,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     
     
-    func dateButtonTapped(sender: SelectSuggestionButton) {
+    func dateButtonTapped(sender: ButtonWithIndexPath) {
         let section :Int = sender.indexPath!.section
         let row: Int = sender.indexPath!.row
         let list = lists[section]
@@ -202,7 +230,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
 
     
-    func selectedButtonTapped(sender: SelectSuggestionButton) {
+    func selectedButtonTapped(sender: ButtonWithIndexPath) {
         let section :Int = sender.indexPath!.section
         let row: Int = sender.indexPath!.row
         let list = lists[section]
@@ -371,6 +399,15 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         if segue.identifier == Helper.SegueKey.kToSelectTodoDateViewController {
             let viewController:SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
+            if (currentTodo != nil) {
+                viewController.currentTodo = currentTodo
+            }
+            
+            
+        }
+        
+        if segue.identifier == Helper.SegueKey.kToAssignTodoViewController {
+            let viewController:AssignTodoViewController = segue.destinationViewController as! AssignTodoViewController
             if (currentTodo != nil) {
                 viewController.currentTodo = currentTodo
             }

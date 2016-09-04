@@ -24,6 +24,11 @@
 		93142E3B1D78663B00CAC387 /* AddTodoTitleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E3A1D78663B00CAC387 /* AddTodoTitleTextField.swift */; };
 		93142E3F1D78772800CAC387 /* TodoNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E3E1D78772800CAC387 /* TodoNameTextField.swift */; };
 		93142E411D79640300CAC387 /* SelectTodoDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E401D79640300CAC387 /* SelectTodoDateViewController.swift */; };
+		93142E431D7C272600CAC387 /* AssignTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E421D7C272500CAC387 /* AssignTodoViewController.swift */; };
+		93142E451D7C27E300CAC387 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E441D7C27E300CAC387 /* PersonTableViewCell.swift */; };
+		93142E471D7C316600CAC387 /* ButtonWithIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E461D7C316600CAC387 /* ButtonWithIndexPath.swift */; };
+		93142E4B1D7C357A00CAC387 /* AssignPersonFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93142E4A1D7C357A00CAC387 /* AssignPersonFooter.xib */; };
+		93142E4F1D7C378400CAC387 /* AssignPersonForTodoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E4E1D7C378400CAC387 /* AssignPersonForTodoFooter.swift */; };
 		938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBC31D64729200B2D070 /* AppDelegate.swift */; };
 		938FDBD01D64729200B2D070 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBCF1D64729200B2D070 /* Views */; };
 		938FDBD21D64729200B2D070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD11D64729200B2D070 /* ViewController.swift */; };
@@ -91,6 +96,11 @@
 		93142E3A1D78663B00CAC387 /* AddTodoTitleTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTodoTitleTextField.swift; sourceTree = "<group>"; };
 		93142E3E1D78772800CAC387 /* TodoNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoNameTextField.swift; sourceTree = "<group>"; };
 		93142E401D79640300CAC387 /* SelectTodoDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTodoDateViewController.swift; sourceTree = "<group>"; };
+		93142E421D7C272500CAC387 /* AssignTodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignTodoViewController.swift; sourceTree = "<group>"; };
+		93142E441D7C27E300CAC387 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
+		93142E461D7C316600CAC387 /* ButtonWithIndexPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonWithIndexPath.swift; path = Views/ButtonWithIndexPath.swift; sourceTree = "<group>"; };
+		93142E4A1D7C357A00CAC387 /* AssignPersonFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssignPersonFooter.xib; sourceTree = "<group>"; };
+		93142E4E1D7C378400CAC387 /* AssignPersonForTodoFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignPersonForTodoFooter.swift; sourceTree = "<group>"; };
 		938FDBC01D64729200B2D070 /* CanDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938FDBC31D64729200B2D070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		938FDBD11D64729200B2D070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +198,7 @@
 				938FDBF81D649BCC00B2D070 /* FBSDKShareKit.framework */,
 				938FDBE71D64808000B2D070 /* Fonts */,
 				938FDBD11D64729200B2D070 /* ViewController.swift */,
+				93142E4A1D7C357A00CAC387 /* AssignPersonFooter.xib */,
 				93142E301D783DCE00CAC387 /* TodoSectionFooter.xib */,
 				938FDBD31D64729200B2D070 /* Main.storyboard */,
 				938FDBD91D64729200B2D070 /* Assets.xcassets */,
@@ -319,6 +330,7 @@
 				93142E251D7478C700CAC387 /* TodoListSectionTextField.swift */,
 				93142E361D785DE300CAC387 /* AssignTodoUndelineButton.swift */,
 				93142E381D785E8400CAC387 /* DateUnderlineButton.swift */,
+				93142E461D7C316600CAC387 /* ButtonWithIndexPath.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -357,10 +369,13 @@
 			children = (
 				938FDC121D65A5EF00B2D070 /* TodoViewController.swift */,
 				93142E401D79640300CAC387 /* SelectTodoDateViewController.swift */,
+				93142E421D7C272500CAC387 /* AssignTodoViewController.swift */,
 				93142E271D747CBD00CAC387 /* TodoTableViewCell.swift */,
 				93142E321D783E0C00CAC387 /* TodoTableSectionFooter.swift */,
 				93142E3A1D78663B00CAC387 /* AddTodoTitleTextField.swift */,
 				93142E3E1D78772800CAC387 /* TodoNameTextField.swift */,
+				93142E441D7C27E300CAC387 /* PersonTableViewCell.swift */,
+				93142E4E1D7C378400CAC387 /* AssignPersonForTodoFooter.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -519,6 +534,7 @@
 				93142E221D74641500CAC387 /* todoResponse.json in Resources */,
 				938FDBEE1D64809B00B2D070 /* exljbris - MuseoSansRounded-100.otf in Resources */,
 				938FDBDA1D64729200B2D070 /* Assets.xcassets in Resources */,
+				93142E4B1D7C357A00CAC387 /* AssignPersonFooter.xib in Resources */,
 				938FDBD51D64729200B2D070 /* Main.storyboard in Resources */,
 				938FDBF11D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf in Resources */,
 				93142E311D783DCE00CAC387 /* TodoSectionFooter.xib in Resources */,
@@ -603,6 +619,8 @@
 				93142E281D747CBD00CAC387 /* TodoTableViewCell.swift in Sources */,
 				938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */,
 				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
+				93142E4F1D7C378400CAC387 /* AssignPersonForTodoFooter.swift in Sources */,
+				93142E471D7C316600CAC387 /* ButtonWithIndexPath.swift in Sources */,
 				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
 				93142E201D745C0800CAC387 /* Person.swift in Sources */,
 				93142E2B1D76EB0600CAC387 /* BaseAuthNavigationController.swift in Sources */,
@@ -615,12 +633,14 @@
 				938FDC231D65E10200B2D070 /* AccountViewController.swift in Sources */,
 				938FDC0C1D64AD1100B2D070 /* SignUpViewController.swift in Sources */,
 				93142E3B1D78663B00CAC387 /* AddTodoTitleTextField.swift in Sources */,
+				93142E431D7C272600CAC387 /* AssignTodoViewController.swift in Sources */,
 				939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */,
 				93142E1E1D745BC200CAC387 /* Todo.swift in Sources */,
 				93142E331D783E0C00CAC387 /* TodoTableSectionFooter.swift in Sources */,
 				938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */,
 				938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */,
 				938FDC341D6C401C00B2D070 /* LoginViewController.swift in Sources */,
+				93142E451D7C27E300CAC387 /* PersonTableViewCell.swift in Sources */,
 				938FDC391D6C837A00B2D070 /* SuggestionsViewController.swift in Sources */,
 				93142E391D785E8400CAC387 /* DateUnderlineButton.swift in Sources */,
 				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,

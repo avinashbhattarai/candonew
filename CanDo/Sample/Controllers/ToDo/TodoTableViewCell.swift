@@ -10,10 +10,10 @@ import UIKit
 
 class TodoTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var dateButton: SelectSuggestionButton!
-    @IBOutlet weak var assignedPersonButton: UIButton!
+    @IBOutlet weak var dateButton: ButtonWithIndexPath!
+    @IBOutlet weak var assignedPersonButton: ButtonWithIndexPath!
     @IBOutlet weak var titleTextField: TodoNameTextField!
-    @IBOutlet weak var selectedButton: SelectSuggestionButton!
+    @IBOutlet weak var selectedButton: ButtonWithIndexPath!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectedButton.backgroundColor = UIColor.clearColor()
