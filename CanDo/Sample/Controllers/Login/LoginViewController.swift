@@ -30,6 +30,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         
+        self.signUpButton.setUnderlineTitle("Not yet on Can Do?")
+        self.cancelButton.setUnderlineTitle("Cancel")
+        
+        
         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
         self.hideKeyboardWhenTappedAround()
         self.emailTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
@@ -38,11 +42,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.emailTextField.delegate = self
         self.passwordTextField.delegate = self
         self.cancelButton.hidden = true
-        self.ansewerLabel.alpha = 0;
         self.passwordTextField.alpha = 0;
         self.resetPasswordContainer.hidden = true
         self.successContainer.hidden = true
-        fadeViewInThenOut(self.ansewerLabel, delay: 0.5)
+        fadeViewInThenOut(self.ansewerLabel, delay: 1.0)
 
         // Do any additional setup after loading the view.
     }
@@ -432,7 +435,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Fade out the view after a delay
         
         UIView.animateWithDuration(animationDuration, delay: delay, options: .CurveEaseInOut, animations: { () -> Void in
-            view.alpha = 1
+            view.alpha = 0
             },
                                    completion: nil)
         

@@ -36,7 +36,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         
        
-        
+        self.loginButton.setUnderlineTitle("Already on Can Do?")
+        self.cancelButton.setUnderlineTitle("Cancel")
         
       self.emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
          self.firstNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
@@ -45,9 +46,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
       self.lastNameTextField.delegate = self
         self.firstNameTextField.delegate = self
         self.cancelButton.hidden = true
-        self.answerLabel.alpha = 0;
         self.firstNameTextField.alpha = 0;
-     fadeViewInThenOut(self.answerLabel, delay: 0.5)
+    
         
 
     }
@@ -68,7 +68,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         
-        
+        self.answerLabel.alpha = 1.0
+         fadeViewInThenOut(self.answerLabel, delay: 1.0)
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
@@ -434,7 +435,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
       // Fade out the view after a delay
             
         UIView.animateWithDuration(animationDuration, delay: delay, options: .CurveEaseInOut, animations: { () -> Void in
-                view.alpha = 1
+                view.alpha = 0
                 },
                                        completion: nil)
         

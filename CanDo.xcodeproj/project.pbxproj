@@ -29,6 +29,7 @@
 		93142E471D7C316600CAC387 /* ButtonWithIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E461D7C316600CAC387 /* ButtonWithIndexPath.swift */; };
 		93142E4B1D7C357A00CAC387 /* AssignPersonFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93142E4A1D7C357A00CAC387 /* AssignPersonFooter.xib */; };
 		93142E4F1D7C378400CAC387 /* AssignPersonForTodoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E4E1D7C378400CAC387 /* AssignPersonForTodoFooter.swift */; };
+		93142E511D7C561800CAC387 /* UIButton+UnderlineText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93142E501D7C561800CAC387 /* UIButton+UnderlineText.swift */; };
 		938FDBC41D64729200B2D070 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBC31D64729200B2D070 /* AppDelegate.swift */; };
 		938FDBD01D64729200B2D070 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 938FDBCF1D64729200B2D070 /* Views */; };
 		938FDBD21D64729200B2D070 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938FDBD11D64729200B2D070 /* ViewController.swift */; };
@@ -101,6 +102,7 @@
 		93142E461D7C316600CAC387 /* ButtonWithIndexPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonWithIndexPath.swift; path = Views/ButtonWithIndexPath.swift; sourceTree = "<group>"; };
 		93142E4A1D7C357A00CAC387 /* AssignPersonFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssignPersonFooter.xib; sourceTree = "<group>"; };
 		93142E4E1D7C378400CAC387 /* AssignPersonForTodoFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignPersonForTodoFooter.swift; sourceTree = "<group>"; };
+		93142E501D7C561800CAC387 /* UIButton+UnderlineText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+UnderlineText.swift"; sourceTree = "<group>"; };
 		938FDBC01D64729200B2D070 /* CanDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		938FDBC31D64729200B2D070 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		938FDBD11D64729200B2D070 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */,
 				939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */,
 				93142E2C1D76EB3C00CAC387 /* UINavigationController+Completion.swift */,
+				93142E501D7C561800CAC387 /* UIButton+UnderlineText.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				93142E451D7C27E300CAC387 /* PersonTableViewCell.swift in Sources */,
 				938FDC391D6C837A00B2D070 /* SuggestionsViewController.swift in Sources */,
 				93142E391D785E8400CAC387 /* DateUnderlineButton.swift in Sources */,
+				93142E511D7C561800CAC387 /* UIButton+UnderlineText.swift in Sources */,
 				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
