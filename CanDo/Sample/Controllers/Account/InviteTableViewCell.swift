@@ -1,17 +1,18 @@
 //
-//  AllItemsSelectedCell.swift
+//  InviteTableViewCell.swift
 //  CanDo
 //
-//  Created by Svyat Zubyak MacBook on 23.08.16.
+//  Created by Svyat Zubyak MacBook on 05.09.16.
 //  Copyright © 2016 Svyat Zubyak MacBook. All rights reserved.
 //
 
 import UIKit
 
-class AllItemsSelectedCell: UITableViewCell {
+class InviteTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var allItemsSelectedButton: SelectSuggestionButton!
-    
+    @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var avatar: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

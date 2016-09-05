@@ -326,7 +326,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
            
         }else{
             button.backgroundColor =  UIColor(red: 44/255.0, green: 89/255.0, blue: 134/255.0, alpha: 1.0)
-            button.setTitle("Sign up", forState: .Normal)
+            button.setTitle("Sign Up", forState: .Normal)
             activityIndicatorView?.stopAnimation()
             button.contentHorizontalAlignment = .Center
             activityIndicatorView?.removeFromSuperview()

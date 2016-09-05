@@ -291,7 +291,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 print(error.description)
                 SVProgressHUD.showErrorWithStatus("\(error.description)")
-                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                 
             }
         }
@@ -328,7 +328,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         
          if((facebookId) == nil){
-            configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+            configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
          }else{
             SVProgressHUD.show()
         }
@@ -349,7 +349,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                     else {
                         
-                        self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                        self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                         SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
@@ -362,7 +362,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     SVProgressHUD.dismiss()
-                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                     self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
                     
                 }
@@ -373,11 +373,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
-                            self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                            self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                             return;
                     }
                     SVProgressHUD.showErrorWithStatus("\(message)")
-                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                    self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                     
                     
                     
@@ -390,7 +390,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 print(error.description)
                 SVProgressHUD.showErrorWithStatus("\(error.description)")
-                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log in")
+                self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
                 
             }
         }

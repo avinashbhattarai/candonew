@@ -24,8 +24,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
          self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
         
-        self.helloLabel.alpha = 0;
-        fadeViewInThenOut(self.helloLabel, delay: 0.5)
+      
+        fadeViewInThenOut(self.helloLabel, delay: 1.0)
         
         self.helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
         
@@ -62,7 +62,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         // Fade out the view after a delay
         
         UIView.animateWithDuration(animationDuration, delay: delay, options: .CurveEaseInOut, animations: { () -> Void in
-            view.alpha = 1
+            view.alpha = 0
             },
                                    completion: nil)
         

@@ -44,6 +44,9 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         self.suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         
+        self.suggestionsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
+        
+        
         var items = [SuggestionsItem]()
         for _ in 0...4 {
             let item = SuggestionsItem(name: "Apple")
@@ -72,7 +75,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return (sections[section].collapsed!) ? 0 : sections[section].items.count+1
+       return (sections[section].collapsed!) ? 0 : sections[section].items.count
     }
     
     
@@ -81,6 +84,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
      func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableCellWithIdentifier("header") as! CollapsibleTableViewHeader
         header.toggleButton.tag = section
+        header.backgroundColor = UIColor.whiteColor()
         header.titleLabel.text = sections[section].name
         header.toggleButton.rotate(sections[section].collapsed! ? CGFloat(M_PI) : 0.0)
         header.toggleButton.addTarget(self, action: #selector(SuggestionsViewController.toggleCollapse), forControlEvents: .TouchUpInside)
@@ -93,7 +97,6 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if sections[indexPath.section].items.count > indexPath.row {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! SuggestionsItemCell!
             let item = sections[indexPath.section].items[indexPath.row] as! SuggestionsItem
             cell.nameLabel?.text = item.name
@@ -112,38 +115,18 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
             cell.selectionStyle = UITableViewCellSelectionStyle.None
              return cell
 
-        }else{
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("allItems") as! AllItemsSelectedCell!
-             let section = sections[indexPath.section] 
-            
-            if section.addAllSelected! {
-                cell.allItemsSelectedButton .setTitle("Items added!", forState: .Normal)
-                cell.allItemsSelectedButton.enabled = false
-            }else{
-                cell.allItemsSelectedButton .setTitle("Add selected items", forState: .Normal)
-                cell.allItemsSelectedButton.enabled = true
-            }
-            
-            cell.allItemsSelectedButton.indexPath = indexPath
-            cell.allItemsSelectedButton.addTarget(self, action: #selector(SuggestionsViewController.addSelectedItemsTapped(_:)), forControlEvents: .TouchUpInside)
-             return cell
-        }
-        
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath)
     }
     
-    func addSelectedItemsTapped(button:SelectSuggestionButton)  {
-        print(button.indexPath)
-        let section = sections[button.indexPath!.section]
-        section.addAllSelected = true
-        self.suggestionsTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: (button.indexPath?.row)!, inSection: (button.indexPath?.section)!)], withRowAnimation: .Automatic)
-
+   
+    @IBAction func allSelectedButtonTapped(sender: AnyObject) {
+        
+        self.navigationController?.popViewControllerAnimated(true)
     }
+    
     
     func selectSuggestionsItem(button:SelectSuggestionButton) {
         print(button.indexPath)
@@ -164,6 +147,13 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         
         // Reload section
         self.suggestionsTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+        
+        if sections[section].collapsed == false
+        {
+            let lastRow: Int = self.suggestionsTableView.numberOfRowsInSection(section)-1
+            self.suggestionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+        }
+       
     }
 
 

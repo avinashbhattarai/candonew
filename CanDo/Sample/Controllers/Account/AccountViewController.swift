@@ -10,6 +10,36 @@ import UIKit
 
 class AccountViewController: UIViewController {
 
+    @IBOutlet weak var TeamView: UIView!
+    @IBOutlet weak var InvitesView: UIView!
+  
+  lazy  var teamViewController: TeamViewController = {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        
+        // Instantiate View Controller
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("TeamViewController") as! TeamViewController
+        
+        // Add View Controller as Child View Controller
+        self.addViewControllerAsChildViewController(viewController)
+        
+        return viewController
+    }()
+    
+ lazy   var sessionsViewController: InvitesViewController = {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        
+        // Instantiate View Controller
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("InvitesViewController") as! InvitesViewController
+        
+        // Add View Controller as Child View Controller
+        self.addViewControllerAsChildViewController(viewController)
+        
+        return viewController
+    }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,37 +50,41 @@ class AccountViewController: UIViewController {
         backButton.frame = CGRectMake(0, 0, 11, 16)
         backButton.addTarget(self, action: #selector(AccountViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
         self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
-       
-
-    }
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-    }
-
-    @IBAction func logoutButtonTapped(sender: AnyObject) {
         
-        cleanUserDefaults()
         
-        self.performSegueWithIdentifier("unwindToSignUpViewController", sender: self)
+      updateContainerViews(true, showTeam: false)
         
         
         
     }
     
-    func cleanUserDefaults() {
+    private func addViewControllerAsChildViewController(viewController: UIViewController) {
+        // Add Child View Controller
+        addChildViewController(viewController)
         
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserEmail)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserFirstName)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserId)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserLastName)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserSecretCode)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserToken)
+        // Add Child View as Subview
+        view.addSubview(viewController.view)
         
-        Helper.UserDefaults.kStandardUserDefaults.synchronize()
+        // Configure Child View
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
+        // Notify Child View Controller
+        viewController.didMoveToParentViewController(self)
     }
 
+    func backButtonTapped(sender: AnyObject) {
+        let nc = (self.tabBarController?.navigationController)! as UINavigationController
+        nc.popViewControllerAnimated(true)
+    }
+
+    func updateContainerViews(showInvites:Bool, showTeam:Bool)
+    {
+        self.InvitesView.hidden = !showInvites
+        self.TeamView.hidden = !showTeam
+
+    }
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

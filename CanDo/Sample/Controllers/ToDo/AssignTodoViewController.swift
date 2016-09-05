@@ -43,12 +43,12 @@ class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableView
             self.todoTitleLabel.text = currentTodo?.name
         }
         
-        let nib = UINib(nibName: "AssignPersonFooter", bundle: nil)
-        self.personsTableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "AssignPersonFooter")
-
+        
 
         self.personsTableView.delegate = self;
         self.personsTableView.dataSource = self;
+        
+         self.personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
         // Do any additional setup after loading the view.
     }
@@ -74,22 +74,8 @@ class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80
     }
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 94
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
-        // Dequeue with the reuse identifier
-        let cell = self.personsTableView.dequeueReusableHeaderFooterViewWithIdentifier("AssignPersonFooter")
-        let footer = cell as! AssignPersonForTodoFooter
-        footer.assignTodoButton.addTarget(self, action:#selector(AssignTodoViewController.assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        return footer
-        
-    }
+  
 
-
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let person : Person = persons[indexPath.row]
@@ -120,8 +106,9 @@ class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableView
 
 
     
-    func assignTodoButtonTapped(sender: AnyObject) {
-        
+  
+    
+    @IBAction func assignTodoButtonTapped(sender: AnyObject) {
         for person:Person in persons{
             if person.selected! {
                 currentTodo?.assignedPerson = person
@@ -129,8 +116,10 @@ class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableView
             }
             
         }
-          self.navigationController!.popViewControllerAnimated(true)
-    }
+        self.navigationController!.popViewControllerAnimated(true)
+     }
+    
+    
     func selectedButtonTapped(sender: ButtonWithIndexPath) {
         
         
