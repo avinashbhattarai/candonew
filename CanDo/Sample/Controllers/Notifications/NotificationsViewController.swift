@@ -9,14 +9,21 @@
 import UIKit
 import ImagePicker
 //import Lightbox
+import PullToRefresh
 
-class NotificationsViewController: UIViewController, ImagePickerDelegate {
+class NotificationsViewController: UIViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var notificationTableView: UITableView!
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var addPhotoButton: AddPhotoButton!
+    @IBOutlet weak var selectedImageButton: UIButton!
+    
+    var dateFormatter : NSDateFormatter?
+    var selectedImage: UIImage?
     
     var isHeaderOpened:Bool = false
+    var notifications = [Notification]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +41,67 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
         postTextView.layer.cornerRadius = 5
         postTextView.layer.borderWidth = 1
         postTextView.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+    
+        selectedImageButton.layer.borderWidth = 1
+        selectedImageButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+        selectedImageButton.clipsToBounds = true
+
+        self.notificationTableView.delegate = self
+        self.notificationTableView.dataSource = self
+        
+        dateFormatter = NSDateFormatter()
+        dateFormatter?.dateStyle = .LongStyle
+        dateFormatter?.timeStyle = .ShortStyle
+        let refresher = PullToRefresh()
+        self.notificationTableView.addPullToRefresh(refresher, action: {
+            // action to be performed (pull data from some source)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+        })
+
 
         
-
+        self.notificationTableView.estimatedRowHeight = 80
+        self.notificationTableView.rowHeight = UITableViewAutomaticDimension
+        self.notificationTableView.tableFooterView = UIView()
+        self.notificationTableView.setNeedsLayout()
+        self.notificationTableView.layoutIfNeeded()
     }
+    deinit {
+        self.notificationTableView.removePullToRefresh(self.notificationTableView.topPullToRefresh!)
+    }
+
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return notifications.count
+    }
+    
+   // func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+      //  return 370
+   // }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let notification : Notification = notifications[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! NotificationTableViewCell
+        
+       cell.nameLabel.text = String(format: "%@ %@", notification.firstName, notification.lastName)
+       cell.contentLabel.text = notification.text
+       cell.dateLabel.text = dateFormatter?.stringFromDate(notification.date)
+        if (notification.image != nil){
+       cell.setPostedImage(notification.image)
+        }else{
+           cell.setPostedImage(nil)
+        }
+        return cell
+    }
+
+    
+    
+    
     func backButtonTapped(sender: AnyObject) {
         let nc = (self.tabBarController?.navigationController)! as UINavigationController
         nc.popViewControllerAnimated(true)
@@ -50,12 +114,64 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
     }
     
     @IBAction func postButtonTapped(sender: AnyObject) {
+        
+        
+        let newNotification :Notification = Notification(text: postTextView.text, firstName: Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName) as? String, lastName: Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserLastName) as? String, date: NSDate(), image: selectedImage)
+        notifications.insert(newNotification, atIndex: 0)
+        self.notificationTableView.reloadData()
+        
+        
+        self.postTextView.text = ""
+        self.selectedImageButton.hidden = true
+        self.addPhotoButton.hidden = false
+        self.selectedImage = nil
+        
+       // postUpdateButtonTapped(UIButton())
+        
+        
     }
+    @IBAction func selectedButtonTapped(sender: AnyObject) {
+        
+        let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .ActionSheet)
+        
+        // 2
+        let deleteAction = UIAlertAction(title: "Choose new photo", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+           self.addPhotoTapped(UIButton())
+        })
+        let saveAction = UIAlertAction(title: "Remove selected photo", style: .Destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+           
+            self.selectedImageButton.hidden = true
+            self.addPhotoButton.hidden = false
+            self.selectedImage = nil
+            
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+           
+        })
+        
+        
+        // 4
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(saveAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+        
+    }
+    
    
     @IBAction func addPhotoTapped(sender: AnyObject) {
         
         let imagePicker = ImagePickerController()
         imagePicker.delegate = self
+        imagePicker.imageLimit = 1
         
         presentViewController(imagePicker, animated: true, completion: nil)
 
@@ -108,6 +224,11 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate {
     func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
         print(images)
+        selectedImage = images[0]
+        self.selectedImageButton.setImage(images[0], forState: .Normal)
+        self.selectedImageButton.hidden = false
+        self.addPhotoButton.hidden = true
+       
     }
 
 

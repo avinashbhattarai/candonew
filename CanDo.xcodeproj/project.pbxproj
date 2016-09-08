@@ -82,6 +82,8 @@
 		93F163181D7ED84E00100D90 /* String+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F163171D7ED84E00100D90 /* String+Base64.swift */; };
 		93F1631A1D7EF79C00100D90 /* Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F163191D7EF79C00100D90 /* Invite.swift */; };
 		93F1631C1D7EFCB100100D90 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631B1D7EFCB100100D90 /* Member.swift */; };
+		93F1631E1D8193F100100D90 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631D1D8193F100100D90 /* Notification.swift */; };
+		93F163201D81BFCA00100D90 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +164,8 @@
 		93F163171D7ED84E00100D90 /* String+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Base64.swift"; sourceTree = "<group>"; };
 		93F163191D7EF79C00100D90 /* Invite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invite.swift; sourceTree = "<group>"; };
 		93F1631B1D7EFCB100100D90 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		93F1631D1D8193F100100D90 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -328,6 +332,7 @@
 				93142E1F1D745C0800CAC387 /* Person.swift */,
 				93F163191D7EF79C00100D90 /* Invite.swift */,
 				93F1631B1D7EFCB100100D90 /* Member.swift */,
+				93F1631D1D8193F100100D90 /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC201D65E0F600B2D070 /* NotificationsViewController.swift */,
+				93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -665,6 +671,7 @@
 				93142E391D785E8400CAC387 /* DateUnderlineButton.swift in Sources */,
 				93142E511D7C561800CAC387 /* UIButton+UnderlineText.swift in Sources */,
 				938FDC0E1D64AD4A00B2D070 /* DashboardViewController.swift in Sources */,
+				93F163201D81BFCA00100D90 /* NotificationTableViewCell.swift in Sources */,
 				93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
@@ -679,6 +686,7 @@
 				938FDC101D6592AD00B2D070 /* DashboardTableViewCell.swift in Sources */,
 				93142E371D785DE300CAC387 /* AssignTodoUndelineButton.swift in Sources */,
 				938FDC2E1D674E3300B2D070 /* CodeViewController.swift in Sources */,
+				93F1631E1D8193F100100D90 /* Notification.swift in Sources */,
 				93142E411D79640300CAC387 /* SelectTodoDateViewController.swift in Sources */,
 				93142E261D7478C700CAC387 /* TodoListSectionTextField.swift in Sources */,
 				938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */,
@@ -815,7 +823,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43a5c16d-281a-486f-be70-0bae84b94b46";
+				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -840,7 +848,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43a5c16d-281a-486f-be70-0bae84b94b46";
+				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
