@@ -218,6 +218,7 @@ class AccountViewController: UIViewController {
     func backButtonTapped(sender: AnyObject) {
         let nc = (self.tabBarController?.navigationController)! as UINavigationController
         nc.popViewControllerAnimated(true)
+        
     }
 
     func updateContainerViews(showInvites:Bool, showTeam:Bool)
