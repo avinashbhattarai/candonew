@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Moya
+import SVProgressHUD
+import PullToRefresh
 
 class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var invitesTableView: UITableView!
     
-     var invites = [String]()
+     var invites = [Invite]()
     
     @IBOutlet weak var startTeamView: UIView!
     
@@ -23,16 +26,17 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.invitesTableView.dataSource = self;
         self.invitesTableView.tableFooterView = UIView()
         
-        for index in 1...3{
-           // invites.append(String(format: "Person %d",index))
-        }
-        
-        if invites.count == 0 {
-            self.startTeamView.hidden = false
-        }
-        // Do any additional setup after loading the view.
+        let refresher = PullToRefresh()
+        self.invitesTableView.addPullToRefresh(refresher, action: {
+            // action to be performed (pull data from some source)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+        })
+      
+               // Do any additional setup after loading the view.
     }
-
+    deinit {
+        self.invitesTableView.removePullToRefresh(self.invitesTableView.topPullToRefresh!)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -51,27 +55,83 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let inviteName : String = invites[indexPath.row]
+         let invite : Invite = invites[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! InviteTableViewCell
         
         
-        cell.nameLabel.text = inviteName
+        cell.nameLabel.text = String(format: "%@ %@", invite.ownerFirstName, invite.ownerLastName)
         cell.acceptButton.tag = indexPath.row
         cell.acceptButton.addTarget(self, action: #selector(self.acceptButtonTapped(_:)), forControlEvents: .TouchUpInside)
         
         return cell
     }
+    
+    func reloadInvitesTableView() {
+        if invites.count == 0 {
+            self.startTeamView.hidden = false
+        }
+        self.invitesTableView.reloadData()
+           self.invitesTableView.endRefreshing(at: .Top)
+
+    }
+    
+    
+    
+    
     @IBAction func startTeamTapped(sender: AnyObject) {
         
-       self.hideInvitesView()
+        
+        SVProgressHUD.show()
+        provider.request(.CreateTeam()) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
+                        else {
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    self.hideInvitesView()
+                    
+                    }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+       
     }
 
     func acceptButtonTapped(sender: UIButton){
         print("accept tapped \(sender.tag)")
+         let invite : Invite = invites[sender.tag]
         if invites.count == 1 {
-        
-         self.hideInvitesView()
+    
+        self.runAcceptTeamRequest(invite.teamId)
             
         }else{
             
@@ -79,7 +139,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
                 print("OK")
                 
-            self.hideInvitesView()
+            self.runAcceptTeamRequest(invite.teamId)
             
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
@@ -90,9 +150,59 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
     
+    func runAcceptTeamRequest(teamId:Int){
+        
+        print("team_id \(teamId)")
+        
+        SVProgressHUD.show()
+        provider.request(.AcceptInvite(teamId: teamId)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
+                        else {
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    self.hideInvitesView()
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+
+    }
+    
     func hideInvitesView() {
+        
         if  let parentViewController: AccountViewController = self.parentViewController as? AccountViewController{
-            parentViewController.updateContainerViews(false,showTeam:true)
+            parentViewController.runTeamInfoRequest()
         }
 
     }

@@ -22,6 +22,8 @@ struct Helper {
         static let kToSetNewPasswordViewController = "toSetNewPasswordViewController"
         static let kToSelectTodoDateViewController = "toSelectTodoDateViewController"
         static let kToAssignTodoViewController = "toAssignTodoViewController"
+        static let kToAccountSettingsViewController = "toAccountSettingsViewController"
+        
         
       }
     

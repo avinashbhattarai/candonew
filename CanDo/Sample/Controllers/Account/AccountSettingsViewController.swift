@@ -8,11 +8,19 @@
 
 import UIKit
 import ImagePicker
+import Moya
+import SVProgressHUD
+
 class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
 
   
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var avatarButton: UIButton!
+    @IBOutlet weak var leaveTeamButton: UIButton!
+    
+    var iamOwner : Bool = false
+    var iamInTeam : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +33,13 @@ class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
         self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
          self.avatarButton.layer.cornerRadius = 5
         self.avatarButton.clipsToBounds = true
+        
+        if iamInTeam {
+            self.leaveTeamButton.hidden = false
+        }else{
+            self.leaveTeamButton.hidden = true
+        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -33,15 +48,114 @@ class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
         cleanUserDefaults()
         
         self.performSegueWithIdentifier("unwindToSignUpViewController", sender: self)
+    }
+    
+    func runDeleteTeamRequest() {
         
+        SVProgressHUD.show()
+        provider.request(.DeleteTeam()) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
+                        else {
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    print(json)
+                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                }
+                catch {
+                         guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+
+    }
+    
+    func runLeaveTeamRequest() {
         
-        
+        SVProgressHUD.show()
+        provider.request(.LeaveTeam()) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
+                        else {
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    print(json)
+                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+
     }
     
     @IBAction func leaveTemaTapped(sender: AnyObject) {
         
         
-    }
+        if iamOwner {
+            runDeleteTeamRequest()
+        }else{
+            runLeaveTeamRequest()
+        }
+     }
+    
+    
     @IBAction func avatarButtonTapped(sender: AnyObject) {
         let imagePicker = ImagePickerController()
         imagePicker.imageLimit = 1

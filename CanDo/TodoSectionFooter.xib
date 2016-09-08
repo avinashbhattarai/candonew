@@ -23,11 +23,11 @@
             <subviews>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YRh-Ba-UgC">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vij-8d-YEf" customClass="AddPhotoButton" customModule="CanDo" customModuleProvider="target">
                     <rect key="frame" x="20" y="0.0" width="560" height="90"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="90" id="5Om-fv-x9t"/>
                     </constraints>
@@ -49,15 +49,15 @@
                             <color key="tintColor" red="0.72549019607843135" green="0.83137254901960778" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" image="iconMenuHelpT"/>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="To do title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CLs-JY-21H" customClass="AddTodoTitleTextField" customModule="CanDo" customModuleProvider="target">
-                            <rect key="frame" x="74" y="15" width="444" height="24"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="To do title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CLs-JY-21H" customClass="AddTodoTitleTextField" customModule="CanDo" customModuleProvider="target">
+                            <rect key="frame" x="74" y="15" width="451" height="24"/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYJ-qu-YjY" customClass="DateUnderlineButton" customModule="CanDo" customModuleProvider="target">
-                            <rect key="frame" x="498" y="15" width="82" height="24"/>
+                            <rect key="frame" x="498" y="16" width="82" height="24"/>
                             <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
                             <state key="normal" title="Date" image="underlineHelpAnytime">
                                 <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,22 +77,24 @@
                             </constraints>
                         </imageView>
                     </subviews>
+                    <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="Dfr-Xp-loQ"/>
                         <constraint firstAttribute="height" constant="90" id="DiA-ZR-Qcu"/>
+                        <constraint firstAttribute="trailing" secondItem="CLs-JY-21H" secondAttribute="trailing" constant="75" id="Ljm-Bd-Kx2"/>
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="top" secondItem="CLs-JY-21H" secondAttribute="bottom" constant="1" id="M0x-xr-P1o"/>
                         <constraint firstAttribute="trailing" secondItem="nYJ-qu-YjY" secondAttribute="trailing" constant="20" id="ah0-xs-nfm"/>
                         <constraint firstItem="BQS-yC-wst" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="avg-QR-pcu"/>
                         <constraint firstItem="DcA-cC-JUC" firstAttribute="top" secondItem="5dH-LO-gj3" secondAttribute="top" constant="20" id="cje-Yu-RrH"/>
                         <constraint firstItem="DcA-cC-JUC" firstAttribute="leading" secondItem="5dH-LO-gj3" secondAttribute="leading" constant="20" id="f4O-3a-k86"/>
-                        <constraint firstItem="nYJ-qu-YjY" firstAttribute="top" secondItem="5dH-LO-gj3" secondAttribute="top" constant="15" id="iel-Dy-DRR"/>
+                        <constraint firstItem="nYJ-qu-YjY" firstAttribute="top" secondItem="5dH-LO-gj3" secondAttribute="top" constant="16" id="iel-Dy-DRR"/>
                         <constraint firstItem="BQS-yC-wst" firstAttribute="top" secondItem="CLs-JY-21H" secondAttribute="bottom" constant="7" id="kR1-R7-tfK"/>
                         <constraint firstItem="CLs-JY-21H" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="pM3-Lv-OFw"/>
                         <constraint firstItem="CLs-JY-21H" firstAttribute="top" secondItem="5dH-LO-gj3" secondAttribute="top" constant="15" id="r56-X4-Or5"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.98039215686274506" green="1" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Vij-8d-YEf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6vm-BU-Aeu"/>
                 <constraint firstItem="YRh-Ba-UgC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Cib-zn-RoB"/>

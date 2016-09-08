@@ -18,12 +18,28 @@ public enum NetworkingService {
     case ResetPasswordForUser(password: String, code: Int, email: String)
     case LoginUser(password: String?, email: String?, facebookId: String?)
     case ForgotPassword(email: String)
+    
+    case TeamInfo()
+    case CreateTeam()
+    case DeleteTeam()
+    case LeaveTeam()
+    case InviteToTeam(email: String)
+    case AcceptInvite(teamId: Int)
+    case RemoveFromTeam(memberId: Int)
 }
 
 let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingService> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
     let endpoint: Endpoint<NetworkingService> = Endpoint<NetworkingService>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
-    return endpoint //.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
+    
+   if let token: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserToken) as? String
+   {
+     let encodedToken: String = token.toBase64()
+    
+     return endpoint.endpointByAddingHTTPHeaderFields(["Authorization": "Bearer \(token)"])
+   }
+    return endpoint
+    
 }
 private func JSONResponseDataFormatter(data: NSData) -> NSData {
     do {
@@ -57,6 +73,22 @@ extension NetworkingService: TargetType {
             return "/user/login"
         case .ForgotPassword(_):
             return "/user/forgot"
+        
+        case .TeamInfo():
+            return "/team"
+        case .CreateTeam():
+            return "/team"
+        case .DeleteTeam():
+            return "/team"
+        case .LeaveTeam():
+            return "/team/leave"
+        case .InviteToTeam(_):
+            return "/team/member"
+        case .AcceptInvite(_):
+            return "/team/accept"
+        case .RemoveFromTeam(let memberId):
+            return "/team/member/\(memberId)"
+            
         }
     }
     public var method: Moya.Method {
@@ -73,6 +105,20 @@ extension NetworkingService: TargetType {
             return .POST
         case .ForgotPassword:
             return .POST
+        case .TeamInfo:
+            return .GET
+        case .CreateTeam:
+            return .POST
+        case .DeleteTeam:
+            return .DELETE
+        case .InviteToTeam:
+            return .POST
+        case .AcceptInvite:
+            return .POST
+        case .RemoveFromTeam:
+            return .DELETE
+        case .LeaveTeam:
+            return .GET
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -104,7 +150,20 @@ extension NetworkingService: TargetType {
         case .ForgotPassword(let email):
             return ["email": email]
             
-        
+        case .TeamInfo():
+            return nil
+        case .CreateTeam():
+            return nil
+        case .DeleteTeam():
+            return nil
+        case .LeaveTeam():
+            return nil
+        case .InviteToTeam(let email):
+            return ["email": email]
+        case .AcceptInvite(let teamId):
+            return ["team_id": teamId]
+        case .RemoveFromTeam(let memberId):
+            return ["id": memberId]
             
         }
     }
@@ -126,6 +185,23 @@ extension NetworkingService: TargetType {
             return "{\"password\": \"\(password)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
         case .ForgotPassword(let email):
              return "{\"email\": \"\(email)\"}".UTF8EncodedData
+            
+        case .TeamInfo():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .CreateTeam():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .DeleteTeam():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .LeaveTeam():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .InviteToTeam(let email):
+            return "{\"email\": \"\(email)\"}".UTF8EncodedData
+        case .AcceptInvite(let teamId):
+            return "{\"team_id\": \"\(teamId)\"}".UTF8EncodedData
+        case .RemoveFromTeam(let memberId):
+            return "{\"id\": \"\(memberId)\"}".UTF8EncodedData
+
+
         }
     }
     public var multipartBody: [MultipartFormData]? {

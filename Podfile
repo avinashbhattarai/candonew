@@ -15,4 +15,5 @@ pod 'Alamofire', '~> 3.4'
 pod 'ImagePicker'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'PullToRefresher', '~> 1.4.0'
 end

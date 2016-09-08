@@ -34,7 +34,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.tabBarController?.selectedIndex = selectedIndex!
         
-        IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
+       // IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
         
         self.toDoTableView.delegate = self;
         self.toDoTableView.dataSource = self;
@@ -241,7 +241,6 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
 
    func addTodoTapped(sender: UIButton) {
-    
     print(sender.superview)
     sender.hidden = true
     
