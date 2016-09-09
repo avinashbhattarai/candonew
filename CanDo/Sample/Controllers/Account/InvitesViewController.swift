@@ -9,7 +9,7 @@
 import UIKit
 import Moya
 import SVProgressHUD
-import PullToRefresh
+import ESPullToRefresh
 
 class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -26,26 +26,25 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.invitesTableView.dataSource = self;
         self.invitesTableView.tableFooterView = UIView()
         
-        let refresher = PullToRefresh()
-        self.invitesTableView.addPullToRefresh(refresher, action: {
-            // action to be performed (pull data from some source)
+        self.invitesTableView.es_addPullToRefresh {
+            [weak self] in
+            /// Do anything you want...
+            /// ...
             NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
-        })
+            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+            
+            /// Set ignore footer or not
+           //  self?.invitesTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
+        }
       
                // Do any additional setup after loading the view.
     }
-    deinit {
-        if (self.invitesTableView != nil) {
-            self.invitesTableView.removePullToRefresh(self.invitesTableView.topPullToRefresh!)
-        }
-        
-    }
-    override func didReceiveMemoryWarning() {
+    
+        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+       func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
@@ -74,7 +73,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.startTeamView.hidden = false
         }
         self.invitesTableView.reloadData()
-           self.invitesTableView.endRefreshing(at: .Top)
+           self.invitesTableView.es_stopPullToRefresh(completion: true)
 
     }
     

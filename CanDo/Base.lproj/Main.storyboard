@@ -543,15 +543,50 @@ how can we help today?</string>
                     <view key="view" contentMode="scaleToFill" id="pGJ-En-a2E">
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uY3-FE-16V" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                <color key="backgroundColor" red="0.94117647058823528" green="0.98431372549019602" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="9Xe-fv-bEM"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                        <color key="value" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontSizeToFitContentSize" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                        <color key="value" red="0.59215686274509804" green="0.71372549019607845" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                        <color key="value" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleTodayColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                        <color key="value" red="0.17254901960784313" green="0.34901960784313724" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="uY3-FE-16V" secondAttribute="trailing" id="IfW-DK-izK"/>
+                            <constraint firstItem="uY3-FE-16V" firstAttribute="top" secondItem="YwP-Ay-p0U" secondAttribute="bottom" id="Wkv-Qb-iHF"/>
+                            <constraint firstItem="uY3-FE-16V" firstAttribute="leading" secondItem="pGJ-En-a2E" secondAttribute="leading" id="dWy-g8-HpT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="DDW-e1-f48"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="calendarView" destination="uY3-FE-16V" id="vXl-OZ-Nay"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2q-Oz-9lo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3508" y="313"/>
+            <point key="canvasLocation" x="3410" y="204"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="hVJ-BD-CfQ">
@@ -1036,7 +1071,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
@@ -1054,14 +1089,14 @@ how can we help today?</string>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-RU-EDi" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-RU-EDi" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="431" y="43" width="149" height="34"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
                                                     <state key="normal" title="8:30pm Tue, Sep 4">
                                                         <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DX-7o-P9P" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DX-7o-P9P" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="74" y="42" width="72" height="36"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
                                                     <state key="normal" title="Estelle F">
@@ -1442,7 +1477,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -1505,7 +1540,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
@@ -2194,10 +2229,10 @@ receive a password reset email</string>
                                                     <state key="normal" image="iconFb"/>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9RS-A6-BWt">
-                                                    <rect key="frame" x="70" y="90" width="510" height="40"/>
+                                                    <rect key="frame" x="70" y="90" width="512" height="40"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hN5-Gf-vB4">
-                                                            <rect key="frame" x="20" y="0.0" width="470" height="40"/>
+                                                            <rect key="frame" x="20" y="0.0" width="472" height="40"/>
                                                             <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
                                                             <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2227,7 +2262,7 @@ receive a password reset email</string>
                                                 <constraint firstAttribute="bottom" secondItem="OBe-SZ-sRY" secondAttribute="bottom" id="9Mn-Gc-5WF"/>
                                                 <constraint firstItem="Ont-Ay-0F8" firstAttribute="top" secondItem="hi1-lI-0tn" secondAttribute="bottom" constant="20" id="9bq-FI-jcK"/>
                                                 <constraint firstAttribute="trailing" secondItem="OBe-SZ-sRY" secondAttribute="trailing" id="DKi-zc-Eg7"/>
-                                                <constraint firstAttribute="trailing" secondItem="9RS-A6-BWt" secondAttribute="trailing" constant="20" id="DLk-Gb-jUY"/>
+                                                <constraint firstAttribute="trailing" secondItem="9RS-A6-BWt" secondAttribute="trailing" constant="18" id="DLk-Gb-jUY"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="VaW-Pw-UcQ" secondAttribute="trailing" constant="20" id="GQZ-0X-nyD"/>
                                                 <constraint firstAttribute="bottom" secondItem="9RS-A6-BWt" secondAttribute="bottom" constant="20" id="Giv-bw-g1j"/>
                                                 <constraint firstItem="9RS-A6-BWt" firstAttribute="top" secondItem="OBe-SZ-sRY" secondAttribute="bottom" id="NrO-ek-rwd"/>
@@ -2274,8 +2309,8 @@ receive a password reset email</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mc-Ev-3L2">
-                                        <rect key="frame" x="518" y="109" width="62" height="41"/>
-                                        <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="24"/>
+                                        <rect key="frame" x="521" y="110" width="59" height="40"/>
+                                        <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="23"/>
                                         <state key="normal" title="Invite">
                                             <color key="titleColor" red="0.25490196079999999" green="0.81176470590000005" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -2355,9 +2390,40 @@ receive a password reset email</string>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YGA-Ye-S2S">
                                 <rect key="frame" x="0.0" y="71" width="600" height="416"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" hidden="YES" contentMode="scaleToFill" id="yho-MW-D9J">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="416"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDd-gr-ugV">
+                                            <rect key="frame" x="20" y="112" width="560" height="42"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="25"/>
+                                            <state key="normal" title="Start my own team">
+                                                <color key="titleColor" red="0.25490196078431371" green="0.81176470588235294" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="startTeamTapped:" destination="X7G-te-q8B" eventType="touchUpInside" id="drJ-MC-KQN"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Invites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzJ-iE-aI6">
+                                            <rect key="frame" x="0.0" y="70" width="600" height="22"/>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
+                                            <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="pDd-gr-ugV" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" constant="20" id="Huz-Yx-lIo"/>
+                                        <constraint firstItem="RzJ-iE-aI6" firstAttribute="top" secondItem="yho-MW-D9J" secondAttribute="top" constant="70" id="JK7-CS-E8L"/>
+                                        <constraint firstAttribute="trailing" secondItem="RzJ-iE-aI6" secondAttribute="trailing" id="kBm-TS-6xh"/>
+                                        <constraint firstItem="RzJ-iE-aI6" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" id="nAG-aH-FGD"/>
+                                        <constraint firstItem="pDd-gr-ugV" firstAttribute="top" secondItem="RzJ-iE-aI6" secondAttribute="bottom" constant="20" id="sAg-RH-Eck"/>
+                                        <constraint firstAttribute="trailing" secondItem="pDd-gr-ugV" secondAttribute="trailing" constant="20" id="xFY-Ry-OeJ"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="90" id="c7H-v8-mLl" customClass="InviteTableViewCell" customModule="CanDo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="90"/>
+                                        <rect key="frame" x="0.0" y="444" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c7H-v8-mLl" id="Go0-Vp-blO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
@@ -2412,36 +2478,6 @@ receive a password reset email</string>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yho-MW-D9J">
-                                <rect key="frame" x="0.0" y="71" width="600" height="416"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDd-gr-ugV">
-                                        <rect key="frame" x="20" y="112" width="560" height="42"/>
-                                        <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="25"/>
-                                        <state key="normal" title="Start my own team">
-                                            <color key="titleColor" red="0.25490196078431371" green="0.81176470588235294" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="startTeamTapped:" destination="X7G-te-q8B" eventType="touchUpInside" id="drJ-MC-KQN"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Invites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzJ-iE-aI6">
-                                        <rect key="frame" x="0.0" y="70" width="600" height="22"/>
-                                        <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
-                                        <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="pDd-gr-ugV" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" constant="20" id="Huz-Yx-lIo"/>
-                                    <constraint firstItem="RzJ-iE-aI6" firstAttribute="top" secondItem="yho-MW-D9J" secondAttribute="top" constant="70" id="JK7-CS-E8L"/>
-                                    <constraint firstAttribute="trailing" secondItem="RzJ-iE-aI6" secondAttribute="trailing" id="kBm-TS-6xh"/>
-                                    <constraint firstItem="RzJ-iE-aI6" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" id="nAG-aH-FGD"/>
-                                    <constraint firstItem="pDd-gr-ugV" firstAttribute="top" secondItem="RzJ-iE-aI6" secondAttribute="bottom" constant="20" id="sAg-RH-Eck"/>
-                                    <constraint firstAttribute="trailing" secondItem="pDd-gr-ugV" secondAttribute="trailing" constant="20" id="xFY-Ry-OeJ"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZOp-qC-mJJ" userLabel="seperator">
                                 <rect key="frame" x="0.0" y="69" width="600" height="2"/>
                                 <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
@@ -2461,16 +2497,12 @@ receive a password reset email</string>
                         </subviews>
                         <constraints>
                             <constraint firstItem="vU9-EW-x1G" firstAttribute="top" secondItem="oV2-TN-MwN" secondAttribute="top" id="3tj-6r-NZu"/>
-                            <constraint firstAttribute="trailing" secondItem="yho-MW-D9J" secondAttribute="trailing" id="B4Y-vu-7zf"/>
                             <constraint firstAttribute="trailing" secondItem="ZOp-qC-mJJ" secondAttribute="trailing" id="Es3-kh-QKN"/>
-                            <constraint firstAttribute="bottom" secondItem="yho-MW-D9J" secondAttribute="bottom" id="FWQ-sG-Akh"/>
                             <constraint firstAttribute="bottom" secondItem="YGA-Ye-S2S" secondAttribute="bottom" id="Gni-PP-uXg"/>
                             <constraint firstItem="vU9-EW-x1G" firstAttribute="leading" secondItem="oV2-TN-MwN" secondAttribute="leading" id="L09-Fm-yNF"/>
                             <constraint firstAttribute="trailing" secondItem="YGA-Ye-S2S" secondAttribute="trailing" id="QBN-Pc-ZAK"/>
-                            <constraint firstItem="yho-MW-D9J" firstAttribute="leading" secondItem="oV2-TN-MwN" secondAttribute="leading" id="QKN-BB-9xw"/>
                             <constraint firstItem="YGA-Ye-S2S" firstAttribute="top" secondItem="ZOp-qC-mJJ" secondAttribute="bottom" id="WrP-Ib-tcw"/>
                             <constraint firstItem="ZOp-qC-mJJ" firstAttribute="top" secondItem="oV2-TN-MwN" secondAttribute="top" constant="69" id="ajL-5d-0NM"/>
-                            <constraint firstItem="yho-MW-D9J" firstAttribute="top" secondItem="ZOp-qC-mJJ" secondAttribute="bottom" id="egr-O0-hQa"/>
                             <constraint firstItem="ZOp-qC-mJJ" firstAttribute="leading" secondItem="oV2-TN-MwN" secondAttribute="leading" id="fc4-Ms-nei"/>
                             <constraint firstAttribute="trailing" secondItem="vU9-EW-x1G" secondAttribute="trailing" id="gee-FN-Y7f"/>
                             <constraint firstItem="YGA-Ye-S2S" firstAttribute="leading" secondItem="oV2-TN-MwN" secondAttribute="leading" id="jHm-eu-tfg"/>

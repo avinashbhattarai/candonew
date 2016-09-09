@@ -9,7 +9,8 @@
 import UIKit
 import ImagePicker
 //import Lightbox
-import PullToRefresh
+import ESPullToRefresh
+
 
 class NotificationsViewController: UIViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -54,29 +55,30 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate, UITabl
         dateFormatter?.timeStyle = .ShortStyle
         
         
-        let refresher = PullToRefresh()
-        
-        self.notificationTableView.addPullToRefresh(refresher, action: {
-            // action to be performed (pull data from some source)
-            
-        })
-        
         
         self.notificationTableView.estimatedRowHeight = 80
         self.notificationTableView.rowHeight = UITableViewAutomaticDimension
         self.notificationTableView.tableFooterView = UIView()
         self.notificationTableView.setNeedsLayout()
         self.notificationTableView.layoutIfNeeded()
-    }
-    
-    
-    deinit {
-        if (self.notificationTableView != nil) {
-             self.notificationTableView.removePullToRefresh(self.notificationTableView.topPullToRefresh!)
+        
+        
+        self.notificationTableView.es_addPullToRefresh {
+            [weak self] in
+            /// Do anything you want...
+            /// ...
+           
+            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+            
+            /// Set ignore footer or not
+            //self?.notificationTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
         }
-       
+
+        
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    
+        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     

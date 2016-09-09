@@ -9,7 +9,7 @@
 import UIKit
 import Moya
 import SVProgressHUD
-import PullToRefresh
+import ESPullToRefresh
 
 class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var inviteTextField: UITextField!
@@ -27,19 +27,24 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         
-        let refresher = PullToRefresh()
-        self.teamTableView.addPullToRefresh(refresher, action: {
-            // action to be performed (pull data from some source)
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
-        })
-        // Do any additional setup after loading the view.
-    }
-    deinit {
-        if (self.teamTableView != nil) {
-             self.teamTableView.removePullToRefresh(self.teamTableView.topPullToRefresh!)
+        
+        self.teamTableView.es_addPullToRefresh {
+            [weak self] in
+            /// Do anything you want...
+            /// ...
+             NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+            
+            /// Set ignore footer or not
+            // self?.teamTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
         }
        
+        
+       
+        // Do any additional setup after loading the view.
     }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -161,7 +166,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
              self.teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         }
         
-        self.teamTableView.endRefreshing(at: .Top)
+       self.teamTableView.es_stopPullToRefresh(completion: true)
 
     }
     
@@ -189,6 +194,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                     
                     SVProgressHUD.showSuccessWithStatus("User was invited successfully")
+                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
                     self.inviteTextField.text = ""
                     print(json)
                     
