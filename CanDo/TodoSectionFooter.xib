@@ -13,6 +13,9 @@
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
         </mutableArray>
+        <mutableArray key="exljbris - MuseoSansRounded-700.otf">
+            <string>MuseoSansRounded-700</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -76,13 +79,22 @@
                                 <constraint firstAttribute="width" constant="178" id="XqE-4n-BTu"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVK-1l-jfv">
+                            <rect key="frame" x="543" y="46" width="37" height="36"/>
+                            <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="20"/>
+                            <state key="normal" title="Add">
+                                <color key="titleColor" red="0.25490196079999999" green="0.81176470590000005" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="tVK-1l-jfv" secondAttribute="bottom" constant="8" id="0Fs-No-jDj"/>
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="Dfr-Xp-loQ"/>
                         <constraint firstAttribute="height" constant="90" id="DiA-ZR-Qcu"/>
                         <constraint firstAttribute="trailing" secondItem="CLs-JY-21H" secondAttribute="trailing" constant="75" id="Ljm-Bd-Kx2"/>
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="top" secondItem="CLs-JY-21H" secondAttribute="bottom" constant="1" id="M0x-xr-P1o"/>
+                        <constraint firstAttribute="trailing" secondItem="tVK-1l-jfv" secondAttribute="trailing" constant="20" id="M7R-en-hxo"/>
                         <constraint firstAttribute="trailing" secondItem="nYJ-qu-YjY" secondAttribute="trailing" constant="20" id="ah0-xs-nfm"/>
                         <constraint firstItem="BQS-yC-wst" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="avg-QR-pcu"/>
                         <constraint firstItem="DcA-cC-JUC" firstAttribute="top" secondItem="5dH-LO-gj3" secondAttribute="top" constant="20" id="cje-Yu-RrH"/>
@@ -109,6 +121,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="addNewTodoButton" destination="tVK-1l-jfv" id="9ak-Dc-gdD"/>
                 <outlet property="addTodoButton" destination="Vij-8d-YEf" id="rer-px-XGR"/>
                 <outlet property="addTodoView" destination="5dH-LO-gj3" id="VUb-Rg-aQe"/>
                 <outlet property="assignTodoButton" destination="BQS-yC-wst" id="fSt-5y-bae"/>

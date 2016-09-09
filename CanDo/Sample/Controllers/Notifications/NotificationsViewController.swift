@@ -53,14 +53,14 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate, UITabl
         dateFormatter?.dateStyle = .LongStyle
         dateFormatter?.timeStyle = .ShortStyle
         
-        /*
+        
         let refresher = PullToRefresh()
         
         self.notificationTableView.addPullToRefresh(refresher, action: {
             // action to be performed (pull data from some source)
             
         })
-        */
+        
         
         self.notificationTableView.estimatedRowHeight = 80
         self.notificationTableView.rowHeight = UITableViewAutomaticDimension
@@ -69,12 +69,13 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate, UITabl
         self.notificationTableView.layoutIfNeeded()
     }
     
-    /*
-    deinit {
-        self.notificationTableView.removePullToRefresh(self.notificationTableView.topPullToRefresh!)
-    }
-   */
     
+    deinit {
+        if (self.notificationTableView != nil) {
+             self.notificationTableView.removePullToRefresh(self.notificationTableView.topPullToRefresh!)
+        }
+       
+    }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

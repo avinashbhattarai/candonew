@@ -10,6 +10,7 @@ import UIKit
 
 class TodoTableSectionFooter: UITableViewHeaderFooterView {
 
+    @IBOutlet weak var addNewTodoButton: UIButton!
     @IBOutlet weak var addTodoButton: AddPhotoButton!
     @IBOutlet weak var addTodoView: UIView!
     @IBOutlet weak var selectedBtton: UIButton!

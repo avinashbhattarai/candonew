@@ -35,7 +35,10 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                // Do any additional setup after loading the view.
     }
     deinit {
-        self.invitesTableView.removePullToRefresh(self.invitesTableView.topPullToRefresh!)
+        if (self.invitesTableView != nil) {
+            self.invitesTableView.removePullToRefresh(self.invitesTableView.topPullToRefresh!)
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

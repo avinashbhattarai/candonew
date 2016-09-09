@@ -146,10 +146,12 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let footer = cell as! TodoTableSectionFooter
         footer.addTodoButton.tag = section
         footer.dateButton.tag = section
+        footer.addNewTodoButton.tag = section
         footer.titleTextField.tag = section
         footer.titleTextField.delegate = self
         footer.dateButton.addTarget(self, action:#selector(TodoViewController.dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
         footer.assignTodoButton.addTarget(self, action:#selector(TodoViewController.assignNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.addNewTodoButton.addTarget(self, action:#selector(TodoViewController.addNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
         footer.addTodoButton.addTarget(self, action:#selector(TodoViewController.addTodoTapped(_:)), forControlEvents: .TouchUpInside)
         return footer
  
@@ -239,6 +241,26 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.toDoTableView.reloadRowsAtIndexPaths([sender.indexPath!], withRowAnimation: .Automatic)
         
     }
+    
+    
+    func  addNewTodoButtonTapped(sender: UIButton) {
+        
+        if let footer = self.toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter{
+    
+                let section :Int = sender.tag
+                let list = lists[section]
+                let newTodo = Todo(name: footer.titleTextField.text!, list: list)
+                let person = Person(name: footer.assignTodoButton.titleLabel!.text!, avatar: "img")
+                newTodo.date = NSDate()
+                newTodo.assignedPerson = person
+                list.todos?.append(newTodo)
+                self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                
+                let lastRow: Int = self.toDoTableView.numberOfRowsInSection(section)-1
+                self.toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+            }
+    }
+
 
    func addTodoTapped(sender: UIButton) {
     print(sender.superview)
@@ -273,23 +295,6 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        
-         if textField is AddTodoTitleTextField{
-           textField.resignFirstResponder()
-            if textField.hasText() {
-                let section :Int = textField.tag
-                let list = lists[section]
-                let newTodo = Todo(name: textField.text!, list: list)
-                let person = Person(name: "AnyOne", avatar: "img")
-                newTodo.date = NSDate()
-                newTodo.assignedPerson = person
-                list.todos?.append(newTodo)
-                self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
-                
-                let lastRow: Int = self.toDoTableView.numberOfRowsInSection(section)-1
-                self.toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
-              }
-        }
         
         if textField is TodoListSectionTextField {
             if textField.hasText() {

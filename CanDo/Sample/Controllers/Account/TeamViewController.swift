@@ -35,7 +35,10 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Do any additional setup after loading the view.
     }
     deinit {
-        self.teamTableView.removePullToRefresh(self.teamTableView.topPullToRefresh!)
+        if (self.teamTableView != nil) {
+             self.teamTableView.removePullToRefresh(self.teamTableView.topPullToRefresh!)
+        }
+       
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

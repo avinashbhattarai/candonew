@@ -785,7 +785,7 @@ how can we help today?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lot-Z2-ip7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3508" y="1007"/>
+            <point key="canvasLocation" x="3523" y="1131"/>
         </scene>
         <!--Account-->
         <scene sceneID="jZt-yM-e3T">
@@ -1124,7 +1124,7 @@ how can we help today?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2pW-Jl-oSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3466" y="-681"/>
+            <point key="canvasLocation" x="3458" y="-716"/>
         </scene>
         <!--Select Todo Date View Controller-->
         <scene sceneID="AY0-ET-qHd">
@@ -1649,7 +1649,7 @@ how can we help today?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NDQ-MK-L1T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2716" y="-146"/>
+            <point key="canvasLocation" x="2625" y="-297"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fh4-B3-bqu">
@@ -1664,6 +1664,8 @@ how can we help today?</string>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0yH-Vn-fPx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1694,6 +1696,8 @@ how can we help today?</string>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gFd-eQ-4iv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1706,7 +1710,7 @@ how can we help today?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0s-2r-Fkx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2710" y="1356"/>
+            <point key="canvasLocation" x="2984" y="1487"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GeI-jr-kDR">
