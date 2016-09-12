@@ -92,6 +92,11 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.prividerButton.backgroundColor = Helper.Colors.RGBCOLOR(179, green: 183, blue: 194)
             cell.providerDetails.text = member.email
         }
+        if member.status == Helper.AccountStatusKey.kInvited {
+            cell.pendingInviteLabel.hidden = false
+        }else{
+            cell.pendingInviteLabel.hidden = true
+        }
         
         cell.removeFromTeamButton.tag = indexPath.row
         cell.removeFromTeamButton.addTarget(self, action: #selector(self.removeButtonTapped(_:)), forControlEvents: .TouchUpInside)

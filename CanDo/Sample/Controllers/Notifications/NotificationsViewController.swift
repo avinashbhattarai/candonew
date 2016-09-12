@@ -12,7 +12,7 @@ import ImagePicker
 import ESPullToRefresh
 
 
-class NotificationsViewController: UIViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource {
+class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var notificationTableView: UITableView!
@@ -32,11 +32,7 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate, UITabl
         // Do any additional setup after loading the view.
         //test
         
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(NotificationsViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
+    
         
         
         postTextView.layer.cornerRadius = 5
@@ -105,15 +101,6 @@ class NotificationsViewController: UIViewController, ImagePickerDelegate, UITabl
         }
         return cell
     }
-
-    
-    
-    
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-    }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

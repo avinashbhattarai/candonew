@@ -13,8 +13,13 @@
             <string>MuseoSansRounded-100</string>
             <string>MuseoSansRounded-100</string>
             <string>MuseoSansRounded-100</string>
+            <string>MuseoSansRounded-100</string>
+            <string>MuseoSansRounded-100</string>
+            <string>MuseoSansRounded-100</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-300.otf">
+            <string>MuseoSansRounded-300</string>
+            <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
@@ -466,7 +471,7 @@ receive a verification email :)</string>
                         <viewControllerLayoutGuide type="bottom" id="sjD-Zv-a9X"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FZN-pN-ZAd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="1400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoCando" translatesAutoresizingMaskIntoConstraints="NO" id="McW-Va-VKs">
@@ -485,7 +490,7 @@ how can we help today?</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wp1-W2-IYs">
-                                <rect key="frame" x="0.0" y="319" width="600" height="1081"/>
+                                <rect key="frame" x="0.0" y="319" width="600" height="281"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -522,6 +527,8 @@ how can we help today?</string>
                             <constraint firstItem="wp1-W2-IYs" firstAttribute="leading" secondItem="FZN-pN-ZAd" secondAttribute="leading" id="qGc-tH-zLr"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="dashboardTableView" destination="wp1-W2-IYs" id="9Z2-oP-2QY"/>
                         <outlet property="helloLabel" destination="blq-wm-Zx2" id="xrL-iV-wak"/>
@@ -544,44 +551,134 @@ how can we help today?</string>
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uY3-FE-16V" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
-                                <color key="backgroundColor" red="0.94117647058823528" green="0.98431372549019602" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="350" id="9Xe-fv-bEM"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
-                                        <color key="value" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontSizeToFitContentSize" value="NO"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
-                                        <color key="value" red="0.59215686274509804" green="0.71372549019607845" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
-                                        <color key="value" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleTodayColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
-                                        <color key="value" red="0.17254901960784313" green="0.34901960784313724" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QZS-zU-j3r">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="eWo-L6-kSG" customClass="FSCalendar">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUp-lT-Vyo">
+                                            <rect key="frame" x="0.0" y="348" width="600" height="2"/>
+                                            <color key="backgroundColor" red="0.63137254901960782" green="0.85490196078431369" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="FF9-IX-OVn"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.94117647059999998" green="0.98431372549999996" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="350" id="K7i-56-eO0"/>
+                                        <constraint firstAttribute="trailing" secondItem="RUp-lT-Vyo" secondAttribute="trailing" id="LfQ-aY-3Fq"/>
+                                        <constraint firstItem="RUp-lT-Vyo" firstAttribute="leading" secondItem="eWo-L6-kSG" secondAttribute="leading" id="bfU-H6-mI0"/>
+                                        <constraint firstAttribute="bottom" secondItem="RUp-lT-Vyo" secondAttribute="bottom" id="kV6-nT-no2"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                            <color key="value" red="0.31764705879999999" green="0.33333333329999998" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="adjustsFontSizeToFitContentSize" value="NO"/>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                            <color key="value" red="0.59215686270000001" green="0.71372549019999998" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                            <color key="value" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="titleTodayColor">
+                                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                            <color key="value" red="0.17254901959999999" green="0.34901960780000002" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="74" id="hW5-7l-fSL" customClass="CalendarTodoTableViewCell" customModule="CanDo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="378" width="600" height="74"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hW5-7l-fSL" id="YUS-1b-Nqi">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Weekly groceries" placeholder="To do title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nck-qZ-bBk" customClass="TodoNameTextField" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="108" y="8" width="472" height="24"/>
+                                                    <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8hT-US-nkp" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="347" y="36" width="233" height="34"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
+                                                    <state key="normal" title="8:30pm Tue, Sep 4">
+                                                        <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DT-Lp-Qfq" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="3" width="68" height="34"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
+                                                    <state key="normal" title="2 pm">
+                                                        <color key="titleColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-Vc-bJf" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="108" y="35" width="234" height="36"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <state key="normal" title="Estelle F">
+                                                        <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5FW-Ca-Snw">
+                                                    <rect key="frame" x="0.0" y="72" width="600" height="2"/>
+                                                    <color key="backgroundColor" red="0.93725490196078431" green="0.95294117647058818" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="2" id="2ms-ok-Npg"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="8hT-US-nkp" secondAttribute="trailing" constant="20" id="1bf-6e-B2r"/>
+                                                <constraint firstAttribute="bottom" secondItem="5FW-Ca-Snw" secondAttribute="bottom" id="AI8-AO-zod"/>
+                                                <constraint firstItem="8hT-US-nkp" firstAttribute="width" secondItem="gcN-Vc-bJf" secondAttribute="width" priority="250" id="CTK-gv-LuK"/>
+                                                <constraint firstAttribute="trailing" secondItem="nck-qZ-bBk" secondAttribute="trailing" constant="20" id="LNp-Qi-D3b"/>
+                                                <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leadingMargin" constant="100" id="Rxe-UK-u8E"/>
+                                                <constraint firstItem="gcN-Vc-bJf" firstAttribute="top" secondItem="nck-qZ-bBk" secondAttribute="bottom" constant="3" id="SPi-vC-aNT"/>
+                                                <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="5DT-Lp-Qfq" secondAttribute="trailing" constant="20" id="Teo-9o-pmS"/>
+                                                <constraint firstItem="5DT-Lp-Qfq" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leading" constant="20" id="TjV-Av-NAL"/>
+                                                <constraint firstAttribute="trailing" secondItem="5FW-Ca-Snw" secondAttribute="trailing" id="fq8-U1-iTO"/>
+                                                <constraint firstItem="8hT-US-nkp" firstAttribute="top" secondItem="nck-qZ-bBk" secondAttribute="bottom" constant="4" id="hhH-di-9Nb"/>
+                                                <constraint firstItem="8hT-US-nkp" firstAttribute="leading" secondItem="gcN-Vc-bJf" secondAttribute="trailing" constant="5" id="mcj-g4-AJC"/>
+                                                <constraint firstItem="5DT-Lp-Qfq" firstAttribute="top" secondItem="YUS-1b-Nqi" secondAttribute="top" constant="3" id="pok-jd-btb"/>
+                                                <constraint firstItem="5FW-Ca-Snw" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leading" id="qfV-7C-9I2"/>
+                                                <constraint firstItem="gcN-Vc-bJf" firstAttribute="leading" secondItem="nck-qZ-bBk" secondAttribute="leading" id="rtH-vk-C2n"/>
+                                                <constraint firstItem="nck-qZ-bBk" firstAttribute="top" secondItem="YUS-1b-Nqi" secondAttribute="top" constant="8" id="wGE-Zh-bE3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="assignPersonButton" destination="gcN-Vc-bJf" id="2c4-Pg-Is1"/>
+                                            <outlet property="dateButton" destination="8hT-US-nkp" id="8qv-1c-kZ7"/>
+                                            <outlet property="timeButton" destination="5DT-Lp-Qfq" id="cA2-Kw-l5s"/>
+                                            <outlet property="todoName" destination="nck-qZ-bBk" id="dgj-DC-SyH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="uY3-FE-16V" secondAttribute="trailing" id="IfW-DK-izK"/>
-                            <constraint firstItem="uY3-FE-16V" firstAttribute="top" secondItem="YwP-Ay-p0U" secondAttribute="bottom" id="Wkv-Qb-iHF"/>
-                            <constraint firstItem="uY3-FE-16V" firstAttribute="leading" secondItem="pGJ-En-a2E" secondAttribute="leading" id="dWy-g8-HpT"/>
+                            <constraint firstItem="QZS-zU-j3r" firstAttribute="top" secondItem="YwP-Ay-p0U" secondAttribute="bottom" id="5fo-gF-jHA"/>
+                            <constraint firstItem="QZS-zU-j3r" firstAttribute="leading" secondItem="pGJ-En-a2E" secondAttribute="leading" id="MIf-gB-Lpd"/>
+                            <constraint firstAttribute="trailing" secondItem="QZS-zU-j3r" secondAttribute="trailing" id="Px8-UG-jKa"/>
+                            <constraint firstItem="xh4-V7-CcF" firstAttribute="top" secondItem="QZS-zU-j3r" secondAttribute="bottom" id="yO0-ej-S61"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" id="DDW-e1-f48"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
-                        <outlet property="calendarView" destination="uY3-FE-16V" id="vXl-OZ-Nay"/>
+                        <outlet property="calendarView" destination="eWo-L6-kSG" id="JFN-6A-mN8"/>
+                        <outlet property="todoTableView" destination="QZS-zU-j3r" id="jOO-BY-Mrz"/>
+                        <segue destination="eNJ-Xu-JJ3" kind="show" identifier="toSelectTodoDateViewController" id="y5L-Mg-VrH"/>
+                        <segue destination="9K7-IN-DkQ" kind="show" identifier="toAssignTodoViewController" id="yeX-sn-hZu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q2q-Oz-9lo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -831,16 +928,16 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="67n-9I-1tM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Lzm-r9-0mK">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABY-rh-y3d">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ABY-rh-y3d">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <connections>
                                     <segue destination="3PV-Py-fQv" kind="embed" id="1Vr-q1-M7I"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tde-VQ-L36">
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tde-VQ-L36">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <connections>
                                     <segue destination="X7G-te-q8B" kind="embed" id="tiL-G2-Ym4"/>
@@ -863,6 +960,7 @@ how can we help today?</string>
                             <constraint firstItem="Tde-VQ-L36" firstAttribute="leading" secondItem="Lzm-r9-0mK" secondAttribute="leading" id="twD-I2-p77"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Account" id="Gcn-V1-WiZ">
                         <barButtonItem key="rightBarButtonItem" image="iconSettings" id="Ibe-AN-Ruk">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -871,6 +969,7 @@ how can we help today?</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
@@ -891,7 +990,7 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="3qY-4R-HBF"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jad-i1-1dn">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0W-2E-YHQ">
@@ -966,7 +1065,7 @@ how can we help today?</string>
                         <viewControllerLayoutGuide type="bottom" id="ktb-bL-0rf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vXq-lQ-s6h">
-                        <rect key="frame" x="0.0" y="64" width="600" height="1287"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1071,7 +1170,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
@@ -1083,21 +1182,21 @@ how can we help today?</string>
                                                     </constraints>
                                                     <color key="tintColor" red="0.53333333333333333" green="0.67450980392156867" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-RU-EDi" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="337" y="43" width="243" height="34"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
+                                                    <state key="normal" title="8:30pm Tue, Sep 4">
+                                                        <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Weekly groceries" placeholder="To do title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jPP-TD-74K" customClass="TodoNameTextField" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="74" y="15" width="506" height="24"/>
                                                     <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6h4-RU-EDi" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
-                                                    <rect key="frame" x="431" y="43" width="149" height="34"/>
-                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
-                                                    <state key="normal" title="8:30pm Tue, Sep 4">
-                                                        <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DX-7o-P9P" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
-                                                    <rect key="frame" x="74" y="42" width="72" height="36"/>
+                                                    <rect key="frame" x="74" y="42" width="243" height="36"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
                                                     <state key="normal" title="Estelle F">
                                                         <color key="titleColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
@@ -1106,6 +1205,7 @@ how can we help today?</string>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="6h4-RU-EDi" firstAttribute="leading" secondItem="0DX-7o-P9P" secondAttribute="trailing" constant="20" id="8oV-Vb-deW"/>
                                                 <constraint firstAttribute="trailing" secondItem="6h4-RU-EDi" secondAttribute="trailing" constant="20" id="96k-DQ-a0O"/>
                                                 <constraint firstItem="jPP-TD-74K" firstAttribute="top" secondItem="byU-zX-MHb" secondAttribute="top" constant="15" id="AgC-4I-4C9"/>
                                                 <constraint firstItem="6h4-RU-EDi" firstAttribute="top" secondItem="jPP-TD-74K" secondAttribute="bottom" constant="4" id="SfF-hy-YSS"/>
@@ -1114,6 +1214,7 @@ how can we help today?</string>
                                                 <constraint firstItem="0DX-7o-P9P" firstAttribute="leading" secondItem="TeI-hU-CHP" secondAttribute="trailing" constant="20" id="dJ9-wR-hYD"/>
                                                 <constraint firstItem="TeI-hU-CHP" firstAttribute="top" secondItem="byU-zX-MHb" secondAttribute="top" constant="20" id="kOQ-UR-Gr3"/>
                                                 <constraint firstItem="0DX-7o-P9P" firstAttribute="top" secondItem="jPP-TD-74K" secondAttribute="bottom" constant="3" id="pad-SQ-OCc"/>
+                                                <constraint firstItem="6h4-RU-EDi" firstAttribute="width" secondItem="0DX-7o-P9P" secondAttribute="width" priority="250" id="qF3-jM-h3Y"/>
                                                 <constraint firstItem="TeI-hU-CHP" firstAttribute="leading" secondItem="byU-zX-MHb" secondAttribute="leading" constant="20" id="y9w-c4-Kvf"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1477,7 +1578,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -1540,7 +1641,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
@@ -1620,6 +1721,8 @@ how can we help today?</string>
         <scene sceneID="DWp-5v-5QE">
             <objects>
                 <tabBarController id="uf4-z7-s3u" customClass="BaseTabBarViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="VyF-gK-4Xy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1668,6 +1771,8 @@ how can we help today?</string>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ap4-MQ-JB9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1745,7 +1850,7 @@ how can we help today?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0s-2r-Fkx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2984" y="1487"/>
+            <point key="canvasLocation" x="2748" y="1471"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GeI-jr-kDR">
@@ -1760,6 +1865,8 @@ how can we help today?</string>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="XKZ-xu-Y8G">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1772,7 +1879,7 @@ how can we help today?</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xd1-g6-PIR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2716" y="2195"/>
+            <point key="canvasLocation" x="1952" y="1951"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JMO-Ko-mzP">
@@ -1787,6 +1894,8 @@ how can we help today?</string>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="LX3-Ta-54U">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2255,9 +2364,16 @@ receive a password reset email</string>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="2" id="LII-Vy-5y3"/>
                                                     </constraints>
                                                 </view>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending invitation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjU-ML-3R5">
+                                                    <rect key="frame" x="90" y="61" width="490" height="20"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="16"/>
+                                                    <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="VaW-Pw-UcQ" firstAttribute="top" secondItem="71a-Hf-X3P" secondAttribute="topMargin" constant="26" id="6jn-C2-Pr3"/>
+                                                <constraint firstAttribute="trailing" secondItem="DjU-ML-3R5" secondAttribute="trailing" constant="20" id="8Su-rf-poo"/>
                                                 <constraint firstItem="VaW-Pw-UcQ" firstAttribute="leading" secondItem="hi1-lI-0tn" secondAttribute="trailing" constant="20" id="9Gs-pP-kSS"/>
                                                 <constraint firstAttribute="bottom" secondItem="OBe-SZ-sRY" secondAttribute="bottom" id="9Mn-Gc-5WF"/>
                                                 <constraint firstItem="Ont-Ay-0F8" firstAttribute="top" secondItem="hi1-lI-0tn" secondAttribute="bottom" constant="20" id="9bq-FI-jcK"/>
@@ -2269,7 +2385,9 @@ receive a password reset email</string>
                                                 <constraint firstItem="9RS-A6-BWt" firstAttribute="leading" secondItem="Ont-Ay-0F8" secondAttribute="trailing" id="QqW-RK-73p"/>
                                                 <constraint firstItem="hi1-lI-0tn" firstAttribute="leading" secondItem="71a-Hf-X3P" secondAttribute="leading" constant="20" id="SVe-Xg-aeE"/>
                                                 <constraint firstItem="Ont-Ay-0F8" firstAttribute="leading" secondItem="71a-Hf-X3P" secondAttribute="leading" constant="20" id="U0W-c4-QSX"/>
+                                                <constraint firstItem="DjU-ML-3R5" firstAttribute="leading" secondItem="hi1-lI-0tn" secondAttribute="trailing" constant="20" id="Usw-fe-kVU"/>
                                                 <constraint firstAttribute="trailing" secondItem="XKZ-Yr-HHv" secondAttribute="trailing" constant="10" id="YBD-8k-fcD"/>
+                                                <constraint firstItem="DjU-ML-3R5" firstAttribute="top" secondItem="VaW-Pw-UcQ" secondAttribute="bottom" constant="3" id="mxO-Wp-gjB"/>
                                                 <constraint firstItem="XKZ-Yr-HHv" firstAttribute="top" secondItem="71a-Hf-X3P" secondAttribute="top" constant="10" id="qLl-pS-pXS"/>
                                                 <constraint firstItem="hi1-lI-0tn" firstAttribute="top" secondItem="71a-Hf-X3P" secondAttribute="top" constant="20" id="vTH-et-9O1"/>
                                                 <constraint firstItem="OBe-SZ-sRY" firstAttribute="leading" secondItem="71a-Hf-X3P" secondAttribute="leading" id="xxA-Q8-CTT"/>
@@ -2284,6 +2402,7 @@ receive a password reset email</string>
                                         <connections>
                                             <outlet property="memberAvatar" destination="hi1-lI-0tn" id="Rtb-Yq-lh2"/>
                                             <outlet property="memberName" destination="VaW-Pw-UcQ" id="mrw-wM-LiD"/>
+                                            <outlet property="pendingInviteLabel" destination="DjU-ML-3R5" id="xjO-fT-9xt"/>
                                             <outlet property="prividerButton" destination="Ont-Ay-0F8" id="yxf-ua-Fx5"/>
                                             <outlet property="providerDetails" destination="hN5-Gf-vB4" id="Ehl-bn-9Ns"/>
                                             <outlet property="removeFromTeamButton" destination="XKZ-Yr-HHv" id="Nji-aT-hie"/>
@@ -2538,5 +2657,7 @@ receive a password reset email</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qO6-7u-NnB"/>
+        <segue reference="GdB-SY-l1j"/>
+        <segue reference="cJO-5E-hyi"/>
     </inferredMetricsTieBreakers>
 </document>

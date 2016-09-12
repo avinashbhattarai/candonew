@@ -9,19 +9,19 @@
 import UIKit
 import FSCalendar
 
-class CalendarViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var calendarView: FSCalendar!
+    @IBOutlet weak var todoTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(CalendarViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
+      
+        self.todoTableView.delegate = self
+        self.todoTableView.dataSource = self
+        print(todoTableView.tableHeaderView)
         
         self.calendarView.delegate = self
         self.calendarView.dataSource = self
@@ -35,11 +35,7 @@ class CalendarViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         
     }
     
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-    }
-
+  
     func calendar(calendar: FSCalendar, didSelectDate date: NSDate) {
         print(date)
     }
@@ -52,19 +48,96 @@ class CalendarViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         return 0
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 74
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+       
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! CalendarTodoTableViewCell
+        
+        cell.assignPersonButton.indexPath = indexPath
+        cell.dateButton.indexPath = indexPath
+        cell.dateButton.addTarget(self, action: #selector(self.dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.assignPersonButton.addTarget(self, action: #selector(self.assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+       
+        
+        return cell
+    }
+   
+    func assignTodoButtonTapped(sender: ButtonWithIndexPath) {
+        let section :Int = sender.indexPath!.section
+        let row: Int = sender.indexPath!.row
+        
+      //  let list = lists[section]
+      //  currentTodo = list.todos![row]
+      //  print(currentTodo)
+        
+        performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        
+    }
+    
+    func dateButtonTapped(sender: ButtonWithIndexPath) {
+        let section :Int = sender.indexPath!.section
+        let row: Int = sender.indexPath!.row
+        
+       // let list = lists[section]
+       // currentTodo = list.todos![row]
+       //  print(currentTodo)
+        
+        performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+        
+    }
+
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == Helper.SegueKey.kToSelectTodoDateViewController {
+            let viewController:SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
+            /*
+            if (currentTodo != nil) {
+                viewController.currentTodo = currentTodo
+            }
+ */
+            viewController.senderViewController = self
+            
+            
+        }
+        
+        if segue.identifier == Helper.SegueKey.kToAssignTodoViewController {
+            let viewController:AssignTodoViewController = segue.destinationViewController as! AssignTodoViewController
+            /*
+            if (currentTodo != nil) {
+                viewController.currentTodo = currentTodo
+            }
+ */
+             viewController.senderViewController = self
+            
+            
+        }
+        
+        
     }
-    */
 
 }

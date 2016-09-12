@@ -11,7 +11,7 @@ import ImagePicker
 import Moya
 import SVProgressHUD
 
-class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
+class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDelegate {
 
   
     @IBOutlet weak var userNameLabel: UILabel!
@@ -26,12 +26,8 @@ class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
 
         
         self.title = "Account"
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
-         self.avatarButton.layer.cornerRadius = 5
+        
+        self.avatarButton.layer.cornerRadius = 5
         self.avatarButton.clipsToBounds = true
         
         if iamInTeam {
@@ -209,10 +205,7 @@ class AccountSettingsViewController: UIViewController, ImagePickerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func backButtonTapped(sender: AnyObject) {
-        self.navigationController!.popViewControllerAnimated(true)
-    }
-    /*
+      /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

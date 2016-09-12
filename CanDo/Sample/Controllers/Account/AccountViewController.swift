@@ -9,7 +9,7 @@
 import UIKit
 import Moya
 import SVProgressHUD
-class AccountViewController: UIViewController {
+class AccountViewController: BaseViewController {
 
     @IBOutlet weak var TeamView: UIView!
     @IBOutlet weak var InvitesView: UIView!
@@ -50,13 +50,7 @@ class AccountViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(AccountViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
-        
-        
+       
         runTeamInfoRequest()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.reloadDataNotification(_:)), name:"reloadDataNotification", object: nil)
@@ -215,12 +209,7 @@ class AccountViewController: UIViewController {
         viewController.didMoveToParentViewController(self)
     }
 
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-        
-    }
-
+  
     func updateContainerViews(showInvites:Bool, showTeam:Bool)
     {
         self.InvitesView.hidden = !showInvites

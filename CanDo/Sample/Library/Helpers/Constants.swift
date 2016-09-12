@@ -35,6 +35,15 @@ struct Helper {
         
         
     }
+    struct AccountStatusKey {
+        static let kSigned = "Signed"
+        static let kInvited = "Invited"
+        
+        
+        
+        
+    }
+
 
     struct Colors {
         static func RGBCOLOR(red: Int, green: Int, blue: Int) -> UIColor {

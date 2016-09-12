@@ -24,7 +24,7 @@ extension UIView {
     }
 }
 
-class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelegate, UITableViewDataSource {
     
     var sections = [Suggestion]()
 
@@ -33,11 +33,6 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Suggestions"
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
         
         self.suggestionsTableView.delegate = self
         self.suggestionsTableView.dataSource = self;
@@ -66,11 +61,7 @@ class SuggestionsViewController: UIViewController, UITableViewDelegate, UITableV
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func backButtonTapped(sender: AnyObject) {
-        
-        self.navigationController!.popViewControllerAnimated(true)
-    }
-     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return sections.count
     }
     

@@ -14,6 +14,7 @@ class TeamMemberTableViewCell: UITableViewCell {
     @IBOutlet weak var prividerButton: UIButton!
     @IBOutlet weak var providerDetails: UILabel!
     @IBOutlet weak var removeFromTeamButton: UIButton!
+    @IBOutlet weak var pendingInviteLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

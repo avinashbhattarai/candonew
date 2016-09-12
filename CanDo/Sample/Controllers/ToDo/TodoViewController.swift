@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 import IQKeyboardManagerSwift
-class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UITextFieldDelegate{
+class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var listTextField: UITextField!
     @IBOutlet weak var headerView: UIView!
@@ -25,13 +25,6 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        // Do any additional setup after loading the view.
-         let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(TodoViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
-        
         self.tabBarController?.selectedIndex = selectedIndex!
         
        // IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
@@ -328,11 +321,7 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-    }
-
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -405,7 +394,9 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let viewController:SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
             if (currentTodo != nil) {
                 viewController.currentTodo = currentTodo
-            }
+             }
+            viewController.senderViewController = self
+
             
             
         }
@@ -414,8 +405,8 @@ class TodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let viewController:AssignTodoViewController = segue.destinationViewController as! AssignTodoViewController
             if (currentTodo != nil) {
                 viewController.currentTodo = currentTodo
-            }
-            
+                 }
+            viewController.senderViewController = self
             
         }
 

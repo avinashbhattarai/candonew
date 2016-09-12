@@ -84,6 +84,9 @@
 		93F1631C1D7EFCB100100D90 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631B1D7EFCB100100D90 /* Member.swift */; };
 		93F1631E1D8193F100100D90 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631D1D8193F100100D90 /* Notification.swift */; };
 		93F163201D81BFCA00100D90 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */; };
+		93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D821D86B44A0059FEE5 /* BaseViewController.swift */; };
+		93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */; };
+		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +169,9 @@
 		93F1631B1D7EFCB100100D90 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		93F1631D1D8193F100100D90 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		93F97D821D86B44A0059FEE5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSecondLineViewController.swift; sourceTree = "<group>"; };
+		93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTodoTableViewCell.swift; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -295,6 +301,8 @@
 			children = (
 				938FDC141D65B09200B2D070 /* BaseTabBarViewController.swift */,
 				93142E2A1D76EB0600CAC387 /* BaseAuthNavigationController.swift */,
+				93F97D821D86B44A0059FEE5 /* BaseViewController.swift */,
+				93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */,
 			);
 			path = BaseClasses;
 			sourceTree = "<group>";
@@ -403,6 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC1B1D65C8C600B2D070 /* CalendarViewController.swift */,
+				93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -661,6 +670,7 @@
 				93142E431D7C272600CAC387 /* AssignTodoViewController.swift in Sources */,
 				939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */,
 				93142E1E1D745BC200CAC387 /* Todo.swift in Sources */,
+				93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */,
 				93142E331D783E0C00CAC387 /* TodoTableSectionFooter.swift in Sources */,
 				938FDC211D65E0F600B2D070 /* NotificationsViewController.swift in Sources */,
 				938FDC1C1D65C8C600B2D070 /* CalendarViewController.swift in Sources */,
@@ -674,6 +684,7 @@
 				93F163201D81BFCA00100D90 /* NotificationTableViewCell.swift in Sources */,
 				93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
+				93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
 				93142E2D1D76EB3C00CAC387 /* UINavigationController+Completion.swift in Sources */,
 				93142E1C1D745B6400CAC387 /* List.swift in Sources */,
@@ -689,6 +700,7 @@
 				93F1631E1D8193F100100D90 /* Notification.swift in Sources */,
 				93142E411D79640300CAC387 /* SelectTodoDateViewController.swift in Sources */,
 				93142E261D7478C700CAC387 /* TodoListSectionTextField.swift in Sources */,
+				93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */,
 				938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */,
 				938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */,
 				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,
@@ -823,7 +835,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a0fd6361-730e-41c8-9f82-bd162bb4d0b1";
+				PROVISIONING_PROFILE = "a0e55924-7473-4244-ba4f-af95f7991013";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -848,7 +860,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a0fd6361-730e-41c8-9f82-bd162bb4d0b1";
+				PROVISIONING_PROFILE = "a0e55924-7473-4244-ba4f-af95f7991013";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

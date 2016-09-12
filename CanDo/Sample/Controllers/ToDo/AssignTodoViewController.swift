@@ -8,23 +8,24 @@
 
 import UIKit
 
-class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var todoTitleLabel: UILabel!
     @IBOutlet weak var personsTableView: UITableView!
    
     var persons = [Person]()
     var currentTodo: Todo?
+    var senderViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "To Do List"
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
+        if senderViewController is TodoViewController {
+            self.title = "To Do List"
+        }else if senderViewController is CalendarViewController{
+            self.title = "Calendar"
+        }
+        
         
         for personIndex in 0...10 {
             
@@ -52,10 +53,7 @@ class AssignTodoViewController: UIViewController,UITableViewDelegate,UITableView
         
         // Do any additional setup after loading the view.
     }
-    func backButtonTapped(sender: AnyObject) {
-        self.navigationController!.popViewControllerAnimated(true)
-    }
-
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

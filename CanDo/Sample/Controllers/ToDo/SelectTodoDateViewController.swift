@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SelectTodoDateViewController: UIViewController {
+class SelectTodoDateViewController: BaseSecondLineViewController {
 
     var currentTodo: Todo?
     var selectedDate: NSDate = NSDate()
+    var senderViewController: UIViewController?
     
     @IBOutlet weak var todoTitle: UILabel!
     @IBOutlet weak var anyTimeButton: ButtonWithIndexPath!
@@ -20,12 +21,13 @@ class SelectTodoDateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "To Do List"
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
+        if senderViewController is TodoViewController {
+            self.title = "To Do List"
+        }else if senderViewController is CalendarViewController{
+            self.title = "Calendar"
+        }
+
+      
         
         if (currentTodo != nil) {
              self.todoTitle.text = currentTodo?.name
@@ -47,11 +49,7 @@ class SelectTodoDateViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    func backButtonTapped(sender: AnyObject) {
-        
-        self.navigationController!.popViewControllerAnimated(true)
-    }
-
+  
     
        // called when the date picker called.
     func pickerDidChangeDate(sender: UIDatePicker){
