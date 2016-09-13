@@ -30,21 +30,21 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
       
         
         if (currentTodo != nil) {
-             self.todoTitle.text = currentTodo?.name
+             todoTitle.text = currentTodo?.name
         }
        
         
-        self.anyTimeButton.backgroundColor = UIColor.clearColor()
-        self.anyTimeButton.layer.cornerRadius = 5
-        self.anyTimeButton.layer.borderWidth = 1
-        self.anyTimeButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).CGColor
+        anyTimeButton.backgroundColor = UIColor.clearColor()
+        anyTimeButton.layer.cornerRadius = 5
+        anyTimeButton.layer.borderWidth = 1
+        anyTimeButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).CGColor
 
-        self.anyTimeButton.setImage(UIImage(), forState: .Normal)
-        self.anyTimeButton.setImage(UIImage(named: "iconHelpAssignTickCopy"), forState: .Selected)
+        anyTimeButton.setImage(UIImage(), forState: .Normal)
+        anyTimeButton.setImage(UIImage(named: "iconHelpAssignTickCopy"), forState: .Selected)
         
         
         // add an event called when value is changed.
-        self.datePicker.addTarget(self, action: #selector(SelectTodoDateViewController.pickerDidChangeDate(_:)), forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(pickerDidChangeDate(_:)), forControlEvents: .ValueChanged)
 
         
         // Do any additional setup after loading the view.
@@ -74,9 +74,9 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
     @IBAction func anyTimeButtonTapped(sender: ButtonWithIndexPath) {
         sender.selected = !sender.selected
         if sender.selected {
-            self.datePicker.datePickerMode = .Date
+            datePicker.datePickerMode = .Date
         }else{
-            self.datePicker.datePickerMode = .DateAndTime
+            datePicker.datePickerMode = .DateAndTime
         }
     
     }

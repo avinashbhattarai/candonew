@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.Black)
         SVProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.Flat)
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.hideProgressHud), name: SVProgressHUDDidReceiveTouchEventNotification, object: nil)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hideProgressHud), name: SVProgressHUDDidReceiveTouchEventNotification, object: nil)
        // Fabric.sharedSDK().debug = true
         Fabric.with([Crashlytics.self])
 

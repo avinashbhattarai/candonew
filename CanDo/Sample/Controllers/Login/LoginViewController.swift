@@ -30,29 +30,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         
-        self.signUpButton.setUnderlineTitle("Not yet on Can Do?")
-        self.cancelButton.setUnderlineTitle("Cancel")
+        signUpButton.setUnderlineTitle("Not yet on Can Do?")
+        cancelButton.setUnderlineTitle("Cancel")
         
         
         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
-        self.hideKeyboardWhenTappedAround()
-        self.emailTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-        self.passwordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-        self.resetPasswordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-        self.emailTextField.delegate = self
-        self.passwordTextField.delegate = self
-        self.cancelButton.hidden = true
-        self.passwordTextField.alpha = 0;
-        self.resetPasswordContainer.hidden = true
-        self.successContainer.hidden = true
-        fadeViewInThenOut(self.ansewerLabel, delay: 1.0)
+        
+        hideKeyboardWhenTappedAround()
+        
+        emailTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        passwordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        resetPasswordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        cancelButton.hidden = true
+        passwordTextField.alpha = 0;
+        resetPasswordContainer.hidden = true
+        successContainer.hidden = true
+        fadeViewInThenOut(ansewerLabel, delay: 1.0)
 
         // Do any additional setup after loading the view.
     }
     func cleanTextFields() {
-        self.emailTextField.text = ""
-        self.passwordTextField.text = ""
-        self.resetPasswordTextField.text = ""
+        emailTextField.text = ""
+        passwordTextField.text = ""
+        resetPasswordTextField.text = ""
         
     }
     
@@ -61,8 +63,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -78,7 +80,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         
         
-        self.emailTextField.textAlignment = .Left
+        emailTextField.textAlignment = .Left
         
         return true
         
@@ -106,10 +108,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if !isKeyboardOpened {
             isKeyboardOpened = true
             print("show")
-            self.passwordTextField.alpha = 1.0
-            self.cancelButton.hidden = false
-            self.signUpButton.hidden = true
-            let y = self.emailTextField.frame.origin.y-28
+            passwordTextField.alpha = 1.0
+            cancelButton.hidden = false
+            signUpButton.hidden = true
+            let y = emailTextField.frame.origin.y-28
             UIView.animateWithDuration(0.2, animations: {
                 
                 for view in self.view.subviews {
@@ -125,11 +127,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             })
             
         }
-        if self.resetPasswordTextField.isFirstResponder(){
+        if resetPasswordTextField.isFirstResponder(){
             
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                   var yOffset = -((self.view.frame.size.height - keyboardSize.height) - (self.resetPasswordContainer.frame.origin.y+self.resetPasswordButton.frame.origin.y))
-                   yOffset += (self.resetPasswordButton.frame.size.height + 10)
+                   var yOffset = -((self.view.frame.size.height - keyboardSize.height) - (resetPasswordContainer.frame.origin.y+resetPasswordButton.frame.origin.y))
+                   yOffset += (resetPasswordButton.frame.size.height + 10)
               UIView.animateWithDuration(0.2, animations: {
                 self.view.frame.origin.y = -yOffset
          })
@@ -138,7 +140,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     func keyboardWillHide(notification: NSNotification) {
-        if self.resetPasswordTextField.isFirstResponder(){
+        if resetPasswordTextField.isFirstResponder(){
             
             UIView.animateWithDuration(0.2, animations: {
                 self.view.frame.origin.y = 0
@@ -225,7 +227,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func resetPasswordButtonTapped(sender: AnyObject) {
-        if !isValidEmail(self.resetPasswordTextField.text!) {
+        if !isValidEmail(resetPasswordTextField.text!) {
             SVProgressHUD.showErrorWithStatus("Entered email is not valid")
             return
         }
@@ -239,7 +241,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
          configureSignUpButton(sender,showSpinner: true ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
         
-        provider.request(.ForgotPassword(email: self.resetPasswordTextField.text!)) { result in
+        provider.request(.ForgotPassword(email: resetPasswordTextField.text!)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -300,17 +302,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     func showSuccessView(){
-        self.resetPasswordContainer.hidden = true
-        self.successContainer.hidden = false
+        resetPasswordContainer.hidden = true
+        successContainer.hidden = false
     }
     
     @IBAction func loginButtonTapped(sender: UIButton) {
         
-         if !isValidEmail(self.emailTextField.text!) {
+         if !isValidEmail(emailTextField.text!) {
          SVProgressHUD.showErrorWithStatus("Entered email is not valid")
          return
          }
-         if !self.passwordTextField.hasText() {
+         if !passwordTextField.hasText() {
          SVProgressHUD.showErrorWithStatus("Password field is empty")
          return
          }
@@ -333,7 +335,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             SVProgressHUD.show()
         }
         
-        provider.request(.LoginUser(password: (self.passwordTextField.text!.isEmpty ? nil : self.passwordTextField.text!), email: (self.emailTextField.text!.isEmpty ? nil : self.emailTextField.text!), facebookId: facebookId)) { result in
+        provider.request(.LoginUser(password: (passwordTextField.text!.isEmpty ? nil : passwordTextField.text!), email: (emailTextField.text!.isEmpty ? nil : emailTextField.text!), facebookId: facebookId)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -399,7 +401,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
   
     @IBAction func forgotPasswordTapped(sender: AnyObject) {
         self.view.endEditing(true)
-        self.resetPasswordContainer.hidden = false
+        resetPasswordContainer.hidden = false
         
     }
     @IBAction func signupButtontapped(sender: AnyObject) {
@@ -409,11 +411,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         self.view.endEditing(true)
         cleanTextFields()
-        self.cancelButton.hidden = true
-        self.isKeyboardOpened = false
-        self.signUpButton.hidden = false
-        self.passwordTextField.alpha=0
-        self.emailTextField.textAlignment = .Center
+        cancelButton.hidden = true
+        isKeyboardOpened = false
+        signUpButton.hidden = false
+        passwordTextField.alpha=0
+        emailTextField.textAlignment = .Center
         for view in self.view.subviews {
             view.translatesAutoresizingMaskIntoConstraints = false
         }

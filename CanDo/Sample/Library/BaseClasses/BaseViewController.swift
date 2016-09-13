@@ -16,7 +16,7 @@ class BaseViewController: UIViewController {
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
         backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(self.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped(_:)), forControlEvents: .TouchUpInside)
         let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         fixedSpace.width = 5.0
         navigationItem.leftBarButtonItems = [fixedSpace, UIBarButtonItem(customView: backButton)]

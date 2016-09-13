@@ -41,15 +41,15 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         }
         
         if (currentTodo != nil) {
-            self.todoTitleLabel.text = currentTodo?.name
+            todoTitleLabel.text = currentTodo?.name
         }
         
         
 
-        self.personsTableView.delegate = self;
-        self.personsTableView.dataSource = self;
+        personsTableView.delegate = self;
+        personsTableView.dataSource = self;
         
-         self.personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
+        personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
         // Do any additional setup after loading the view.
     }
@@ -96,7 +96,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         cell.personTitle.text = person.name
         cell.personAvatar.image =  UIImage(named: person.avatar!)
         cell.selectButton.indexPath = indexPath
-        cell.selectButton.addTarget(self, action: #selector(AssignTodoViewController.selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.selectButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
       
         
         return cell
@@ -129,7 +129,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         let selectedPerson:Person = persons[row]
         selectedPerson.selected = true
         
-        self.personsTableView.reloadData()
+        personsTableView.reloadData()
         
 
     }

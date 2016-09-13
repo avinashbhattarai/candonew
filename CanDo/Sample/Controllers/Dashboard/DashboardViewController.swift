@@ -25,14 +25,14 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
         
       
-        fadeViewInThenOut(self.helloLabel, delay: 1.0)
+        fadeViewInThenOut(helloLabel, delay: 1.0)
         
-        self.helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
+        helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
         
-        self.dashboardTableView.delegate = self;
-        self.dashboardTableView.dataSource = self;
-        self.dashboardTableView.alwaysBounceVertical = false
-        self.dashboardTableView.registerClass(DashboardTableViewCell.self, forCellReuseIdentifier: "Cell")
+        dashboardTableView.delegate = self;
+        dashboardTableView.dataSource = self;
+        dashboardTableView.alwaysBounceVertical = false
+        dashboardTableView.registerClass(DashboardTableViewCell.self, forCellReuseIdentifier: "Cell")
         
     }
     
@@ -140,7 +140,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             let tabbarController:UITabBarController = segue.destinationViewController as! UITabBarController
             let navigationController = tabbarController.viewControllers?.first as! UINavigationController
             let viewController = navigationController.topViewController as! TodoViewController
-            let indexPath = self.dashboardTableView.indexPathForSelectedRow!
+            let indexPath = dashboardTableView.indexPathForSelectedRow!
             viewController.selectedIndex = indexPath.row
             
         }

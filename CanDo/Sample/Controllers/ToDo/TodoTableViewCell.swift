@@ -16,10 +16,10 @@ class TodoTableViewCell: UITableViewCell {
     @IBOutlet weak var selectedButton: ButtonWithIndexPath!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectedButton.backgroundColor = UIColor.clearColor()
-        self.selectedButton.layer.cornerRadius = 5
-        self.selectedButton.layer.borderWidth = 1
-        self.selectedButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+        selectedButton.backgroundColor = UIColor.clearColor()
+        selectedButton.layer.cornerRadius = 5
+        selectedButton.layer.borderWidth = 1
+        selectedButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
         // Initialization code
     }
 

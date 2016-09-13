@@ -19,19 +19,19 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
 
         // Do any additional setup after loading the view.
       
-        self.todoTableView.delegate = self
-        self.todoTableView.dataSource = self
+        todoTableView.delegate = self
+        todoTableView.dataSource = self
         print(todoTableView.tableHeaderView)
         
-        self.calendarView.delegate = self
-        self.calendarView.dataSource = self
-        self.calendarView.headerDateFormat = "MMMM"
-        self.calendarView.headerHeight = 64
-        self.calendarView.appearance.headerTitleFont = UIFont(name: "MuseoSansRounded-500", size: 24)
-        self.calendarView.appearance.weekdayFont = UIFont(name: "MuseoSansRounded-300", size: 20)
-        self.calendarView.appearance.titleFont = UIFont(name: "MuseoSansRounded-300", size: 20)
-        self.calendarView.clipsToBounds = true
-        self.calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
+        calendarView.delegate = self
+        calendarView.dataSource = self
+        calendarView.headerDateFormat = "MMMM"
+        calendarView.headerHeight = 64
+        calendarView.appearance.headerTitleFont = UIFont(name: "MuseoSansRounded-500", size: 24)
+        calendarView.appearance.weekdayFont = UIFont(name: "MuseoSansRounded-300", size: 20)
+        calendarView.appearance.titleFont = UIFont(name: "MuseoSansRounded-300", size: 20)
+        calendarView.clipsToBounds = true
+        calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
         
     }
     
@@ -68,8 +68,8 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         
         cell.assignPersonButton.indexPath = indexPath
         cell.dateButton.indexPath = indexPath
-        cell.dateButton.addTarget(self, action: #selector(self.dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        cell.assignPersonButton.addTarget(self, action: #selector(self.assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.assignPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
        
         
         return cell

@@ -16,11 +16,11 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
        override func viewDidLoad() {
         super.viewDidLoad()
        
-       self.codeTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+       codeTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
          self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
-        self.codeTextField.delegate = self
+        codeTextField.delegate = self
       
-        self.codeTextField.addDoneOnKeyboardWithTarget(self, action: #selector(CodeViewController.doneButtonTapped))
+        codeTextField.addDoneOnKeyboardWithTarget(self, action: #selector(doneButtonTapped))
         
         
      
@@ -44,10 +44,10 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     
     func doneButtonTapped() {
         
-        if self.codeTextField.text?.characters.count == 6 {
+        if codeTextField.text?.characters.count == 6 {
              print("textfield \(self.codeTextField.text)")
-            self.codeTextField.resignFirstResponder()
-            let code :String = self.codeTextField.text!
+            codeTextField.resignFirstResponder()
+            let code :String = codeTextField.text!
             let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
             runVerificateUserRequest(email, code: code)
         }else{

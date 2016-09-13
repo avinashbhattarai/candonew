@@ -53,7 +53,7 @@ class AccountViewController: BaseViewController {
        
         runTeamInfoRequest()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.reloadDataNotification(_:)), name:"reloadDataNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataNotification(_:)), name:"reloadDataNotification", object: nil)
        
         
         

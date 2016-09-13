@@ -15,7 +15,7 @@ class SetPasswordViewController: UIViewController {
     var activityIndicatorView: NVActivityIndicatorView?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.passwordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        passwordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
 
         // Do any additional setup after loading the view.
@@ -78,11 +78,11 @@ class SetPasswordViewController: UIViewController {
 
     @IBAction func passwordActionTapped(sender: UIButton) {
         
-        if !self.passwordTextField.hasText() {
+        if !passwordTextField.hasText() {
             SVProgressHUD.showErrorWithStatus("Password field is empty")
             return
         }
-        self.passwordTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
      runSetPasswordForUserRequest(sender)
 
     }
@@ -92,7 +92,7 @@ class SetPasswordViewController: UIViewController {
         let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserSecretCode) as! String)!
         let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
         
-        provider.request(.SetPasswordForUser(password: self.passwordTextField.text!, code:code, email: email)) { result in
+        provider.request(.SetPasswordForUser(password: passwordTextField.text!, code:code, email: email)) { result in
             switch result {
             case let .Success(moyaResponse):
                 

@@ -87,6 +87,7 @@
 		93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D821D86B44A0059FEE5 /* BaseViewController.swift */; };
 		93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */; };
 		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
+		93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,6 +173,8 @@
 		93F97D821D86B44A0059FEE5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSecondLineViewController.swift; sourceTree = "<group>"; };
 		93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTodoTableViewCell.swift; sourceTree = "<group>"; };
+		93F97D881D883A790059FEE5 /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -319,6 +322,8 @@
 		938FDBCD1D64729200B2D070 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				93F97D881D883A790059FEE5 /* UIScrollView+EmptyDataSet.h */,
+				93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */,
 				938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */,
 				938FDC2A1D671A3200B2D070 /* UIViewController+HideKeyboard.swift */,
 				938FDC351D6C5E9E00B2D070 /* UIScreen+DeviceScreenSize.swift */,
@@ -706,6 +711,7 @@
 				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,
 				938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */,
 				93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */,
+				93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				938FDC151D65B09200B2D070 /* BaseTabBarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

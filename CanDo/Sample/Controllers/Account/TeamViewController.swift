@@ -22,13 +22,13 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.teamTableView.delegate = self
-        self.teamTableView.dataSource = self
+        teamTableView.delegate = self
+        teamTableView.dataSource = self
         
-        self.teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
+        teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         
         
-        self.teamTableView.es_addPullToRefresh {
+        teamTableView.es_addPullToRefresh {
             [weak self] in
             /// Do anything you want...
             /// ...
@@ -99,7 +99,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         cell.removeFromTeamButton.tag = indexPath.row
-        cell.removeFromTeamButton.addTarget(self, action: #selector(self.removeButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.removeFromTeamButton.addTarget(self, action: #selector(removeButtonTapped(_:)), forControlEvents: .TouchUpInside)
         
         return cell
     }
@@ -162,29 +162,29 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func updateTeamTableView(){
         
-        self.teamTableView.reloadData()
+        teamTableView.reloadData()
         if !iamOwner{
-            self.inviteView.hidden = true
-             self.teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+            inviteView.hidden = true
+            teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         }else{
-            self.inviteView.hidden = false
-             self.teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
+            inviteView.hidden = false
+             teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         }
         
-       self.teamTableView.es_stopPullToRefresh(completion: true)
+       teamTableView.es_stopPullToRefresh(completion: true)
 
     }
     
     @IBAction func inviteButtonTapped(sender: AnyObject) {
         
-        if !self.inviteTextField.hasText() {
+        if !inviteTextField.hasText() {
             SVProgressHUD.showErrorWithStatus("Invite field is empty")
             return
         }
         
         
         SVProgressHUD.show()
-        provider.request(.InviteToTeam(email: self.inviteTextField.text!)) { result in
+        provider.request(.InviteToTeam(email: inviteTextField.text!)) { result in
             switch result {
             case let .Success(moyaResponse):
                 

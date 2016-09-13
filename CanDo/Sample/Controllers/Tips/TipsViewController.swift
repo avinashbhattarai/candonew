@@ -19,7 +19,7 @@ class TipsViewController: UIViewController {
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
         backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(TipsViewController.backButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped(_:)), forControlEvents: .TouchUpInside)
         self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
 
     }

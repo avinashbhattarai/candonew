@@ -29,24 +29,24 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
      self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
-        self.hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTappedAround()
         
-        if self.isUserLogined() {
+        if isUserLogined() {
             performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
         }
         
        
-        self.loginButton.setUnderlineTitle("Already on Can Do?")
-        self.cancelButton.setUnderlineTitle("Cancel")
+        loginButton.setUnderlineTitle("Already on Can Do?")
+        cancelButton.setUnderlineTitle("Cancel")
         
-      self.emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-         self.firstNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-         self.lastNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-      self.emailTextfield.delegate = self
-      self.lastNameTextField.delegate = self
-        self.firstNameTextField.delegate = self
-        self.cancelButton.hidden = true
-        self.firstNameTextField.alpha = 0;
+      emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+    firstNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+    lastNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+    emailTextfield.delegate = self
+    lastNameTextField.delegate = self
+    firstNameTextField.delegate = self
+    cancelButton.hidden = true
+    firstNameTextField.alpha = 0;
     
         
 
@@ -57,9 +57,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func cleanTextFields() {
-        self.emailTextfield.text = ""
-        self.firstNameTextField.text = ""
-        self.lastNameTextField.text = ""
+        emailTextfield.text = ""
+        firstNameTextField.text = ""
+        lastNameTextField.text = ""
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -68,8 +68,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         
-        self.answerLabel.alpha = 1.0
-         fadeViewInThenOut(self.answerLabel, delay: 1.0)
+        answerLabel.alpha = 1.0
+         fadeViewInThenOut(answerLabel, delay: 1.0)
         self.navigationController?.navigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
@@ -90,7 +90,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         
    
-        self.emailTextfield.textAlignment = .Left
+        emailTextfield.textAlignment = .Left
         
         return true
         
@@ -118,10 +118,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         if !isKeyboardOpened {
             isKeyboardOpened = true
             print("show")
-            self.firstNameTextField.alpha = 1.0
-            self.cancelButton.hidden = false
-             self.loginButton.hidden = true
-            let y = self.emailTextfield.frame.origin.y-28
+            firstNameTextField.alpha = 1.0
+            cancelButton.hidden = false
+            loginButton.hidden = true
+            let y = emailTextfield.frame.origin.y-28
             UIView.animateWithDuration(0.2, animations: {
                 
                 for view in self.view.subviews {
@@ -144,15 +144,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signUpButtonTapped(sender: UIButton) {
         
         
-        if !isValidEmail(self.emailTextfield.text!) {
+        if !isValidEmail(emailTextfield.text!) {
             SVProgressHUD.showErrorWithStatus("Entered email is not valid")
                  return
         }
-        if !self.firstNameTextField.hasText() {
+        if !firstNameTextField.hasText() {
             SVProgressHUD.showErrorWithStatus("First name field is empty")
             return
         }
-        if !self.lastNameTextField.hasText() {
+        if !lastNameTextField.hasText() {
             SVProgressHUD.showErrorWithStatus("Last name field is empty")
             return
         }
@@ -171,16 +171,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         var email: String?
         var facebookId: String?
         
-        if((self.facebookData) == nil){
+        if((facebookData) == nil){
             firstName = firstNameTextField.text
             lastName = lastNameTextField.text
             email = emailTextfield.text
             facebookId = nil
         }else{
-            firstName = self.facebookData?.valueForKey("first_name") as? String
-            lastName = self.facebookData?.valueForKey("last_name") as? String
-            email = self.facebookData?.valueForKey("email") as? String
-            facebookId = self.facebookData?.valueForKey("id") as? String
+            firstName = facebookData?.valueForKey("first_name") as? String
+            lastName = facebookData?.valueForKey("last_name") as? String
+            email = facebookData?.valueForKey("email") as? String
+            facebookId = facebookData?.valueForKey("id") as? String
             SVProgressHUD.show()
             
         }
@@ -245,8 +245,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         
         var facebookId: String?
-        if((self.facebookData) != nil){
-            facebookId = self.facebookData?.valueForKey("id") as? String
+        if((facebookData) != nil){
+            facebookId = facebookData?.valueForKey("id") as? String
         }
         
         provider.request(.LoginUser(password: nil, email: nil, facebookId: facebookId)) { result in
@@ -339,11 +339,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         self.view.endEditing(true)
         cleanTextFields()
-        self.cancelButton.hidden = true
-        self.isKeyboardOpened = false
-        self.firstNameTextField.alpha=0
-         self.loginButton.hidden = false
-        self.emailTextfield.textAlignment = .Center
+        cancelButton.hidden = true
+        isKeyboardOpened = false
+        firstNameTextField.alpha=0
+        loginButton.hidden = false
+        emailTextfield.textAlignment = .Center
         for view in self.view.subviews {
             view.translatesAutoresizingMaskIntoConstraints = false
         }

@@ -29,13 +29,13 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
         
        // IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
         
-        self.toDoTableView.delegate = self;
-        self.toDoTableView.dataSource = self;
-        self.toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        toDoTableView.delegate = self;
+        toDoTableView.dataSource = self;
+        toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         
         let nib = UINib(nibName: "TodoSectionFooter", bundle: nil)
-        self.toDoTableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TodoSectionFooter")
+        toDoTableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TodoSectionFooter")
         
         if let path = NSBundle.mainBundle().pathForResource("todoResponse", ofType: "json") {
             do {
@@ -135,17 +135,17 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
        
         // Dequeue with the reuse identifier
-        let cell = self.toDoTableView.dequeueReusableHeaderFooterViewWithIdentifier("TodoSectionFooter")
+        let cell = toDoTableView.dequeueReusableHeaderFooterViewWithIdentifier("TodoSectionFooter")
         let footer = cell as! TodoTableSectionFooter
         footer.addTodoButton.tag = section
         footer.dateButton.tag = section
         footer.addNewTodoButton.tag = section
         footer.titleTextField.tag = section
         footer.titleTextField.delegate = self
-        footer.dateButton.addTarget(self, action:#selector(TodoViewController.dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        footer.assignTodoButton.addTarget(self, action:#selector(TodoViewController.assignNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        footer.addNewTodoButton.addTarget(self, action:#selector(TodoViewController.addNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        footer.addTodoButton.addTarget(self, action:#selector(TodoViewController.addTodoTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.dateButton.addTarget(self, action:#selector(dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.assignTodoButton.addTarget(self, action:#selector(assignNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.addNewTodoButton.addTarget(self, action:#selector(addNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        footer.addTodoButton.addTarget(self, action:#selector(addTodoTapped(_:)), forControlEvents: .TouchUpInside)
         return footer
  
     }
@@ -169,10 +169,10 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
         cell.dateButton.indexPath = indexPath
         cell.assignedPersonButton.indexPath = indexPath
         
-        cell.dateButton.addTarget(self, action: #selector(TodoViewController.dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        cell.selectedButton.addTarget(self, action: #selector(TodoViewController.selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.selectedButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
         cell.assignedPersonButton.setTitle(todo.assignedPerson?.name, forState: .Normal)
-        cell.assignedPersonButton.addTarget(self, action: #selector(TodoViewController.assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.assignedPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
 
         return cell
     }
@@ -231,14 +231,14 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
         let list = lists[section]
         let todo = list.todos![row]
         todo.finished = !todo.finished
-        self.toDoTableView.reloadRowsAtIndexPaths([sender.indexPath!], withRowAnimation: .Automatic)
+        toDoTableView.reloadRowsAtIndexPaths([sender.indexPath!], withRowAnimation: .Automatic)
         
     }
     
     
     func  addNewTodoButtonTapped(sender: UIButton) {
         
-        if let footer = self.toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter{
+        if let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter{
     
                 let section :Int = sender.tag
                 let list = lists[section]
@@ -247,10 +247,10 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
                 newTodo.date = NSDate()
                 newTodo.assignedPerson = person
                 list.todos?.append(newTodo)
-                self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
                 
-                let lastRow: Int = self.toDoTableView.numberOfRowsInSection(section)-1
-                self.toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+                let lastRow: Int = toDoTableView.numberOfRowsInSection(section)-1
+                toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
             }
     }
 
@@ -270,7 +270,7 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
        
             if let todoName = textField as? TodoNameTextField {
                 print("show \(todoName.indexPath)")
-                self.toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = true
+                toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = true
                 
             }
         
@@ -281,7 +281,7 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
     func textFieldDidEndEditing(textField: UITextField) {
         if let todoName = textField as? TodoNameTextField {
             print("hide \(todoName.indexPath)")
-            self.toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = false
+            toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = false
         }
     }
    
@@ -295,7 +295,7 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
             let section :Int = textField.tag
             let list = lists[section]
             list.name = textField.text
-            self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+            toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
             }
         }
         
@@ -308,7 +308,7 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
                     let list = lists[section]
                     let todo = list.todos![row]
                     todo.name = todoName.text
-                    self.toDoTableView.reloadRowsAtIndexPaths([todoName.indexPath!], withRowAnimation: .Automatic)
+                    toDoTableView.reloadRowsAtIndexPaths([todoName.indexPath!], withRowAnimation: .Automatic)
                 }
 
             }
@@ -328,17 +328,17 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
     }
     @IBAction func addNewListTapped(sender: AnyObject) {
         
-        if !self.listTextField.hasText() {
+        if !listTextField.hasText() {
             SVProgressHUD.showErrorWithStatus("List field is empty")
             return
         }
         
-         let newList = List(name: self.listTextField.text!)
+         let newList = List(name: listTextField.text!)
         newList.todos = [Todo]()
         lists.insert(newList, atIndex: 0)
         
-        self.listTextField.text = ""
-         self.toDoTableView.reloadData()
+        listTextField.text = ""
+        toDoTableView.reloadData()
         
         addLIstButtonTaped(UIButton())
         
@@ -353,18 +353,18 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
         if isHeaderOpened {
             height = 0
             isHeaderOpened = false
-            self.listTextField.resignFirstResponder()
+            listTextField.resignFirstResponder()
         }else{
             height = 100
             isHeaderOpened = true
-            self.listTextField.becomeFirstResponder()
+            listTextField.becomeFirstResponder()
         }
         
         
-        var newRect = self.toDoTableView.tableHeaderView?.frame
+        var newRect = toDoTableView.tableHeaderView?.frame
         newRect?.size.height = height
         // Get the reference to the header view
-        let tblHeaderView = self.toDoTableView.tableHeaderView
+        let tblHeaderView = toDoTableView.tableHeaderView
         // Animate the height change
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             tblHeaderView?.frame = newRect!

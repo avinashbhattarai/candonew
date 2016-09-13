@@ -16,7 +16,7 @@ class SetNewPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.newPassword.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        newPassword.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
         // Do any additional setup after loading the view.
     }
@@ -81,7 +81,7 @@ class SetNewPasswordViewController: UIViewController {
         let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserSecretCode) as! String)!
         let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
         
-        provider.request(.ResetPasswordForUser(password: self.newPassword.text!, code:code, email: email)) { result in
+        provider.request(.ResetPasswordForUser(password: newPassword.text!, code:code, email: email)) { result in
             switch result {
             case let .Success(moyaResponse):
                 

@@ -44,7 +44,6 @@
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
-            <string>MuseoSansRounded-300</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-500.otf">
             <string>MuseoSansRounded-500</string>
@@ -80,7 +79,6 @@
             <string>MuseoSansRounded-500</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-700.otf">
-            <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
             <string>MuseoSansRounded-700</string>
@@ -597,7 +595,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="378" width="600" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hW5-7l-fSL" id="YUS-1b-Nqi">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Weekly groceries" placeholder="To do title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nck-qZ-bBk" customClass="TodoNameTextField" customModule="CanDo" customModuleProvider="target">
@@ -1170,7 +1168,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
@@ -1578,7 +1576,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -1641,7 +1639,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
@@ -2509,40 +2507,9 @@ receive a password reset email</string>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YGA-Ye-S2S">
                                 <rect key="frame" x="0.0" y="71" width="600" height="416"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <view key="tableHeaderView" hidden="YES" contentMode="scaleToFill" id="yho-MW-D9J">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="416"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDd-gr-ugV">
-                                            <rect key="frame" x="20" y="112" width="560" height="42"/>
-                                            <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="25"/>
-                                            <state key="normal" title="Start my own team">
-                                                <color key="titleColor" red="0.25490196078431371" green="0.81176470588235294" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="startTeamTapped:" destination="X7G-te-q8B" eventType="touchUpInside" id="drJ-MC-KQN"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Invites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RzJ-iE-aI6">
-                                            <rect key="frame" x="0.0" y="70" width="600" height="22"/>
-                                            <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
-                                            <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="pDd-gr-ugV" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" constant="20" id="Huz-Yx-lIo"/>
-                                        <constraint firstItem="RzJ-iE-aI6" firstAttribute="top" secondItem="yho-MW-D9J" secondAttribute="top" constant="70" id="JK7-CS-E8L"/>
-                                        <constraint firstAttribute="trailing" secondItem="RzJ-iE-aI6" secondAttribute="trailing" id="kBm-TS-6xh"/>
-                                        <constraint firstItem="RzJ-iE-aI6" firstAttribute="leading" secondItem="yho-MW-D9J" secondAttribute="leading" id="nAG-aH-FGD"/>
-                                        <constraint firstItem="pDd-gr-ugV" firstAttribute="top" secondItem="RzJ-iE-aI6" secondAttribute="bottom" constant="20" id="sAg-RH-Eck"/>
-                                        <constraint firstAttribute="trailing" secondItem="pDd-gr-ugV" secondAttribute="trailing" constant="20" id="xFY-Ry-OeJ"/>
-                                    </constraints>
-                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="90" id="c7H-v8-mLl" customClass="InviteTableViewCell" customModule="CanDo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="444" width="600" height="90"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c7H-v8-mLl" id="Go0-Vp-blO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
@@ -2629,7 +2596,6 @@ receive a password reset email</string>
                     </view>
                     <connections>
                         <outlet property="invitesTableView" destination="YGA-Ye-S2S" id="aeA-zF-loc"/>
-                        <outlet property="startTeamView" destination="yho-MW-D9J" id="vLO-1j-aCc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E6u-Wi-hw1" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -11,22 +11,24 @@ import Moya
 import SVProgressHUD
 import ESPullToRefresh
 
-class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet weak var invitesTableView: UITableView!
     
      var invites = [Invite]()
-    
-    @IBOutlet weak var startTeamView: UIView!
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.invitesTableView.delegate = self;
-        self.invitesTableView.dataSource = self;
-        self.invitesTableView.tableFooterView = UIView()
+        invitesTableView.delegate = self;
+        invitesTableView.dataSource = self;
+        invitesTableView.tableFooterView = UIView()
+        invitesTableView.emptyDataSetSource = self;
+        invitesTableView.emptyDataSetDelegate = self;
         
-        self.invitesTableView.es_addPullToRefresh {
+        
+        
+        invitesTableView.es_addPullToRefresh {
             [weak self] in
             /// Do anything you want...
             /// ...
@@ -63,24 +65,21 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         cell.nameLabel.text = String(format: "%@ %@", invite.ownerFirstName, invite.ownerLastName)
         cell.acceptButton.tag = indexPath.row
-        cell.acceptButton.addTarget(self, action: #selector(self.acceptButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), forControlEvents: .TouchUpInside)
         
         return cell
     }
     
     func reloadInvitesTableView() {
-        if invites.count == 0 {
-            self.startTeamView.hidden = false
-        }
-        self.invitesTableView.reloadData()
-           self.invitesTableView.es_stopPullToRefresh(completion: true)
+        invitesTableView.reloadData()
+        invitesTableView.es_stopPullToRefresh(completion: true)
 
     }
     
     
     
     
-    @IBAction func startTeamTapped(sender: AnyObject) {
+     func startTeamTapped(sender: AnyObject) {
         
         
         SVProgressHUD.show()
@@ -133,7 +132,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
          let invite : Invite = invites[sender.tag]
         if invites.count == 1 {
     
-        self.runAcceptTeamRequest(invite.teamId)
+        runAcceptTeamRequest(invite.teamId)
             
         }else{
             
@@ -207,6 +206,31 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             parentViewController.runTeamInfoRequest()
         }
 
+    }
+    
+    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "No invites"
+        let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func buttonTitleForEmptyDataSet(scrollView: UIScrollView, forState state: UIControlState) -> NSAttributedString? {
+        let str = "Start my own team"
+        let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-700", size: 24)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(65, green: 207, blue: 108)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func emptyDataSetDidTapButton(scrollView: UIScrollView) {
+        startTeamTapped(UIButton())
+    }
+    /*
+    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView) -> CGFloat {
+        return -100
+    }
+ */
+    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+        return true
     }
 
     /*

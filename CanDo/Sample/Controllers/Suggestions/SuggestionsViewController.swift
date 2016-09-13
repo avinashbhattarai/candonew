@@ -34,12 +34,12 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         super.viewDidLoad()
         self.title = "Suggestions"
         
-        self.suggestionsTableView.delegate = self
-        self.suggestionsTableView.dataSource = self;
-        self.suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        suggestionsTableView.delegate = self
+        suggestionsTableView.dataSource = self;
+        suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         
-        self.suggestionsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
+        suggestionsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
         
         var items = [SuggestionsItem]()
@@ -123,7 +123,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         print(button.indexPath)
         let item = sections[button.indexPath!.section].items[button.indexPath!.row] as! SuggestionsItem
         item.selected = !item.selected
-        self.suggestionsTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: (button.indexPath?.row)!, inSection: (button.indexPath?.section)!)], withRowAnimation: .Automatic)
+        suggestionsTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: (button.indexPath?.row)!, inSection: (button.indexPath?.section)!)], withRowAnimation: .Automatic)
     }
     //
     // MARK: - Event Handlers
@@ -137,12 +137,12 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         sender.rotate(0.0)
         
         // Reload section
-        self.suggestionsTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+        suggestionsTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
         
         if sections[section].collapsed == false
         {
-            let lastRow: Int = self.suggestionsTableView.numberOfRowsInSection(section)-1
-            self.suggestionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+            let lastRow: Int = suggestionsTableView.numberOfRowsInSection(section)-1
+            suggestionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
         }
        
     }
