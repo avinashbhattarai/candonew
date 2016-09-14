@@ -24,7 +24,7 @@ class Tip {
         self.title = title ?? ""
         var newCover = cover ?? ""
         newCover = newCover.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        self.cover = "http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"
+        self.cover = "http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"//newCover
         self.url = url ?? ""
        
     }

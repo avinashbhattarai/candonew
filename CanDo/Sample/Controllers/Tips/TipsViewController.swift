@@ -58,6 +58,14 @@ class TipsViewController: BaseViewController {
                             let newTip = Tip(title: tip["title"]as? String, cover: tip["cover"]as? String, url: tip["url"]as? String)
                             self.tipsArray.append(newTip)
                         }
+                    self.cachedImages = [UIImage?](count:self.tipsArray.count, repeatedValue: nil)
+                    for index in 0 ..< self.tipsArray.count {
+                        
+                        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                        self.loadImage(indexPath,tip: self.tipsArray[index])
+                    }
+
+                    
                     self.tipsTableView.reloadData()
                     SVProgressHUD.dismiss()
                     
@@ -89,10 +97,26 @@ class TipsViewController: BaseViewController {
         
     }
 
-    func reloadCellWithDownloadedImage(indexPath: NSIndexPath){
-        tipsTableView.beginUpdates()
-    tipsTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-        tipsTableView.endUpdates()
+    func loadImage(indexPath: NSIndexPath, tip:Tip){
+        
+        
+        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string:tip.cover), options: [], progress: {(receivedSize: Int, expectedSize: Int) -> Void in
+            // progression tracking code
+            
+            }, completed: {(image: UIImage?, error: NSError!, cacheType: SDImageCacheType, finished: Bool!, imageURL: NSURL!) -> Void in
+                // progression tracking code
+            
+                self.cachedImages![indexPath.row] = image
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tipsTableView.beginUpdates()
+                    self.tipsTableView.reloadRowsAtIndexPaths(
+                        [indexPath],
+                        withRowAnimation: .Fade)
+                    self.tipsTableView.endUpdates()
+                })
+
+        })
+
     }
    
     /*
@@ -115,7 +139,7 @@ extension TipsViewController : UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 500
+        return 300
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -131,10 +155,12 @@ extension TipsViewController : UITableViewDataSource{
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TipTableViewCell
         
         cell.titleLabel.text = tip.title
-        cell.setPostedImage(NSURL(string:tip.cover))
-       // reloadCellWithDownloadedImage(indexPath)
         
        
+        
+          cell.setPostedImage(self.cachedImages![indexPath.row])
+         
+            
         return cell
     }
 
