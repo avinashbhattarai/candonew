@@ -10,7 +10,7 @@ target 'CanDo' do
 pod 'IQKeyboardManagerSwift'
 pod 'SVProgressHUD'
 pod 'NVActivityIndicatorView'
-pod 'Moya'
+pod 'Moya', '= 7.0.0'
 pod 'Alamofire', '~> 3.4'
 pod 'ImagePicker'
 pod 'Fabric'
