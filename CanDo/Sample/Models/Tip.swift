@@ -15,13 +15,16 @@ class Tip {
     var title: String!
     var cover: String!
     var url: String!
+    var image: UIImage?
     
     // MARK: Initialization
     
     init(title: String?, cover: String?, url: String?) {
         
         self.title = title ?? ""
-        self.cover = cover ?? ""
+        var newCover = cover ?? ""
+        newCover = newCover.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        self.cover = "http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"
         self.url = url ?? ""
        
     }

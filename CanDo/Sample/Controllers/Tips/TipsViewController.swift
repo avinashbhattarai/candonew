@@ -10,7 +10,7 @@ import UIKit
 import Moya
 import SVProgressHUD
 import ESPullToRefresh
-
+import SDWebImage
 
 class TipsViewController: BaseViewController {
     
@@ -18,14 +18,18 @@ class TipsViewController: BaseViewController {
     @IBOutlet weak var tipsTableView: UITableView!
     
     var tipsArray = [Tip]()
-
+    var cachedImages:[UIImage?]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.tipsTableView.dataSource = self
-        self.tipsTableView.delegate = self
+        tipsTableView.dataSource = self
+        tipsTableView.delegate = self
         runTipsInfoRequest()
+        
+      
+        
        
 
     }
@@ -54,7 +58,7 @@ class TipsViewController: BaseViewController {
                             let newTip = Tip(title: tip["title"]as? String, cover: tip["cover"]as? String, url: tip["url"]as? String)
                             self.tipsArray.append(newTip)
                         }
-                    
+                    self.tipsTableView.reloadData()
                     SVProgressHUD.dismiss()
                     
                     
@@ -85,7 +89,12 @@ class TipsViewController: BaseViewController {
         
     }
 
-
+    func reloadCellWithDownloadedImage(indexPath: NSIndexPath){
+        tipsTableView.beginUpdates()
+    tipsTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        tipsTableView.endUpdates()
+    }
+   
     /*
     // MARK: - Navigation
 
@@ -101,6 +110,14 @@ class TipsViewController: BaseViewController {
 // MARK: - UITableViewDataSource
 extension TipsViewController : UITableViewDataSource{
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 500
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -114,13 +131,10 @@ extension TipsViewController : UITableViewDataSource{
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TipTableViewCell
         
         cell.titleLabel.text = tip.title
-      
-        if (tip.cover.characters.count > 0){
-           // cell.setPostedImage(notification.image)
-        }else{
-            cell.setPostedImage(nil)
-        }
+        cell.setPostedImage(NSURL(string:tip.cover))
+       // reloadCellWithDownloadedImage(indexPath)
         
+       
         return cell
     }
 
