@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sXV-SE-Blq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sXV-SE-Blq">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -44,8 +44,11 @@
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
             <string>MuseoSansRounded-300</string>
+            <string>MuseoSansRounded-300</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-500.otf">
+            <string>MuseoSansRounded-500</string>
+            <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
@@ -496,11 +499,11 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19b-7I-J2q" id="eI3-eV-Jmv">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xPI-84-rUj">
-                                                    <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="26"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1065,9 +1068,87 @@ how can we help today?</string>
                     <view key="view" contentMode="scaleToFill" id="vXq-lQ-s6h">
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Ij-xh-BSI">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="BQp-a2-ilr">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0A-gY-UGx">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                            <string key="text">Here are some tips and resources
+to help you support Rachael</string>
+                                            <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
+                                            <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.98039215686274506" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="350" id="OLi-Hq-xAu" customClass="TipTableViewCell" customModule="CanDo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="128" width="600" height="350"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OLi-Hq-xAu" id="Krz-ut-HPN">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="349"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My loved one has been diagnosed with breast cancer and I don’t know what to say!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UMq-Vr-FIm">
+                                                    <rect key="frame" x="20" y="20" width="560" height="48"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <color key="textColor" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oan-Lq-t4z">
+                                                    <rect key="frame" x="20" y="298" width="560" height="36"/>
+                                                    <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="20"/>
+                                                    <state key="normal" title="Read More  &gt;">
+                                                        <color key="titleColor" red="0.0" green="0.78431372549019607" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Gj-8B-hcK">
+                                                    <rect key="frame" x="0.0" y="80" width="600" height="210"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="210" id="c7v-Du-en9"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="UMq-Vr-FIm" secondAttribute="trailing" constant="20" id="168-wc-bXQ"/>
+                                                <constraint firstItem="5Gj-8B-hcK" firstAttribute="leading" secondItem="Krz-ut-HPN" secondAttribute="leading" id="FbY-Zk-lr8"/>
+                                                <constraint firstItem="Oan-Lq-t4z" firstAttribute="top" secondItem="5Gj-8B-hcK" secondAttribute="bottom" constant="8" id="G1Z-0B-nau"/>
+                                                <constraint firstItem="UMq-Vr-FIm" firstAttribute="top" secondItem="Krz-ut-HPN" secondAttribute="top" constant="20" id="GiW-Fg-jQq"/>
+                                                <constraint firstAttribute="trailing" secondItem="5Gj-8B-hcK" secondAttribute="trailing" id="IZ1-H2-j9m"/>
+                                                <constraint firstItem="5Gj-8B-hcK" firstAttribute="top" secondItem="UMq-Vr-FIm" secondAttribute="bottom" constant="12" id="iTO-AQ-Nty"/>
+                                                <constraint firstItem="UMq-Vr-FIm" firstAttribute="leading" secondItem="Krz-ut-HPN" secondAttribute="leading" constant="20" id="lry-ZG-yi4"/>
+                                                <constraint firstItem="Oan-Lq-t4z" firstAttribute="leading" secondItem="Krz-ut-HPN" secondAttribute="leading" constant="20" id="wQM-lx-ErU"/>
+                                                <constraint firstAttribute="trailing" secondItem="Oan-Lq-t4z" secondAttribute="trailing" constant="20" id="wTg-zK-g3G"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="coverImageView" destination="5Gj-8B-hcK" id="BSO-e6-xvZ"/>
+                                            <outlet property="readMoreButton" destination="Oan-Lq-t4z" id="eDf-Ft-Gi9"/>
+                                            <outlet property="titleLabel" destination="UMq-Vr-FIm" id="FE7-gl-SSn"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ktb-bL-0rf" firstAttribute="top" secondItem="8Ij-xh-BSI" secondAttribute="bottom" id="13a-X2-bng"/>
+                            <constraint firstItem="8Ij-xh-BSI" firstAttribute="leading" secondItem="vXq-lQ-s6h" secondAttribute="leading" id="VFV-5f-sx7"/>
+                            <constraint firstItem="8Ij-xh-BSI" firstAttribute="top" secondItem="BWb-aM-4ld" secondAttribute="bottom" id="lzW-5b-5dS"/>
+                            <constraint firstAttribute="trailing" secondItem="8Ij-xh-BSI" secondAttribute="trailing" id="tNh-Nu-Ils"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Supporter Tips" id="fBz-fu-mRR"/>
+                    <connections>
+                        <outlet property="headerLabel" destination="G0A-gY-UGx" id="iGQ-Hk-iEt"/>
+                        <outlet property="tipsTableView" destination="8Ij-xh-BSI" id="jh3-IQ-0Th"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxi-tG-AvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1168,7 +1249,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
@@ -1576,7 +1657,7 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -1639,10 +1720,10 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
                                                     <rect key="frame" x="20" y="0.0" width="510" height="44"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

@@ -88,6 +88,8 @@
 		93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */; };
 		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
 		93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */; };
+		EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */; };
+		EEB18D521D897D9A007E655B /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB18D511D897D9A007E655B /* Tip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -177,6 +179,8 @@
 		93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipTableViewCell.swift; sourceTree = "<group>"; };
+		EEB18D511D897D9A007E655B /* Tip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +350,7 @@
 				93F163191D7EF79C00100D90 /* Invite.swift */,
 				93F1631B1D7EFCB100100D90 /* Member.swift */,
 				93F1631D1D8193F100100D90 /* Notification.swift */,
+				EEB18D511D897D9A007E655B /* Tip.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				938FDC241D65E10E00B2D070 /* TipsViewController.swift */,
+				EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */,
 			);
 			path = Tips;
 			sourceTree = "<group>";
@@ -674,6 +680,7 @@
 				93142E3B1D78663B00CAC387 /* AddTodoTitleTextField.swift in Sources */,
 				93142E431D7C272600CAC387 /* AssignTodoViewController.swift in Sources */,
 				939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */,
+				EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */,
 				93142E1E1D745BC200CAC387 /* Todo.swift in Sources */,
 				93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */,
 				93142E331D783E0C00CAC387 /* TodoTableSectionFooter.swift in Sources */,
@@ -711,6 +718,7 @@
 				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,
 				938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */,
 				93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */,
+				EEB18D521D897D9A007E655B /* Tip.swift in Sources */,
 				93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				938FDC151D65B09200B2D070 /* BaseTabBarViewController.swift in Sources */,
 			);

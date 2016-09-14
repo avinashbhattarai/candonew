@@ -7,33 +7,84 @@
 //
 
 import UIKit
+import Moya
+import SVProgressHUD
+import ESPullToRefresh
 
-class TipsViewController: UIViewController {
+
+class TipsViewController: BaseViewController {
+    
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var tipsTableView: UITableView!
+    
+    var tipsArray = [Tip]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "iconChevronRightWhite-1"), forState: .Normal)
-        backButton.frame = CGRectMake(0, 0, 11, 16)
-        backButton.addTarget(self, action: #selector(backButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: backButton), animated: true);
+        self.tipsTableView.dataSource = self
+        self.tipsTableView.delegate = self
+        runTipsInfoRequest()
+       
 
     }
-    func backButtonTapped(sender: AnyObject) {
-        let nc = (self.tabBarController?.navigationController)! as UINavigationController
-        nc.popViewControllerAnimated(true)
-    }
-
+  
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func runTipsInfoRequest(){
+        
+        SVProgressHUD.show()
+        provider.request(.TipsInfo()) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
+                            print("wrong json format")
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    for tip in json{
+                            let newTip = Tip(title: tip["title"]as? String, cover: tip["cover"]as? String, url: tip["url"]as? String)
+                            self.tipsArray.append(newTip)
+                        }
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+        
+    }
+
 
     /*
     // MARK: - Navigation
@@ -46,3 +97,38 @@ class TipsViewController: UIViewController {
     */
 
 }
+
+// MARK: - UITableViewDataSource
+extension TipsViewController : UITableViewDataSource{
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tipsArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let tip : Tip = tipsArray[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TipTableViewCell
+        
+        cell.titleLabel.text = tip.title
+      
+        if (tip.cover.characters.count > 0){
+           // cell.setPostedImage(notification.image)
+        }else{
+            cell.setPostedImage(nil)
+        }
+        
+        return cell
+    }
+
+
+ 
+}
+// MARK: - UITableViewDelegate
+extension TipsViewController : UITableViewDelegate{
+    
+}
+

@@ -105,8 +105,27 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func removeButtonTapped(sender:UIButton) {
+        
+        
+        
+        let alert = UIAlertController(title: "", message: "Do you want to remove this user from team?", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            print("OK")
+            
+            self.runRemoveUserFromTeamRequest(sender)
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
+            print("Cancel")
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    
+    }
+    func runRemoveUserFromTeamRequest(sender: UIButton) {
+        
         print(sender.tag)
-          let member : Member = members[sender.tag]
+        
+        let member : Member = members[sender.tag]
         
         
         
@@ -155,9 +174,6 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
 
-        
-        
-        
     }
 
     func updateTeamTableView(){

@@ -26,6 +26,9 @@ public enum NetworkingService {
     case InviteToTeam(email: String)
     case AcceptInvite(teamId: Int)
     case RemoveFromTeam(memberId: Int)
+    
+    case TipsInfo()
+    
 }
 
 let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingService> in
@@ -89,6 +92,9 @@ extension NetworkingService: TargetType {
         case .RemoveFromTeam(let memberId):
             return "/team/member/\(memberId)"
             
+        case .TipsInfo():
+            return "/tips"
+            
         }
     }
     public var method: Moya.Method {
@@ -118,6 +124,8 @@ extension NetworkingService: TargetType {
         case .RemoveFromTeam:
             return .DELETE
         case .LeaveTeam:
+            return .GET
+        case .TipsInfo:
             return .GET
         }
     }
@@ -165,6 +173,9 @@ extension NetworkingService: TargetType {
         case .RemoveFromTeam(let memberId):
             return ["id": memberId]
             
+        case .TipsInfo():
+            return nil
+            
         }
     }
     public var sampleData: NSData {
@@ -201,7 +212,8 @@ extension NetworkingService: TargetType {
         case .RemoveFromTeam(let memberId):
             return "{\"id\": \"\(memberId)\"}".UTF8EncodedData
 
-
+        case .TipsInfo():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
         }
     }
     public var multipartBody: [MultipartFormData]? {
