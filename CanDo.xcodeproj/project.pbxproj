@@ -89,6 +89,7 @@
 		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
 		93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */; };
 		EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */; };
+		EE3C69121D8A84F10050A238 /* TipDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */; };
 		EEB18D521D897D9A007E655B /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB18D511D897D9A007E655B /* Tip.swift */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +181,7 @@
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipTableViewCell.swift; sourceTree = "<group>"; };
+		EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipDetailsViewController.swift; sourceTree = "<group>"; };
 		EEB18D511D897D9A007E655B /* Tip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -453,6 +455,7 @@
 			children = (
 				938FDC241D65E10E00B2D070 /* TipsViewController.swift */,
 				EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */,
+				EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */,
 			);
 			path = Tips;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				938FDC431D6CC9BD00B2D070 /* SelectSuggestionButton.swift in Sources */,
 				938FDC411D6CC35200B2D070 /* SuggestionsItemCell.swift in Sources */,
 				938FDC2B1D671A3200B2D070 /* UIViewController+HideKeyboard.swift in Sources */,
+				EE3C69121D8A84F10050A238 /* TipDetailsViewController.swift in Sources */,
 				938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */,
 				93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */,
 				EEB18D521D897D9A007E655B /* Tip.swift in Sources */,

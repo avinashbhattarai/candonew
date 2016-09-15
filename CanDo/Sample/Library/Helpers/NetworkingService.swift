@@ -29,6 +29,10 @@ public enum NetworkingService {
     
     case TipsInfo()
     
+    case AddList(name: String)
+    case AddTodo(listId: Int, name: String)
+
+    
 }
 
 let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingService> in
@@ -95,6 +99,11 @@ extension NetworkingService: TargetType {
         case .TipsInfo():
             return "/tips"
             
+        case .AddList(_):
+            return "/lists"
+        case .AddTodo(_,_):
+            return "/todo"
+            
         }
     }
     public var method: Moya.Method {
@@ -127,6 +136,10 @@ extension NetworkingService: TargetType {
             return .GET
         case .TipsInfo:
             return .GET
+        case .AddList:
+            return .POST
+        case .AddTodo:
+            return .POST
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -176,6 +189,11 @@ extension NetworkingService: TargetType {
         case .TipsInfo():
             return nil
             
+        case .AddList(let name):
+            return ["name": name]
+        case .AddTodo(let listId, let name):
+            return ["list_id": listId, "name":name]
+            
         }
     }
     public var sampleData: NSData {
@@ -214,6 +232,12 @@ extension NetworkingService: TargetType {
 
         case .TipsInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
+            
+        case .AddList(let name):
+            return "{\"name\": \"\(name)\"}".UTF8EncodedData
+        case .AddTodo(let listId, let name):
+            return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\"}".UTF8EncodedData
+
         }
     }
     public var multipartBody: [MultipartFormData]? {

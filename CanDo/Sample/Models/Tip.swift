@@ -24,8 +24,12 @@ class Tip {
         self.title = title ?? ""
         var newCover = cover ?? ""
         newCover = newCover.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        self.cover = "http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"//newCover
-        self.url = url ?? ""
+        print(newCover)
+        self.cover = newCover//"http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"//
+        var newUrl = url ?? ""
+        newUrl = newUrl.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        print(newUrl)
+        self.url = newUrl
        
     }
     

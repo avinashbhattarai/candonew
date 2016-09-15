@@ -12,7 +12,7 @@ class TipTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var readMoreButton: UIButton!
+    @IBOutlet weak var readMoreButton: ButtonWithIndexPath!
     
     override func awakeFromNib() {
         super.awakeFromNib()

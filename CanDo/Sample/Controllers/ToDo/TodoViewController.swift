@@ -9,6 +9,8 @@
 import UIKit
 import SVProgressHUD
 import IQKeyboardManagerSwift
+import Moya
+import ESPullToRefresh
 class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var listTextField: UITextField!
@@ -62,7 +64,7 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
             for list: NSDictionary in response {
                 if let name : String = list["name"] as? String {
                     
-                    let newList = List(name: name)
+                    let newList = List(name: name, listId: 1)
                     var todosArray = [Todo]()
                     
                     if let todos : [NSDictionary] = list["todos"] as? [NSDictionary] {
@@ -156,7 +158,6 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TodoTableViewCell
         
         if todo.finished! {
-            print(indexPath)
             cell.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
         }else{
             cell.selectedButton .setImage(UIImage(), forState: .Normal)
@@ -239,20 +240,90 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
     func  addNewTodoButtonTapped(sender: UIButton) {
         
         if let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter{
-    
+            
                 let section :Int = sender.tag
                 let list = lists[section]
-                let newTodo = Todo(name: footer.titleTextField.text!, list: list)
-                let person = Person(name: footer.assignTodoButton.titleLabel!.text!, avatar: "img")
-                newTodo.date = NSDate()
-                newTodo.assignedPerson = person
-                list.todos?.append(newTodo)
-                toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
-                
-                let lastRow: Int = toDoTableView.numberOfRowsInSection(section)-1
-                toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+                runAddTodoRequest(footer.titleTextField.text!, listId: list.listId)
+            
             }
     }
+    
+    func runAddTodoRequest(todoName: String, listId: Int){
+        
+        SVProgressHUD.show()
+        provider.request(.AddTodo(listId: listId, name: todoName)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
+                        print("wrong json format")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    print(json)
+                    SVProgressHUD.dismiss()
+                    /*
+                    let newTodo = Todo(name: footer.titleTextField.text!, list: list)
+                    let person = Person(name: footer.assignTodoButton.titleLabel!.text!, avatar: "img")
+                    newTodo.date = NSDate()
+                    newTodo.assignedPerson = person
+                    list.todos?.append(newTodo)
+                    toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                     
+                    
+                    let lastRow: Int = toDoTableView.numberOfRowsInSection(section)-1
+                    toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+                    */
+                    /*
+                    guard let listId = json["id"] as? Int else{
+                        print("wrong list id")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    let newList = List(name: self.listTextField.text!, listId: listId)
+                    newList.todos = [Todo]()
+                    self.lists.insert(newList, atIndex: 0)
+                    
+                    self.listTextField.text = ""
+                    self.toDoTableView.reloadData()
+                    self.addLIstButtonTaped(UIButton())
+                    */
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+        
+    }
+
+    
 
 
    func addTodoTapped(sender: UIButton) {
@@ -333,17 +404,70 @@ class TodoViewController: BaseViewController , UITableViewDelegate,UITableViewDa
             return
         }
         
-         let newList = List(name: listTextField.text!)
-        newList.todos = [Todo]()
-        lists.insert(newList, atIndex: 0)
-        
-        listTextField.text = ""
-        toDoTableView.reloadData()
-        
-        addLIstButtonTaped(UIButton())
+        runAddListRequest(listTextField.text!)
+    }
+    
+    func runAddListRequest(listName: String){
         
         
-        
+        SVProgressHUD.show()
+        provider.request(.AddList(name:listName)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
+                        print("wrong json format")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    print(json)
+                    
+                    guard let listId = json["id"] as? Int else{
+                        print("wrong list id")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    
+                    let newList = List(name: self.listTextField.text!, listId: listId)
+                    newList.todos = [Todo]()
+                    self.lists.insert(newList, atIndex: 0)
+                    
+                    self.listTextField.text = ""
+                    self.toDoTableView.reloadData()
+                    self.addLIstButtonTaped(UIButton())
+                        
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+
     }
     
     @IBAction func addLIstButtonTaped(sender: AnyObject) {

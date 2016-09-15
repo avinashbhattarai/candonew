@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sXV-SE-Blq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sXV-SE-Blq">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -47,6 +47,7 @@
             <string>MuseoSansRounded-300</string>
         </mutableArray>
         <mutableArray key="exljbris - MuseoSansRounded-500.otf">
+            <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
             <string>MuseoSansRounded-500</string>
@@ -499,11 +500,11 @@ how can we help today?</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="19b-7I-J2q" id="eI3-eV-Jmv">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xPI-84-rUj">
-                                                    <rect key="frame" x="15" y="0.0" width="550" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-700" family="Museo Sans Rounded" pointSize="26"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1057,6 +1058,75 @@ how can we help today?</string>
             </objects>
             <point key="canvasLocation" x="4402" y="2739"/>
         </scene>
+        <!--Tip Details View Controller-->
+        <scene sceneID="exH-Xz-olZ">
+            <objects>
+                <viewController id="f6c-6M-YVZ" customClass="TipDetailsViewController" customModule="CanDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="R6r-9S-4h7"/>
+                        <viewControllerLayoutGuide type="bottom" id="OgW-4a-AK0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d5n-aL-l80">
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhc-j3-e6l">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="472"/>
+                                <subviews>
+                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZh-xL-Krm">
+                                        <rect key="frame" x="0.0" y="128" width="600" height="320"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="320" id="lGm-jy-7it"/>
+                                        </constraints>
+                                    </webView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="OFF.png" translatesAutoresizingMaskIntoConstraints="NO" id="G5z-nw-wrd">
+                                        <rect key="frame" x="0.0" y="96" width="600" height="20"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My loved one has been diagnosed with breast cancer and I don’t know what to say!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5A4-Nw-QKA">
+                                        <rect key="frame" x="20" y="20" width="560" height="48"/>
+                                        <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="20"/>
+                                        <color key="textColor" red="0.31764705879999999" green="0.33333333329999998" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="LZh-xL-Krm" firstAttribute="centerX" secondItem="mhc-j3-e6l" secondAttribute="centerX" id="00K-n9-Asf"/>
+                                    <constraint firstAttribute="trailing" secondItem="5A4-Nw-QKA" secondAttribute="trailing" constant="20" id="0hc-dl-tcM"/>
+                                    <constraint firstAttribute="trailing" secondItem="G5z-nw-wrd" secondAttribute="trailing" id="9C6-So-7Rl"/>
+                                    <constraint firstItem="LZh-xL-Krm" firstAttribute="top" secondItem="G5z-nw-wrd" secondAttribute="bottom" constant="20" id="9Oj-c0-tYj"/>
+                                    <constraint firstAttribute="bottom" secondItem="LZh-xL-Krm" secondAttribute="bottom" constant="12" id="Dgp-RS-xIx"/>
+                                    <constraint firstItem="G5z-nw-wrd" firstAttribute="top" secondItem="5A4-Nw-QKA" secondAttribute="bottom" constant="20" id="SGK-EP-NYh"/>
+                                    <constraint firstItem="5A4-Nw-QKA" firstAttribute="top" secondItem="mhc-j3-e6l" secondAttribute="top" constant="20" id="Ue1-h7-JI4"/>
+                                    <constraint firstAttribute="trailing" secondItem="LZh-xL-Krm" secondAttribute="trailing" id="aXH-ZY-jgg"/>
+                                    <constraint firstItem="5A4-Nw-QKA" firstAttribute="centerX" secondItem="mhc-j3-e6l" secondAttribute="centerX" id="dc8-HD-jc5"/>
+                                    <constraint firstItem="5A4-Nw-QKA" firstAttribute="leading" secondItem="mhc-j3-e6l" secondAttribute="leading" constant="20" id="eSa-d4-KdL"/>
+                                    <constraint firstItem="LZh-xL-Krm" firstAttribute="leading" secondItem="mhc-j3-e6l" secondAttribute="leading" id="fPe-nL-SH6"/>
+                                    <constraint firstItem="G5z-nw-wrd" firstAttribute="leading" secondItem="mhc-j3-e6l" secondAttribute="leading" id="q0r-ch-OMG"/>
+                                    <constraint firstItem="G5z-nw-wrd" firstAttribute="centerX" secondItem="mhc-j3-e6l" secondAttribute="centerX" id="uWx-80-TPD"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mhc-j3-e6l" secondAttribute="trailing" id="Y70-cD-gfT"/>
+                            <constraint firstItem="mhc-j3-e6l" firstAttribute="leading" secondItem="d5n-aL-l80" secondAttribute="leading" id="kFo-p6-frG"/>
+                            <constraint firstItem="mhc-j3-e6l" firstAttribute="top" secondItem="R6r-9S-4h7" secondAttribute="bottom" id="vtT-Qf-wQW"/>
+                            <constraint firstItem="OgW-4a-AK0" firstAttribute="top" secondItem="mhc-j3-e6l" secondAttribute="bottom" constant="15" id="zTv-hk-mlo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tipImage" destination="G5z-nw-wrd" id="ngz-Tv-Ory"/>
+                        <outlet property="tipTitle" destination="5A4-Nw-QKA" id="cNN-5e-ggw"/>
+                        <outlet property="tipWebView" destination="LZh-xL-Krm" id="264-2a-x0T"/>
+                        <outlet property="tipsScrollView" destination="mhc-j3-e6l" id="8ri-gq-mHD"/>
+                        <outlet property="webViewHeight" destination="lGm-jy-7it" id="2E9-Yz-V6E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="loX-0G-XJO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4230" y="3460"/>
+        </scene>
         <!--Supporter Tips-->
         <scene sceneID="f1o-AK-vY5">
             <objects>
@@ -1107,16 +1177,16 @@ to help you support Rachael</string>
                                                     <color key="textColor" red="0.31764705882352939" green="0.33333333333333331" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconFb" translatesAutoresizingMaskIntoConstraints="NO" id="5Gj-8B-hcK">
-                                                    <rect key="frame" x="0.0" y="100" width="600" height="190"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oan-Lq-t4z">
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oan-Lq-t4z" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="304" width="560" height="36"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="20"/>
                                                     <state key="normal" title="Read More  &gt;">
                                                         <color key="titleColor" red="0.0" green="0.78431372549019607" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="iconFb" translatesAutoresizingMaskIntoConstraints="NO" id="5Gj-8B-hcK">
+                                                    <rect key="frame" x="0.0" y="96" width="600" height="190"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.98039215690000003" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -1153,6 +1223,7 @@ to help you support Rachael</string>
                     <connections>
                         <outlet property="headerLabel" destination="G0A-gY-UGx" id="iGQ-Hk-iEt"/>
                         <outlet property="tipsTableView" destination="8Ij-xh-BSI" id="jh3-IQ-0Th"/>
+                        <segue destination="f6c-6M-YVZ" kind="show" identifier="toTipDetailsViewController" id="gTx-7w-qVt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxi-tG-AvD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1254,7 +1325,7 @@ to help you support Rachael</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Z-y5-sFi" id="byU-zX-MHb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TeI-hU-CHP" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
@@ -1662,7 +1733,7 @@ to help you support Rachael</string>
                                         <rect key="frame" x="0.0" y="28" width="600" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4T-IA-I0W" id="025-DV-hD3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SKa-vt-Uik">
@@ -1725,10 +1796,10 @@ to help you support Rachael</string>
                                         <rect key="frame" x="0.0" y="104" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWd-nl-r1Y" id="TqS-ij-lpL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgc-pe-h3N">
                                                     <rect key="frame" x="20" y="0.0" width="510" height="44"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2691,6 +2762,7 @@ receive a password reset email</string>
     </scenes>
     <resources>
         <image name="Group 4" width="295" height="326"/>
+        <image name="OFF.png" width="14" height="20"/>
         <image name="icon-delete" width="10" height="11"/>
         <image name="iconChevronUpNavy" width="18" height="12"/>
         <image name="iconFb" width="13" height="24"/>

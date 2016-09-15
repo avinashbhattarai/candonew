@@ -23,6 +23,7 @@ struct Helper {
         static let kToSelectTodoDateViewController = "toSelectTodoDateViewController"
         static let kToAssignTodoViewController = "toAssignTodoViewController"
         static let kToAccountSettingsViewController = "toAccountSettingsViewController"
+        static let kToTipDetailsViewController = "toTipDetailsViewController"
         
         
       }

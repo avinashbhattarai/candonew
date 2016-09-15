@@ -12,7 +12,7 @@ import UIKit
 class List {
     
     // MARK: Properties
-    
+    var listId: Int!
     var name: String!
     var todos: [Todo]?
     
@@ -20,10 +20,9 @@ class List {
     
     // MARK: Initialization
     
-    init(name: String) {
-        self.name = name
-        
-        
-    }
+    init(name: String?, listId:Int) {
+        self.name = name ?? ""
+        self.listId = listId
+     }
     
 }
