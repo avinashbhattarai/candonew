@@ -32,9 +32,9 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
             var person:Person?
             
             if personIndex == 0 {
-                 person = Person(name: "Anyone", selected: true, avatar: "")
+                 person = Person(name: "Anyone", personId: 0)
             }else{
-                 person = Person(name: String(format: "Person %d",personIndex), selected: false, avatar: "imageHelpAssignEstelleCopy")
+                 person = Person(name: String(format: "Person %d",personIndex), personId: personIndex)
             }
            
             persons.append(person!)
@@ -80,12 +80,10 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! PersonTableViewCell
         
-        if person.selected! {
-            print(indexPath)
+        
+       /*
             cell.selectButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
-        }else{
-            cell.selectButton .setImage(UIImage(), forState: .Normal)
-        }
+ */
         cell.selectButton.backgroundColor = UIColor.clearColor()
         cell.selectButton.layer.cornerRadius = cell.selectButton.frame.size.height/2
         cell.selectButton.layer.borderWidth = 1
@@ -94,7 +92,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         cell.personAvatar.layer.cornerRadius = 5
 
         cell.personTitle.text = person.name
-        cell.personAvatar.image =  UIImage(named: person.avatar!)
+        cell.personAvatar.image =  UIImage(named: "imageHelpAssignEstelleCopy")
         cell.selectButton.indexPath = indexPath
         cell.selectButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
       
@@ -107,6 +105,8 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
   
     
     @IBAction func assignTodoButtonTapped(sender: AnyObject) {
+        
+        /*
         for person:Person in persons{
             if person.selected! {
                 currentTodo?.assignedPerson = person
@@ -114,13 +114,14 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
             }
             
         }
+ */
         self.navigationController!.popViewControllerAnimated(true)
      }
     
     
     func selectedButtonTapped(sender: ButtonWithIndexPath) {
         
-        
+        /*
         for person:Person in persons{
             person.selected = false
         }
@@ -128,6 +129,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         let row: Int = sender.indexPath!.row
         let selectedPerson:Person = persons[row]
         selectedPerson.selected = true
+ */
         
         personsTableView.reloadData()
         

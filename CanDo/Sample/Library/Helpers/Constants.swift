@@ -44,6 +44,16 @@ struct Helper {
         
         
     }
+    struct TodoStatusKey {
+        static let kActive = "Active"
+        static let kOverdue = "Overdue"
+        
+        
+        
+        
+        
+    }
+
 
 
     struct Colors {

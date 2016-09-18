@@ -22,6 +22,8 @@ UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName
             }
         }
 
+        
+        
         // Do any additional setup after loading the view.
         //test
     }

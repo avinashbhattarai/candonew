@@ -14,24 +14,66 @@ class Todo {
     
     var name: String!
     var list: List!
-    var updated: NSDate!
-    var createdAt: NSDate!
-    var date: NSDate!
-    var time: String!
-    var status: Int!
+    var updatedAt: NSDate?
+    var createdAt: NSDate?
+    var date: NSDate?
+    var time: NSDate!
+    var status: String!
     var todoId: Int!
-    var assignedPerson :Person!
+    var assignedTo: Person!
     
     
-    var finished: Bool! = false
+    var footer: TodoTableSectionFooter?
+    
+    //debug
+  //  var assignedPerson :Person!
+  //  var finished: Bool! = false
     
     
     // MARK: Initialization
-    
+    //debug
+    /*
     init(name: String, list: List, finished: Bool = false) {
         self.name = name
         self.list = list
         self.finished = finished
     }
+ */
+    
+    
+    
+  
+    
+    // MARK: Initialization
+    
+    init(name: String?, list: List, updatedAt: String?, createdAt: String?, date: String?, time: String?, status: String?, todoId: Int, assignedTo: Person) {
+        
+        print("date \(date)")
+        self.name = name ?? ""
+        self.list = list
+        self.updatedAt = updatedAt != nil ? stringCreateUpdateToDate(updatedAt!) : nil
+        self.createdAt = createdAt != nil ? stringCreateUpdateToDate(createdAt!) : nil
+        self.date = date != nil ? stringDateToDate(date!) : nil
+        self.time = time != nil ? stringTimeToDate(time!)  : nil
+        self.status = status ?? Helper.TodoStatusKey.kActive
+        self.todoId = todoId
+        self.assignedTo = assignedTo
+        
+        
+        
+    }
+    
+    
+    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    }
+    func stringDateToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd"))
+    }
+    func stringTimeToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
+    }
+
+    
     
 }

@@ -13,18 +13,37 @@ class Person {
     // MARK: Properties
     
     var name: String!
-    var selected: Bool! = false
-    var avatar: String?
+    var personId : Int
+    
+    //debug
+   // var selected: Bool! = false
+   // var avatar: String?
     
     
     
     // MARK: Initialization
-    
+    //debug
+    /*
     init(name: String, selected: Bool = false, avatar: String ) {
         self.name = name
         self.selected = selected
         self.avatar = avatar
-       
+        
+        personId = 0
     }
+ */
+    
+    
+    init(name: String?, personId: Int ) {
+        self.name = name ?? "Anyone"
+        print("self.name1 \(self.name)  name1 \(name) ")
+        self.name = name == "" ? "Anyone" : self.name
+        print("self.name2 \(self.name)  name2 \(name) ")
+        self.personId = personId
+        
+        
+    }
+
+    
     
 }

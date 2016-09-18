@@ -14,10 +14,11 @@ class TodoTableSectionFooter: UITableViewHeaderFooterView {
     @IBOutlet weak var addTodoButton: AddPhotoButton!
     @IBOutlet weak var addTodoView: UIView!
     @IBOutlet weak var selectedBtton: UIButton!
-    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var titleTextField: AddTodoTitleTextField!
     @IBOutlet weak var dateButton: DateUnderlineButton!
     @IBOutlet weak var assignTodoButton: AssignTodoUndelineButton!
     @IBOutlet weak var undelineImage: UIImageView!
+    var newTodo:Todo?
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -11,8 +11,11 @@ import UIKit
 class SelectTodoDateViewController: BaseSecondLineViewController {
 
     var currentTodo: Todo?
-    var selectedDate: NSDate = NSDate()
+    var selectedDate: NSDate?
+    var selectedTime: NSDate?
     var senderViewController: UIViewController?
+    var isUpdate: Bool = false
+    
     
     @IBOutlet weak var todoTitle: UILabel!
     @IBOutlet weak var anyTimeButton: ButtonWithIndexPath!
@@ -29,7 +32,7 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
 
       
         
-        if (currentTodo != nil) {
+        if (currentTodo?.name != "") {
              todoTitle.text = currentTodo?.name
         }
        
@@ -60,9 +63,8 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
         
         // get the date string applied date format
         let mySelectedDate: NSString = myDateFormatter.stringFromDate(sender.date)
-        
         selectedDate = sender.date
-       
+        selectedTime = sender.date
         print(mySelectedDate)
         print(selectedDate)
     }
@@ -83,7 +85,37 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
     
     
     @IBAction func setDateButtonTapped(sender: AnyObject) {
-        currentTodo?.date = selectedDate
+        currentTodo?.date = datePicker.date
+        let dateFormatter = NSDateFormatter()
+        let timeFormater = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        timeFormater.timeStyle = NSDateFormatterStyle.ShortStyle
+        let dateInFormat = dateFormatter.stringFromDate(datePicker.date)
+        var timeInFormat:String?
+       
+        if anyTimeButton.selected {
+            currentTodo?.time = nil
+            timeInFormat = "Any time"
+        }else{
+            currentTodo?.time = datePicker.date
+            timeInFormat = timeFormater.stringFromDate(datePicker.date)
+            
+        }
+        print(timeInFormat)
+        print(dateInFormat)
+        
+        if currentTodo?.footer != nil {
+            currentTodo?.footer?.dateButton.setTitle(String(format: "%@, %@",timeInFormat!,dateInFormat), forState: .Normal)
+            currentTodo?.footer?.dateButton.setImage(nil, forState: .Normal)
+            currentTodo?.footer?.undelineImage.hidden = true
+        }else{
+            if currentTodo != nil {
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+            }
+            
+        }
+        
+        
         self.navigationController?.popViewControllerAnimated(true)
         
     }

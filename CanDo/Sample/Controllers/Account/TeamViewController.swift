@@ -214,7 +214,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                             return;
                     }
                     
-                    SVProgressHUD.showSuccessWithStatus("User was invited successfully")
+                    SVProgressHUD.dismiss()
                     NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
                     self.inviteTextField.text = ""
                     print(json)

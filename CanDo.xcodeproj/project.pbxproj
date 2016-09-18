@@ -74,6 +74,7 @@
 		939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */; };
 		939DE54F1D7065CE00CE3751 /* PostUpdateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */; };
 		939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE5501D7071F300CE3751 /* AddPhotoButton.swift */; };
+		93B75F721D8C215C00DA87C3 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */; };
 		93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1630B1D7D7FF200100D90 /* AccountSettingsViewController.swift */; };
 		93F1630E1D7D9E6C00100D90 /* TeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1630D1D7D9E6C00100D90 /* TeamViewController.swift */; };
 		93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F163111D7DA57E00100D90 /* InviteTableViewCell.swift */; };
@@ -163,6 +164,7 @@
 		939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSdata+JSON.swift"; sourceTree = "<group>"; };
 		939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostUpdateButton.swift; path = Views/PostUpdateButton.swift; sourceTree = "<group>"; };
 		939DE5501D7071F300CE3751 /* AddPhotoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPhotoButton.swift; path = Views/AddPhotoButton.swift; sourceTree = "<group>"; };
+		93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		93F1630B1D7D7FF200100D90 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		93F1630D1D7D9E6C00100D90 /* TeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamViewController.swift; sourceTree = "<group>"; };
 		93F163111D7DA57E00100D90 /* InviteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteTableViewCell.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 		938FDBCD1D64729200B2D070 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */,
 				93F97D881D883A790059FEE5 /* UIScrollView+EmptyDataSet.h */,
 				93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */,
 				938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */,
@@ -700,6 +703,7 @@
 				93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */,
+				93B75F721D8C215C00DA87C3 /* AFDateExtension.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
 				93142E2D1D76EB3C00CAC387 /* UINavigationController+Completion.swift in Sources */,
 				93142E1C1D745B6400CAC387 /* List.swift in Sources */,
@@ -853,7 +857,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
+				PROVISIONING_PROFILE = "a0e55924-7473-4244-ba4f-af95f7991013";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -878,7 +882,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff001b99-1f3a-480f-a639-b24cd266ab06";
+				PROVISIONING_PROFILE = "a0e55924-7473-4244-ba4f-af95f7991013";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

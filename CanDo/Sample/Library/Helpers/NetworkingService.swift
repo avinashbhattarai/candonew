@@ -30,7 +30,9 @@ public enum NetworkingService {
     case TipsInfo()
     
     case AddList(name: String)
-    case AddTodo(listId: Int, name: String)
+    case AddTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
+    case UpdateTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
+    case ListsInfo()
 
     
 }
@@ -101,8 +103,12 @@ extension NetworkingService: TargetType {
             
         case .AddList(_):
             return "/lists"
-        case .AddTodo(_,_):
+        case .AddTodo(_,_,_,_,_):
             return "/todo"
+        case .UpdateTodo(_,_,_,_,_):
+            return "/todo"
+        case .ListsInfo():
+            return "/lists"
             
         }
     }
@@ -140,6 +146,10 @@ extension NetworkingService: TargetType {
             return .POST
         case .AddTodo:
             return .POST
+        case .UpdateTodo:
+            return .PUT
+        case .ListsInfo:
+            return .GET
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -191,8 +201,25 @@ extension NetworkingService: TargetType {
             
         case .AddList(let name):
             return ["name": name]
-        case .AddTodo(let listId, let name):
-            return ["list_id": listId, "name":name]
+        case .AddTodo(let listId, let name, let assign_to, let date, let time):
+            var params: [String : AnyObject] = [:]
+            params["list_id"] = listId
+            params["name"] = name
+            params["assign_to"] = assign_to
+            params["date"] = date
+            params["time"] = time
+            return params
+        case .UpdateTodo(let listId, let name, let assign_to, let date, let time):
+            var params: [String : AnyObject] = [:]
+            params["list_id"] = listId
+            params["name"] = name
+            params["assign_to"] = assign_to
+            params["date"] = date
+            params["time"] = time
+            return params
+
+        case .ListsInfo():
+            return nil
             
         }
     }
@@ -235,8 +262,12 @@ extension NetworkingService: TargetType {
             
         case .AddList(let name):
             return "{\"name\": \"\(name)\"}".UTF8EncodedData
-        case .AddTodo(let listId, let name):
-            return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\"}".UTF8EncodedData
+        case .AddTodo(let listId, let name, let assign_to, let date, let time):
+            return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
+        case .UpdateTodo(let listId, let name, let assign_to, let date, let time):
+            return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
+        case .ListsInfo():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
 
         }
     }

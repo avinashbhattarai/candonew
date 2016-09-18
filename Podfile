@@ -18,7 +18,8 @@ pod 'Crashlytics'
 pod 'PullToRefresher', '~> 1.4.0'
 pod 'FSCalendar'
 pod "ESPullToRefresh"
-pod 'SDWebImage'
-pod 'SWXMLHash', '2.5.1'
+pod 'Kingfisher', '2.6'
+pod "AFDateHelper", '3.4.2'
+
 
 end

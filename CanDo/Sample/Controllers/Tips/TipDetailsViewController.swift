@@ -8,7 +8,7 @@
 
 import UIKit
 import SVProgressHUD
-import SWXMLHash
+
 class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, NSXMLParserDelegate {
 
     @IBOutlet weak var tipsScrollView: UIScrollView!
