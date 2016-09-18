@@ -31,7 +31,7 @@ public enum NetworkingService {
     
     case AddList(name: String)
     case AddTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
-    case UpdateTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
+    case UpdateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?)
     case ListsInfo()
 
     
@@ -105,8 +105,8 @@ extension NetworkingService: TargetType {
             return "/lists"
         case .AddTodo(_,_,_,_,_):
             return "/todo"
-        case .UpdateTodo(_,_,_,_,_):
-            return "/todo"
+        case .UpdateTodo(let todoId,_,_,_,_):
+            return "/todo/\(todoId)"
         case .ListsInfo():
             return "/lists"
             
@@ -209,9 +209,9 @@ extension NetworkingService: TargetType {
             params["date"] = date
             params["time"] = time
             return params
-        case .UpdateTodo(let listId, let name, let assign_to, let date, let time):
+        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time):
             var params: [String : AnyObject] = [:]
-            params["list_id"] = listId
+            params["id"] = todoId
             params["name"] = name
             params["assign_to"] = assign_to
             params["date"] = date
@@ -264,8 +264,8 @@ extension NetworkingService: TargetType {
             return "{\"name\": \"\(name)\"}".UTF8EncodedData
         case .AddTodo(let listId, let name, let assign_to, let date, let time):
             return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
-        case .UpdateTodo(let listId, let name, let assign_to, let date, let time):
-            return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
+        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time):
+            return "{\"id\": \"\(todoId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
         case .ListsInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
 

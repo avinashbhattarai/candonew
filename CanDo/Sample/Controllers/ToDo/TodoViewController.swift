@@ -83,7 +83,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         selectedTime = nil
                     }
 
-                runUpdateTodoRequest(todo.name, listId: todo.list.listId, assignTo: nil, date: selectedDate, time: selectedTime)
+                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignTo: nil, date: selectedDate, time: selectedTime)
             }
 
         }
@@ -258,6 +258,16 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		cell.selectedButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
 		cell.assignedPersonButton.setTitle(todo.assignedTo.name, forState: .Normal)
 		cell.assignedPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        if todo.assignedTo.personId == 0 {
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
+            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
+            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(167, green: 90, blue: 255).CGColor
+        }else{
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
+            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
+            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).CGColor
+        }
+        
 
 		return cell
 	}
@@ -425,10 +435,10 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 	}
     
-    func runUpdateTodoRequest(todoName: String, listId: Int, assignTo: Int?, date:String?, time:String?) {
+    func runUpdateTodoRequest(todoName: String, todoId: Int, assignTo: Int?, date:String?, time:String?) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateTodo(listId: listId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
+        provider.request(.UpdateTodo(todoId: todoId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -541,7 +551,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 }
                 
             
-                runUpdateTodoRequest(todoTitle!, listId: todo.list.listId, assignTo: nil, date: nil, time: nil)
+                runUpdateTodoRequest(todoTitle!, todoId: todo.todoId, assignTo: nil, date: nil, time: nil)
 
 		}
         
