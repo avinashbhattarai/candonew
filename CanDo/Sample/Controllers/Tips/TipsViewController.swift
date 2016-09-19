@@ -25,7 +25,7 @@ class TipsViewController: BaseViewController {
 		// Do any additional setup after loading the view.
 		tipsTableView.dataSource = self
 		tipsTableView.delegate = self
-		runTipsInfoRequest()
+		
 
 		tipsTableView.es_addPullToRefresh {
 
@@ -37,6 +37,7 @@ class TipsViewController: BaseViewController {
 			/// Set ignore footer or not
 			// self?.teamTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
 		}
+        tipsTableView.es_startPullToRefresh()
 
 	}
 
@@ -47,7 +48,7 @@ class TipsViewController: BaseViewController {
 
 	func runTipsInfoRequest() {
 
-		SVProgressHUD.show()
+		
 		provider.request(.TipsInfo()) { result in
 			switch result {
 			case let .Success(moyaResponse):
@@ -56,6 +57,7 @@ class TipsViewController: BaseViewController {
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
+                        self.tipsTableView.es_stopPullToRefresh(completion: true)
 						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
 						return
 					}

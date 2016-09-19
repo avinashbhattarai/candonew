@@ -52,7 +52,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 		}
 
-		runListsInfoRequest()
+		toDoTableView.es_startPullToRefresh()
     
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataTodo(_:)), name:"reloadDataTodo", object: nil)
        
@@ -83,7 +83,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         selectedTime = nil
                     }
 
-                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignTo: nil, date: selectedDate, time: selectedTime)
+                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignTo: todo.assignedTo.personId, date: selectedDate, time: selectedTime)
             }
 
         }
@@ -91,7 +91,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
 	func runListsInfoRequest() {
 
-		SVProgressHUD.show()
+		
 		provider.request(.ListsInfo()) { result in
 			switch result {
 			case let .Success(moyaResponse):
@@ -100,6 +100,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
+                        self.toDoTableView.es_stopPullToRefresh(completion: true)
 						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
 						return;
 					}
@@ -274,11 +275,10 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 	func assignNewTodoButtonTapped(sender: DateUnderlineButton) {
 
-		currentTodo = nil
-		let section: Int = sender.tag
-		let list = lists[section]
-		print(list)
-		performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        if  let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter {
+		    currentTodo = footer.newTodo
+            performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        }
 
 	}
 
@@ -392,9 +392,11 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					
                     if let todoId = json["id"] as? Int {
                         var person:Person?
-                        if let assignedToId = json["assign_to_id"] as? Int {
+                        if let assignedToId = json["assign_to"] as? Int {
                             person = Person(name: json["assign_to_name"] as? String, personId: assignedToId)
+                            
                         }else{
+                            
                             person = Person(name: nil, personId: 0)
                         }
                         let newTodo = Todo(name: json["todo"] as? String, list: list, updatedAt: json["updated_at"] as? String , createdAt: json["created_at"] as? String, date: json["date"] as? String, time:json["time"] as? String, status: json["status"] as? String, todoId: todoId, assignedTo: person!)

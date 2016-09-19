@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import SVProgressHUD
+import Moya
+import ESPullToRefresh
 class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var todoTitleLabel: UILabel!
@@ -27,18 +29,6 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         }
         
         
-        for personIndex in 0...10 {
-            
-            var person:Person?
-            
-            if personIndex == 0 {
-                 person = Person(name: "Anyone", personId: 0)
-            }else{
-                 person = Person(name: String(format: "Person %d",personIndex), personId: personIndex)
-            }
-           
-            persons.append(person!)
-        }
         
         if (currentTodo != nil) {
             todoTitleLabel.text = currentTodo?.name
@@ -50,6 +40,18 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         personsTableView.dataSource = self;
         
         personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
+        
+        personsTableView.es_addPullToRefresh {
+            
+            /// Do anything you want...
+            /// ...
+            self.runTeamInfoRequest()
+            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+            
+        }
+
+        
+        personsTableView.es_startPullToRefresh()
         
         // Do any additional setup after loading the view.
     }
@@ -81,18 +83,28 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! PersonTableViewCell
         
         
-       /*
-            cell.selectButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
- */
+        if person.selected == true {
+             cell.selectButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
+        }else{
+            cell.selectButton .setImage(UIImage(), forState: .Normal)
+        }
+        
+ 
         cell.selectButton.backgroundColor = UIColor.clearColor()
         cell.selectButton.layer.cornerRadius = cell.selectButton.frame.size.height/2
         cell.selectButton.layer.borderWidth = 1
         cell.selectButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).CGColor
         
         cell.personAvatar.layer.cornerRadius = 5
+        if person.personId == 0 {
+            cell.personAvatar.image =  UIImage()
+        }else{
+            
+            cell.personAvatar.image =  UIImage(named: "imageHelpAssignEstelleCopy")
+        }
 
         cell.personTitle.text = person.name
-        cell.personAvatar.image =  UIImage(named: "imageHelpAssignEstelleCopy")
+        
         cell.selectButton.indexPath = indexPath
         cell.selectButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
       
@@ -101,27 +113,107 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
     }
 
 
-    
+    func runTeamInfoRequest(){
+        
+        provider.request(.TeamInfo()) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
+                        let members = json["members"] as? [[String: AnyObject]]
+                        else {
+                            
+                            self.personsTableView.es_stopPullToRefresh(completion: true)
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    self.persons = [Person]()
+                    for member in members{
+                        
+                            if let userId = member["user_id"] as? Int{
+                              
+                                    let newPerson = Person(name: String(format:"%@ %@",(member["first_name"] as? String ?? ""),(member["last_name"] as? String ?? "")), personId: userId)
+                                    self.persons.append(newPerson)
+                        }
+                    }
+                    let anyOnePerson = Person(name: "Anyone", personId: 0)
+                    self.persons.insert(anyOnePerson, atIndex: 0)
+                    
+                    for person:Person in self.persons{
+                        if self.currentTodo?.assignedTo.personId == person.personId{
+                            person.selected = true
+                            break
+                        }
+                    }
+                    
+                    self.personsTableView.es_stopPullToRefresh(completion: true)
+                    self.personsTableView.reloadData()
+
+                    
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            self.personsTableView.es_stopPullToRefresh(completion: true)
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    self.personsTableView.es_stopPullToRefresh(completion: true)
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                self.personsTableView.es_stopPullToRefresh(completion: true)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+        
+    }
+
   
     
     @IBAction func assignTodoButtonTapped(sender: AnyObject) {
         
-        /*
+        
         for person:Person in persons{
             if person.selected! {
-                currentTodo?.assignedPerson = person
+                currentTodo?.assignedTo = person
                 break
             }
             
         }
- */
+        if currentTodo?.footer != nil {
+            currentTodo?.footer?.assignTodoButton.setTitle(currentTodo?.assignedTo.name, forState: .Normal)
+            currentTodo?.footer?.assignTodoButton.setImage(nil, forState: .Normal)
+            
+
+        
+        }else{
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+        }
+       
         self.navigationController!.popViewControllerAnimated(true)
      }
     
     
     func selectedButtonTapped(sender: ButtonWithIndexPath) {
         
-        /*
+        
         for person:Person in persons{
             person.selected = false
         }
@@ -129,7 +221,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         let row: Int = sender.indexPath!.row
         let selectedPerson:Person = persons[row]
         selectedPerson.selected = true
- */
+ 
         
         personsTableView.reloadData()
         

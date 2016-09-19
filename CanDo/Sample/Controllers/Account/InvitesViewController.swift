@@ -29,7 +29,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         
         invitesTableView.es_addPullToRefresh {
-            [weak self] in
+         
             /// Do anything you want...
             /// ...
             NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)

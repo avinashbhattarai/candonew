@@ -16,7 +16,7 @@ class Person {
     var personId : Int
     
     //debug
-   // var selected: Bool! = false
+    var selected: Bool!
    // var avatar: String?
     
     
@@ -34,12 +34,11 @@ class Person {
  */
     
     
-    init(name: String?, personId: Int ) {
+    init(name: String?, personId: Int, selected: Bool = false ) {
         self.name = name ?? "Anyone"
-        print("self.name1 \(self.name)  name1 \(name) ")
         self.name = name == "" ? "Anyone" : self.name
-        print("self.name2 \(self.name)  name2 \(name) ")
         self.personId = personId
+        self.selected = selected
         
         
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -25,8 +25,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YRh-Ba-UgC">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YRh-Ba-UgC">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                     <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vij-8d-YEf" customClass="AddPhotoButton" customModule="CanDo" customModuleProvider="target">
@@ -41,8 +41,8 @@
                         <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                 </button>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-LO-gj3">
-                    <rect key="frame" x="0.0" y="90" width="600" height="90"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-LO-gj3">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcA-cC-JUC">
                             <rect key="frame" x="20" y="20" width="34" height="34"/>
@@ -53,16 +53,6 @@
                             <color key="tintColor" red="0.72549019607843135" green="0.83137254901960778" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" image="iconMenuHelpT"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYJ-qu-YjY" customClass="DateUnderlineButton" customModule="CanDo" customModuleProvider="target">
-                            <rect key="frame" x="257" y="15" width="323" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="bDK-rL-co8"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
-                            <state key="normal" title="Date" image="underlineHelpAnytime">
-                                <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQS-yC-wst" customClass="AssignTodoUndelineButton" customModule="CanDo" customModuleProvider="target">
                             <rect key="frame" x="74" y="46" width="211" height="24"/>
                             <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
@@ -71,7 +61,7 @@
                             </state>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="underlineHelpTask" translatesAutoresizingMaskIntoConstraints="NO" id="Cgi-yn-B5C">
-                            <rect key="frame" x="74" y="40" width="178" height="3"/>
+                            <rect key="frame" x="74" y="39" width="178" height="3"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVK-1l-jfv">
                             <rect key="frame" x="543" y="46" width="37" height="36"/>
@@ -80,13 +70,23 @@
                                 <color key="titleColor" red="0.25490196079999999" green="0.81176470590000005" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="To do title" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CLs-JY-21H" customClass="AddTodoTitleTextField" customModule="CanDo" customModuleProvider="target">
-                            <rect key="frame" x="74" y="15" width="178" height="24"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="To do title" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CLs-JY-21H" customClass="AddTodoTitleTextField" customModule="CanDo" customModuleProvider="target">
+                            <rect key="frame" x="74" y="15" width="251" height="24"/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYJ-qu-YjY" customClass="DateUnderlineButton" customModule="CanDo" customModuleProvider="target">
+                            <rect key="frame" x="330" y="15" width="250" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="bDK-rL-co8"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
+                            <state key="normal" title="Date" image="underlineHelpAnytime">
+                                <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.98039215690000003" green="1" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -95,7 +95,7 @@
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="leading" secondItem="DcA-cC-JUC" secondAttribute="trailing" constant="20" id="Dfr-Xp-loQ"/>
                         <constraint firstAttribute="height" constant="90" id="DiA-ZR-Qcu"/>
                         <constraint firstItem="nYJ-qu-YjY" firstAttribute="leading" secondItem="CLs-JY-21H" secondAttribute="trailing" constant="5" id="IhE-eZ-AqQ"/>
-                        <constraint firstItem="Cgi-yn-B5C" firstAttribute="top" secondItem="CLs-JY-21H" secondAttribute="bottom" constant="1" id="M0x-xr-P1o"/>
+                        <constraint firstItem="Cgi-yn-B5C" firstAttribute="top" secondItem="CLs-JY-21H" secondAttribute="bottom" id="M0x-xr-P1o"/>
                         <constraint firstAttribute="trailing" secondItem="tVK-1l-jfv" secondAttribute="trailing" constant="20" id="M7R-en-hxo"/>
                         <constraint firstItem="nYJ-qu-YjY" firstAttribute="width" secondItem="CLs-JY-21H" secondAttribute="width" priority="250" id="Rrh-0W-d1f"/>
                         <constraint firstItem="Cgi-yn-B5C" firstAttribute="width" secondItem="CLs-JY-21H" secondAttribute="height" multiplier="89:12" id="aW0-o0-B79"/>

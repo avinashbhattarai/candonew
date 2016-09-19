@@ -29,7 +29,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
         teamTableView.es_addPullToRefresh {
-            [weak self] in
+         
             /// Do anything you want...
             /// ...
              NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)

@@ -67,7 +67,7 @@ class AccountViewController: BaseViewController {
     
     
     func runTeamInfoRequest(){
-         SVProgressHUD.show()
+        // SVProgressHUD.show()
         provider.request(.TeamInfo()) { result in
             switch result {
             case let .Success(moyaResponse):

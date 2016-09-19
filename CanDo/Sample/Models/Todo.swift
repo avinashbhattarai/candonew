@@ -48,7 +48,7 @@ class Todo {
     
     init(name: String?, list: List, updatedAt: String?, createdAt: String?, date: String?, time: String?, status: String?, todoId: Int, assignedTo: Person) {
         
-        print("date \(date)")
+      
         self.name = name ?? ""
         self.list = list
         self.updatedAt = updatedAt != nil ? stringCreateUpdateToDate(updatedAt!) : nil

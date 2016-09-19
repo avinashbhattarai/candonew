@@ -60,7 +60,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         
         
         self.notificationTableView.es_addPullToRefresh {
-            [weak self] in
+           
             /// Do anything you want...
             /// ...
            
