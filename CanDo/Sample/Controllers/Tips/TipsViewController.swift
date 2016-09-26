@@ -12,7 +12,7 @@ import SVProgressHUD
 import ESPullToRefresh
 import Kingfisher
 
-class TipsViewController: BaseViewController {
+class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 	@IBOutlet weak var headerLabel: UILabel!
 	@IBOutlet weak var tipsTableView: UITableView!
 
@@ -25,7 +25,9 @@ class TipsViewController: BaseViewController {
 		// Do any additional setup after loading the view.
 		tipsTableView.dataSource = self
 		tipsTableView.delegate = self
-		
+        tipsTableView.emptyDataSetSource = self;
+        tipsTableView.emptyDataSetDelegate = self;
+
 
 		tipsTableView.es_addPullToRefresh {
 
@@ -40,6 +42,11 @@ class TipsViewController: BaseViewController {
         tipsTableView.es_startPullToRefresh()
 
 	}
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "No tips"
+        let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()

@@ -58,7 +58,7 @@ class SetPasswordViewController: UIViewController {
             activityIndicatorView?.removeFromSuperview()
             activityIndicatorView = NVActivityIndicatorView(frame: CGRectMake(button.frame.size.width-30, (button.frame.size.height-30)/2, 30, 30), type: .BallClipRotate, color: UIColor.whiteColor(), padding: 0)
             button.addSubview(activityIndicatorView!)
-            activityIndicatorView!.startAnimating()
+            activityIndicatorView!.startAnimation()
             button.userInteractionEnabled = false
             
             
@@ -66,7 +66,7 @@ class SetPasswordViewController: UIViewController {
         }else{
             button.backgroundColor =  UIColor(red: 44/255.0, green: 89/255.0, blue: 134/255.0, alpha: 1.0)
             button.setTitle("Set Password", forState: .Normal)
-            activityIndicatorView?.stopAnimating()
+            activityIndicatorView?.stopAnimation()
             button.contentHorizontalAlignment = .Center
             activityIndicatorView?.removeFromSuperview()
             button.userInteractionEnabled = true

@@ -129,11 +129,14 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
             currentTodo?.footer?.undelineImage.hidden = true
         }else{
             if currentTodo != nil {
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+                if senderViewController is TodoViewController {
+                     NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+                }else if senderViewController is CalendarViewController{
+                     NSNotificationCenter.defaultCenter().postNotificationName("reloadDataCalendar", object: nil, userInfo: ["todo":currentTodo!])
+                }
             }
             
         }
-        
         
         self.navigationController?.popViewControllerAnimated(true)
         

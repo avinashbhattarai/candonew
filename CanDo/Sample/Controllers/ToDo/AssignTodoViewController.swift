@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import Moya
 import ESPullToRefresh
-class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate,UITableViewDataSource {
+class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate,UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet weak var todoTitleLabel: UILabel!
     @IBOutlet weak var personsTableView: UITableView!
@@ -38,7 +38,8 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
 
         personsTableView.delegate = self;
         personsTableView.dataSource = self;
-        
+        personsTableView.emptyDataSetSource = self;
+        personsTableView.emptyDataSetDelegate = self;
         personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
         personsTableView.es_addPullToRefresh {
@@ -62,7 +63,12 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "No members"
+        let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -204,7 +210,14 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
 
         
         }else{
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+            
+            if senderViewController is TodoViewController {
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+            }else if senderViewController is CalendarViewController{
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataCalendar", object: nil, userInfo: ["todo":currentTodo!])
+            }
+
+            
         }
        
         self.navigationController!.popViewControllerAnimated(true)

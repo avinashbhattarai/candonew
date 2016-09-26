@@ -13,7 +13,7 @@ import Moya
 import ESPullToRefresh
 
 
-class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
 	@IBOutlet weak var listTextField: UITextField!
 	@IBOutlet weak var headerView: UIView!
@@ -34,6 +34,8 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		// IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
 		toDoTableView.delegate = self;
 		toDoTableView.dataSource = self;
+        toDoTableView.emptyDataSetSource = self;
+        toDoTableView.emptyDataSetDelegate = self;
 		toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.None
 
 		let nib = UINib(nibName: "TodoSectionFooter", bundle: nil)
@@ -52,11 +54,14 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 		}
 
-		toDoTableView.es_startPullToRefresh()
-    
+		
+        toDoTableView.es_startPullToRefresh()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataTodo(_:)), name:"reloadDataTodo", object: nil)
        
 	}
+    override func viewWillAppear(animated: Bool) {
+       
+    }
     
     func reloadDataTodo(n: NSNotification) {
         toDoTableView.reloadData()
@@ -520,7 +525,12 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
     }
 
-    
+    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "No todos"
+        let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+
     func runUpdateListRequest(listName: String, section:Int, list:List) {
         
         SVProgressHUD.show()
