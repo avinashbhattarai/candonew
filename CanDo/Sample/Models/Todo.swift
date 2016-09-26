@@ -58,9 +58,6 @@ class Todo {
         self.status = status ?? Helper.TodoStatusKey.kActive
         self.todoId = todoId
         self.assignedTo = assignedTo
-        
-        
-        
     }
     
     

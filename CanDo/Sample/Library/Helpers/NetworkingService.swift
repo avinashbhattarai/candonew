@@ -31,8 +31,9 @@ public enum NetworkingService {
     
     case AddList(name: String)
     case AddTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
-    case UpdateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?)
-    case ListsInfo()
+    case UpdateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?, status:String?)
+    case ListsInfo(date: String?)
+    case UpdateList(listId: Int, name: String)
 
     
 }
@@ -105,10 +106,16 @@ extension NetworkingService: TargetType {
             return "/lists"
         case .AddTodo(_,_,_,_,_):
             return "/todo"
-        case .UpdateTodo(let todoId,_,_,_,_):
+        case .UpdateTodo(let todoId,_,_,_,_,_):
             return "/todo/\(todoId)"
-        case .ListsInfo():
-            return "/lists"
+        case .ListsInfo(let date):
+            if (date != nil) {
+                 return "/lists/\(date!)"
+            }else{
+                return "/lists"
+            }
+        case .UpdateList(let listId,_):
+            return "/lists/\(listId)"
             
         }
     }
@@ -150,6 +157,8 @@ extension NetworkingService: TargetType {
             return .PUT
         case .ListsInfo:
             return .GET
+        case .UpdateList:
+            return .PUT
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -209,17 +218,21 @@ extension NetworkingService: TargetType {
             params["date"] = date
             params["time"] = time
             return params
-        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time):
+        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time, let status):
             var params: [String : AnyObject] = [:]
             params["id"] = todoId
             params["name"] = name
             params["assign_to"] = assign_to
             params["date"] = date
             params["time"] = time
+            params["status"] = status
             return params
 
-        case .ListsInfo():
+        case .ListsInfo(_):
             return nil
+
+        case .UpdateList(let listId, let name):
+            return ["listId": listId, "name": name]
             
         }
     }
@@ -264,10 +277,12 @@ extension NetworkingService: TargetType {
             return "{\"name\": \"\(name)\"}".UTF8EncodedData
         case .AddTodo(let listId, let name, let assign_to, let date, let time):
             return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
-        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time):
-            return "{\"id\": \"\(todoId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
-        case .ListsInfo():
+        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time, let status):
+            return "{\"id\": \"\(todoId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\", \"status\": \"\(status)\"}".UTF8EncodedData
+        case .ListsInfo(_):
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .UpdateList(let listId,let name):
+            return "{\"list_id\": \"\(listId)\",\"name\": \"\(name)\"}".UTF8EncodedData
 
         }
     }

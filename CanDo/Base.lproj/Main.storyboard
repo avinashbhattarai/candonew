@@ -608,21 +608,21 @@ how can we help today?</string>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8hT-US-nkp" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8hT-US-nkp" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="347" y="36" width="233" height="34"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="18"/>
                                                     <state key="normal" title="8:30pm Tue, Sep 4">
                                                         <color key="titleColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DT-Lp-Qfq" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="3" width="68" height="34"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5DT-Lp-Qfq" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="3" width="78" height="34"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-300" family="Museo Sans Rounded" pointSize="18"/>
                                                     <state key="normal" title="2 pm">
                                                         <color key="titleColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-Vc-bJf" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-Vc-bJf" customClass="ButtonWithIndexPath" customModule="CanDo" customModuleProvider="target">
                                                     <rect key="frame" x="108" y="35" width="234" height="36"/>
                                                     <fontDescription key="fontDescription" name="MuseoSansRounded-100" family="Museo Sans Rounded" pointSize="20"/>
                                                     <state key="normal" title="Estelle F">
@@ -644,7 +644,7 @@ how can we help today?</string>
                                                 <constraint firstAttribute="trailing" secondItem="nck-qZ-bBk" secondAttribute="trailing" constant="20" id="LNp-Qi-D3b"/>
                                                 <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leadingMargin" constant="100" id="Rxe-UK-u8E"/>
                                                 <constraint firstItem="gcN-Vc-bJf" firstAttribute="top" secondItem="nck-qZ-bBk" secondAttribute="bottom" constant="3" id="SPi-vC-aNT"/>
-                                                <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="5DT-Lp-Qfq" secondAttribute="trailing" constant="20" id="Teo-9o-pmS"/>
+                                                <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="5DT-Lp-Qfq" secondAttribute="trailing" constant="10" id="Teo-9o-pmS"/>
                                                 <constraint firstItem="5DT-Lp-Qfq" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leading" constant="20" id="TjV-Av-NAL"/>
                                                 <constraint firstAttribute="trailing" secondItem="5FW-Ca-Snw" secondAttribute="trailing" id="fq8-U1-iTO"/>
                                                 <constraint firstItem="8hT-US-nkp" firstAttribute="top" secondItem="nck-qZ-bBk" secondAttribute="bottom" constant="4" id="hhH-di-9Nb"/>
@@ -2781,7 +2781,7 @@ receive a password reset email</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qO6-7u-NnB"/>
-        <segue reference="GdB-SY-l1j"/>
-        <segue reference="cJO-5E-hyi"/>
+        <segue reference="y5L-Mg-VrH"/>
+        <segue reference="yeX-sn-hZu"/>
     </inferredMetricsTieBreakers>
 </document>

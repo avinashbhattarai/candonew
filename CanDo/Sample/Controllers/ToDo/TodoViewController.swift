@@ -83,7 +83,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         selectedTime = nil
                     }
 
-                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignTo: todo.assignedTo.personId, date: selectedDate, time: selectedTime)
+                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignToId: todo.assignedTo.personId,assignToName: todo.assignedTo.name, date: selectedDate, time: selectedTime,status: nil, todo: todo)
             }
 
         }
@@ -92,7 +92,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	func runListsInfoRequest() {
 
 		
-		provider.request(.ListsInfo()) { result in
+        provider.request(.ListsInfo(date:nil)) { result in
 			switch result {
 			case let .Success(moyaResponse):
 
@@ -316,12 +316,16 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		let row: Int = sender.indexPath!.row
 		let list = lists[section]
 		let todo = list.todos![row]
-		if todo.status == Helper.TodoStatusKey.kActive {
-            todo.status = Helper.TodoStatusKey.kOverdue
+        var status:String?
+        if todo.status == Helper.TodoStatusKey.kActive || todo.status == Helper.TodoStatusKey.kOverdue {
+            status = Helper.TodoStatusKey.kDone
         }else{
-            todo.status = Helper.TodoStatusKey.kActive
+            status = Helper.TodoStatusKey.kActive
         }
-		toDoTableView.reloadRowsAtIndexPaths([sender.indexPath!], withRowAnimation: .Automatic)
+        
+        runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignToId: nil, assignToName: nil, date: nil, time: nil, status: status, todo: todo)
+        
+		
 
 	}
 
@@ -367,9 +371,6 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
             runAddTodoRequest(todoTitle!, listId: (footer.newTodo?.list.listId)!, assignTo: (footer.newTodo?.assignedTo.personId)!, date:selectedDate, time:selectedTime, section: section, list: list)
            
-            
-        
-
 		}
 	}
 
@@ -392,7 +393,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					
                     if let todoId = json["id"] as? Int {
                         var person:Person?
-                        if let assignedToId = json["assign_to"] as? Int {
+                        if let assignedToId = json["assign_to_id"] as? Int {
                             person = Person(name: json["assign_to_name"] as? String, personId: assignedToId)
                             
                         }else{
@@ -437,10 +438,10 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 	}
     
-    func runUpdateTodoRequest(todoName: String, todoId: Int, assignTo: Int?, date:String?, time:String?) {
+    func runUpdateTodoRequest(todoName: String, todoId: Int, assignToId: Int?,assignToName: String?, date:String?, time:String?, status:String?, todo:Todo) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateTodo(todoId: todoId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
+        provider.request(.UpdateTodo(todoId: todoId, name: todoName, assign_to: assignToId, date: date, time: time, status:status)) { result in
             switch result {
             case let .Success(moyaResponse):
                 
@@ -451,7 +452,93 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
-                    print(json)
+                    if let todoId = json["id"] as? Int {
+                        var person:Person?
+                        if let assignedToId = json["assign_to_id"] as? Int {
+                            person = Person(name: json["assign_to_name"] as? String, personId: assignedToId)
+                            
+                        }else{
+                            
+                            person = Person(name: nil, personId: 0)
+                        }
+                        
+                        let newDate = json["date"] as? String
+                        let newTime = json["time"] as? String
+                        let newUpdatedAt = json["updated_at"] as? String
+                        let newCreatedAt = json["created_at"] as? String
+                        
+                        todo.assignedTo = person
+                        todo.name = json["todo"] as? String ?? ""
+                        todo.date = newDate != nil ? self.stringDateToDate(newDate!) : nil
+                        todo.time = newTime != nil ? self.stringTimeToDate(newTime!) : nil
+                        todo.updatedAt = newUpdatedAt != nil ? self.stringCreateUpdateToDate(newUpdatedAt!) : nil
+                        todo.createdAt = newCreatedAt != nil ? self.stringCreateUpdateToDate(newCreatedAt!) : nil
+                        todo.todoId = todoId
+                        todo.status = json["status"] as? String ?? Helper.TodoStatusKey.kActive
+                        
+                        self.toDoTableView.reloadData()
+                        
+                        SVProgressHUD.dismiss()
+                    
+                    }
+
+                    
+                    
+                }
+                catch {
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    
+                }
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+            }
+        }
+        
+    }
+    
+    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    }
+    
+    func stringDateToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd"))
+    }
+    func stringTimeToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
+    }
+
+    
+    func runUpdateListRequest(listName: String, section:Int, list:List) {
+        
+        SVProgressHUD.show()
+        provider.request(.UpdateList(listId:list.listId, name: listName)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
+                        print("wrong json format")
+                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        return;
+                    }
+                    if let listName = json["name"] as? String {
+                       list.name = listName
+                       self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                    }
                     SVProgressHUD.dismiss()
                     
                     
@@ -479,6 +566,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         
     }
+
 
 
 	func addTodoTapped(sender: UIButton) {
@@ -530,9 +618,8 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 			if textField.hasText() {
 				textField.resignFirstResponder()
 				let section: Int = textField.tag
-				let list = lists[section]
-				list.name = textField.text
-				toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                let list = lists[section]
+                runUpdateListRequest(textField.text!, section: section, list: list)
 			}
 		}
 
@@ -553,7 +640,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 }
                 
             
-                runUpdateTodoRequest(todoTitle!, todoId: todo.todoId, assignTo: nil, date: nil, time: nil)
+                runUpdateTodoRequest(todoTitle!, todoId: todo.todoId, assignToId: nil, assignToName: nil, date: nil, time: nil, status: nil,todo: todo)
 
 		}
         

@@ -36,6 +36,25 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
              todoTitle.text = currentTodo?.name
         }
        
+        if ((currentTodo?.time) == nil) {
+            anyTimeButton.selected = true
+            datePicker.datePickerMode = .Date
+            
+            
+        }
+        if ((currentTodo?.date) != nil) {
+            datePicker.date = currentTodo?.date ?? NSDate()
+            if ((currentTodo?.time) != nil) {
+                let calendar = NSCalendar.currentCalendar()
+                let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (currentTodo?.time)!)
+                let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (currentTodo?.date)!)
+                let date = calendar.dateFromComponents(dateComp)
+                let newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+                datePicker.date = newDate!
+                
+            }
+        }
+        
         
         anyTimeButton.backgroundColor = UIColor.clearColor()
         anyTimeButton.layer.cornerRadius = 5
