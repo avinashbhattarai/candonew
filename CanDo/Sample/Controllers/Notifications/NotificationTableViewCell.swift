@@ -48,6 +48,8 @@ class NotificationTableViewCell: UITableViewCell {
         }else{
             contentImageView.image = UIImage()
         }
+        
+        
        
     }
     override func setSelected(selected: Bool, animated: Bool) {

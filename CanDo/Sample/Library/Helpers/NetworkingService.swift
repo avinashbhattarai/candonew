@@ -34,6 +34,10 @@ public enum NetworkingService {
     case UpdateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?, status:String?)
     case ListsInfo(date: String?)
     case UpdateList(listId: Int, name: String)
+    
+    case NotificationsInfo()
+    case PostNotification(post: String?, image: String?)
+    
 
     
 }
@@ -117,6 +121,12 @@ extension NetworkingService: TargetType {
         case .UpdateList(let listId,_):
             return "/lists/\(listId)"
             
+        case .NotificationsInfo():
+            return "/notifications"
+        case .PostNotification(_,_):
+            return "/notifications"
+
+            
         }
     }
     public var method: Moya.Method {
@@ -159,6 +169,10 @@ extension NetworkingService: TargetType {
             return .GET
         case .UpdateList:
             return .PUT
+        case .NotificationsInfo:
+            return .GET
+        case .PostNotification:
+            return .POST
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -234,6 +248,16 @@ extension NetworkingService: TargetType {
         case .UpdateList(let listId, let name):
             return ["listId": listId, "name": name]
             
+        case .NotificationsInfo():
+            return nil
+            
+        case .PostNotification(let post, let image):
+            var params: [String : AnyObject] = [:]
+            params["post"] = post
+            params["image"] = image
+            return params
+
+            
         }
     }
     public var sampleData: NSData {
@@ -283,7 +307,10 @@ extension NetworkingService: TargetType {
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
         case .UpdateList(let listId,let name):
             return "{\"list_id\": \"\(listId)\",\"name\": \"\(name)\"}".UTF8EncodedData
-
+        case .NotificationsInfo():
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .PostNotification(let post, let image):
+            return "{\"post\": \"\(post)\",\"image\": \"\(image)\"}".UTF8EncodedData
         }
     }
     public var multipartBody: [MultipartFormData]? {

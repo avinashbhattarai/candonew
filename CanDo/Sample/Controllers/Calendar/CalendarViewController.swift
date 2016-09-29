@@ -97,7 +97,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-
+    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+        return true
+    }
     func runListsInfoRequest(date:String) {
         
         

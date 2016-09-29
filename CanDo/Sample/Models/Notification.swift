@@ -15,24 +15,32 @@ class Notification {
    // var memberId: Int!
    // var userId: Int!
     
-    var firstName: String!
-    var lastName: String!
-    var date: NSDate!
+    var name: String!
+    var createdDate: NSDate!
+    var updatedDate: NSDate!
     var text: String!
-    var image : UIImage!
+    var imageURL : String!
+    var notificationId: Int!
+    var image: UIImage?
     
     // MARK: Initialization
     
-    init(text: String?, firstName: String?, lastName: String?, date: NSDate?, image: UIImage?) {
+    init(text: String?, name: String?, createdDate: String?, updatedDate: String?, imageURL: String?, notificationId: Int!) {
         
      
-        self.date = date ?? NSDate()
+        self.createdDate = createdDate != nil ? stringCreateUpdateToDate(createdDate!) : NSDate()
+        self.updatedDate = updatedDate != nil ? stringCreateUpdateToDate(updatedDate!) : NSDate()
         self.text = text ?? ""
-        self.lastName = lastName ?? ""
-        self.firstName = firstName ?? ""
-        self.image = image
+        self.name = name ?? ""
+        self.imageURL = imageURL ?? ""
+        self.notificationId = notificationId
         
         
     }
+    
+    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
+        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    }
+
     
 }
