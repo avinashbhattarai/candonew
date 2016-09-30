@@ -22,10 +22,11 @@ class Notification {
     var imageURL : String!
     var notificationId: Int!
     var image: UIImage?
+    var avatar:String!
     
     // MARK: Initialization
     
-    init(text: String?, name: String?, createdDate: String?, updatedDate: String?, imageURL: String?, notificationId: Int!) {
+    init(text: String?, name: String?, createdDate: String?, updatedDate: String?, imageURL: String?, notificationId: Int!, avatar:String?) {
         
      
         self.createdDate = createdDate != nil ? stringCreateUpdateToDate(createdDate!) : NSDate()
@@ -34,6 +35,7 @@ class Notification {
         self.name = name ?? ""
         self.imageURL = imageURL ?? ""
         self.notificationId = notificationId
+        self.avatar = avatar ?? ""
         
         
     }

@@ -15,6 +15,7 @@ import Kingfisher
 
 class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
+    @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var notificationTableView: UITableView!
     @IBOutlet weak var headerView: UIView!
@@ -40,6 +41,11 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         selectedImageButton.layer.borderWidth = 1
         selectedImageButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
         selectedImageButton.clipsToBounds = true
+        
+        
+        let imageUrl = NSURL(string:(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserAvatar) as? String) ?? "")
+        
+        userAvatar.kf_setImageWithURL(imageUrl, placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
 
         notificationTableView.delegate = self
         notificationTableView.dataSource = self
@@ -86,7 +92,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
                     self.notifications.removeAll()
                     for notification in json {
                         if let notificationId = notification["id"] as? Int {
-                        let newNotification = Notification(text: notification["post"] as? String, name: notification["user"] as? String, createdDate: notification["created_at"] as? String, updatedDate: notification["updated_at"] as? String, imageURL: notification["image"] as? String, notificationId: notificationId)
+                            let newNotification = Notification(text: notification["post"] as? String, name: notification["user"] as? String, createdDate: notification["created_at"] as? String, updatedDate: notification["updated_at"] as? String, imageURL: notification["image"] as? String, notificationId: notificationId, avatar:notification["avatar"] as? String)
                         self.notifications.append(newNotification)
                         }
                     }
@@ -162,6 +168,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         
        cell.nameLabel.text = notification.name
        cell.contentLabel.text = notification.text
+       cell.avatarImageView.kf_setImageWithURL(NSURL(string:notification.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
        cell.dateLabel.text = dateFormatter?.stringFromDate(notification.createdDate)
         if notification.imageURL.characters.count > 0 && notification.image == nil {
             loadImage(indexPath, notification: notification)
@@ -221,7 +228,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
                     
                     print(json)
                     if let notificationId = json["id"] as? Int {
-                    let newNotification = Notification(text: json["post"] as? String, name: json["user"] as? String, createdDate: json["created_at"] as? String, updatedDate: json["updated_at"] as? String, imageURL: json["image"] as? String, notificationId: notificationId)
+                        let newNotification = Notification(text: json["post"] as? String, name: json["user"] as? String, createdDate: json["created_at"] as? String, updatedDate: json["updated_at"] as? String, imageURL: json["image"] as? String, notificationId: notificationId, avatar:json["avatar"] as? String)
                     
                     self.notifications.insert(newNotification, atIndex: 0)
                     self.notificationTableView.beginUpdates()
