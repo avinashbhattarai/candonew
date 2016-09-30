@@ -12,7 +12,7 @@ class InviteTableViewCell: UITableViewCell {
 
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var avatar: UIView!
+    @IBOutlet weak var avatar: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

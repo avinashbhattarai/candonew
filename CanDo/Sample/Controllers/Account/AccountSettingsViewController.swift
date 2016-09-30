@@ -10,7 +10,7 @@ import UIKit
 import ImagePicker
 import Moya
 import SVProgressHUD
-
+import Kingfisher
 class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDelegate {
 
   
@@ -27,13 +27,21 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
         
         self.title = "Account"
         
-        self.avatarButton.layer.cornerRadius = 5
-        self.avatarButton.clipsToBounds = true
+        userNameLabel.text = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserLastName) as? String) ?? "")
         
+        avatarButton.layer.cornerRadius = 5
+        avatarButton.clipsToBounds = true
+        
+        let imageUrl = NSURL(string:(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserAvatar) as? String) ?? "")
+        
+        avatarButton.kf_setImageWithURL(imageUrl, forState: .Normal, placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        
+        
+
         if iamInTeam {
-            self.leaveTeamButton.hidden = false
+            leaveTeamButton.hidden = false
         }else{
-            self.leaveTeamButton.hidden = true
+            leaveTeamButton.hidden = true
         }
         
         // Do any additional setup after loading the view.
@@ -168,6 +176,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserLastName)
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserSecretCode)
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserToken)
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserAvatar)
         
         Helper.UserDefaults.kStandardUserDefaults.synchronize()
         
@@ -195,10 +204,79 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
     
     func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        self.avatarButton .setImage(images[0], forState: .Normal)
         print(images)
+        let data = resizeImage(images[0])
+        let  dataString = data!.toBase64()
+        
+        runUpdateUserRequest(dataString, firstName: nil, lastName: nil, image: images[0])
+        }
+    
+    func resizeImage(image:UIImage) -> NSData? {
+        let resizedImage = image.resizeWithPercentage(0.9)
+        let data:NSData = UIImageJPEGRepresentation(resizedImage!, 1)!
+        print(resizedImage, data.length)
+        if data.length > Helper.UploadImageSize.kUploadSize as Int
+        {
+            let newData = resizeImage(resizedImage!)
+            return newData
+            
+        }
+        return data
     }
 
+
+    func runUpdateUserRequest(avatar:String?,firstName:String?,lastName:String?, image:UIImage) {
+        
+        SVProgressHUD.show()
+        provider.request(.UpdateUser(avatar:avatar,firstName:firstName,lastName:lastName)) { result in
+            switch result {
+            case let .Success(moyaResponse):
+                
+                
+                do {
+                    try moyaResponse.filterSuccessfulStatusCodes()
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
+                        else {
+                            
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    self.avatarButton .setImage(image, forState: .Normal)
+                    if var imgURL = json["avatar"] as? String{
+                         imgURL = imgURL.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                        Helper.UserDefaults.kStandardUserDefaults.setObject(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
+                        Helper.UserDefaults.kStandardUserDefaults.synchronize()
+                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+                   
+                }
+                catch {
+                    
+                    
+                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            return;
+                    }
+                    SVProgressHUD.showErrorWithStatus("\(message)")
+                }
+                
+                
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                print(error.description)
+                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                
+                
+            }
+        }
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

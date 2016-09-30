@@ -125,9 +125,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                                     if let todoId = todo["id"] as? Int {
                                         var person:Person?
                                         if let assignedToId = todo["assign_to_id"] as? Int {
-                                            person = Person(name: todo["assign_to_name"] as? String, personId: assignedToId)
+                                            person = Person(name: todo["assign_to_name"] as? String, personId: assignedToId, avatar:"")
                                         }else{
-                                            person = Person(name: nil, personId: 0)
+                                            person = Person(name: nil, personId: 0, avatar:"")
                                         }
                                         let newTodo = Todo(name: todo["todo"] as? String, list: newList, updatedAt: todo["updated_at"] as? String , createdAt: todo["created_at"] as? String, date: todo["date"] as? String, time:todo["time"] as? String, status: todo["status"] as? String, todoId: todoId, assignedTo: person!)
                                         self.todos.append(newTodo)
@@ -336,11 +336,11 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                     if let todoId = json["id"] as? Int {
                         var person:Person?
                         if let assignedToId = json["assign_to_id"] as? Int {
-                            person = Person(name: json["assign_to_name"] as? String, personId: assignedToId)
+                            person = Person(name: json["assign_to_name"] as? String, personId: assignedToId, avatar:"")
                             
                         }else{
                             
-                            person = Person(name: nil, personId: 0)
+                            person = Person(name: nil, personId: 0, avatar:"")
                         }
                         
                         let newDate = json["date"] as? String

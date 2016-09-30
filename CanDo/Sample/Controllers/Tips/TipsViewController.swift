@@ -15,7 +15,7 @@ import Kingfisher
 class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 	@IBOutlet weak var headerLabel: UILabel!
 	@IBOutlet weak var tipsTableView: UITableView!
-
+    var heightAtIndexPath = NSMutableDictionary()
 	var tipsArray = [Tip]()
 	var selectedTip: Tip?
 
@@ -164,9 +164,19 @@ extension TipsViewController: UITableViewDataSource {
 		return UITableViewAutomaticDimension
 	}
 
-	func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return 300
-	}
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let height = self.heightAtIndexPath.objectForKey(indexPath)
+        if ((height) != nil) {
+            return CGFloat(height!.floatValue)
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let height = cell.frame.size.height
+        self.heightAtIndexPath.setObject(height, forKey: indexPath)
+    }
 
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1

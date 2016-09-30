@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import Moya
 import ESPullToRefresh
+import Kingfisher
 class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate,UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet weak var todoTitleLabel: UILabel!
@@ -108,7 +109,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
             cell.personAvatar.image =  UIImage()
         }else{
             
-            cell.personAvatar.image =  UIImage(named: "imageHelpAssignEstelleCopy")
+            cell.personAvatar.kf_setImageWithURL(NSURL(string:person.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
         }
 
         cell.personTitle.text = person.name
@@ -145,11 +146,11 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                         
                             if let userId = member["user_id"] as? Int{
                               
-                                    let newPerson = Person(name: String(format:"%@ %@",(member["first_name"] as? String ?? ""),(member["last_name"] as? String ?? "")), personId: userId)
+                                let newPerson = Person(name: String(format:"%@ %@",(member["first_name"] as? String ?? ""),(member["last_name"] as? String ?? "")), personId: userId, avatar: member["avatar"] as? String)
                                     self.persons.append(newPerson)
                         }
                     }
-                    let anyOnePerson = Person(name: "Anyone", personId: 0)
+                    let anyOnePerson = Person(name: "Anyone", personId: 0, avatar: "")
                     self.persons.insert(anyOnePerson, atIndex: 0)
                     
                     for person:Person in self.persons{

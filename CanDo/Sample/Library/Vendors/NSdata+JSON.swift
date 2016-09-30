@@ -16,4 +16,7 @@ extension NSData {
         }
         return nil
     }
+    func toBase64() -> String{
+        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+    }
 }

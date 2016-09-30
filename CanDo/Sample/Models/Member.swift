@@ -20,14 +20,15 @@ class Member {
     var email: String!
     var facebook: Bool!
     var owner : Bool!
+    var avatar: String!
     
     // MARK: Initialization
     
-    init(memberId: Int,userId: Int, email: String?, firstName: String?, lastName: String?, status: String?, facebook :Bool, owner:Bool) {
+    init(memberId: Int,userId: Int, email: String?, firstName: String?, lastName: String?, status: String?, facebook :Bool, owner:Bool, avatar:String?) {
         
         self.memberId = memberId
         self.userId = userId
-        
+        self.avatar = avatar ?? ""
         self.status = status ?? ""
         self.email = email ?? ""
         self.lastName = lastName ?? ""

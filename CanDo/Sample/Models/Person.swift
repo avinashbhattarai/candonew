@@ -13,8 +13,8 @@ class Person {
     // MARK: Properties
     
     var name: String!
-    var personId : Int
-    
+    var personId : Int!
+    var avatar: String!
     //debug
     var selected: Bool!
    // var avatar: String?
@@ -34,11 +34,12 @@ class Person {
  */
     
     
-    init(name: String?, personId: Int, selected: Bool = false ) {
+    init(name: String?, personId: Int, selected: Bool = false, avatar:String? ) {
         self.name = name ?? "Anyone"
         self.name = name == "" ? "Anyone" : self.name
         self.personId = personId
         self.selected = selected
+        self.avatar = avatar ?? ""
         
         
     }

@@ -48,12 +48,14 @@ struct Helper {
         static let kActive = "Active"
         static let kOverdue = "Overdue"
         static let kDone = "Done"
-        
-        
-        
-        
-        
     }
+    struct PlaceholderImage {
+        static let kAvatar = "Unknown"
+    }
+    struct UploadImageSize {
+        static let kUploadSize = 1400000
+    }
+
 
 
 
@@ -71,6 +73,7 @@ struct Helper {
         static let kUserEmail = "user_email"
         static let kUserSecretCode = "user_secret_code"
         static let kUserToken = "user_token"
+        static let kUserAvatar = "user_avatar"
         }
     
 

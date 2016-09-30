@@ -20,7 +20,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var addPhotoButton: AddPhotoButton!
     @IBOutlet weak var selectedImageButton: UIButton!
-    
+    var heightAtIndexPath = NSMutableDictionary()
     var dateFormatter : NSDateFormatter?
     var selectedImage: UIImage?
     
@@ -53,7 +53,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         
         
         
-        notificationTableView.estimatedRowHeight = 80
+     //   notificationTableView.estimatedRowHeight = 80
         notificationTableView.rowHeight = UITableViewAutomaticDimension
         notificationTableView.tableFooterView = UIView()
         notificationTableView.setNeedsLayout()
@@ -142,7 +142,19 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
    // func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
       //  return 370
    // }
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let height = self.heightAtIndexPath.objectForKey(indexPath)
+        if ((height) != nil) {
+            return CGFloat(height!.floatValue)
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
     
+     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let height = cell.frame.size.height
+        self.heightAtIndexPath.setObject(height, forKey: indexPath)
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let notification : Notification = notifications[indexPath.row]
@@ -181,7 +193,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
                         self.notificationTableView.beginUpdates()
                         self.notificationTableView.reloadRowsAtIndexPaths(
                             [indexPath],
-                            withRowAnimation: .None)
+                            withRowAnimation: .Automatic)
                         self.notificationTableView.endUpdates()
                     })
                 }
@@ -224,24 +236,12 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
                     self.addPhotoButton.hidden = false
                     self.selectedImage = nil
                         SVProgressHUD.dismiss()
+                        
                     }else{
                         
                         SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
                     }
 
-                    /*
-                    for notification in json {
-                        if let notificationId = notification["id"] as? Int {
-                            let newNotification = Notification(text: notification["post"] as? String, name: notification["user"] as? String, createdDate: notification["created_at"] as? String, updatedDate: notification["updated_at"] as? String, imageURL: notification["image"] as? String, notificationId: notificationId)
-                            self.notifications.append(newNotification)
-                        }
-                    }
-                    
-                    self.notificationTableView.reloadData()
-                    SVProgressHUD.dismiss()
-                   
- */
-                    
                 }
                 catch {
                     
@@ -292,7 +292,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         let resizedImage = image.resizeWithPercentage(0.9)
         let data:NSData = UIImageJPEGRepresentation(resizedImage!, 1)!
         print(resizedImage, data.length)
-        if data.length > 1490000 {
+        if data.length > Helper.UploadImageSize.kUploadSize as Int {
           let newData = resizeImage(resizedImage!)
           return newData
             
@@ -415,35 +415,4 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
     
 }
 
-extension UIImage{
-  
-    func resizeWithPercentage(percentage: CGFloat) -> UIImage? {
-        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))
-        imageView.contentMode = .ScaleAspectFit
-        imageView.image = self
-        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        imageView.layer.renderInContext(context)
-        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
-        UIGraphicsEndImageContext()
-        return result
-    }
-    
-    func resizeWithWidth(width: CGFloat) -> UIImage? {
-        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))))
-        imageView.contentMode = .ScaleAspectFit
-        imageView.image = self
-        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        imageView.layer.renderInContext(context)
-        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
-        UIGraphicsEndImageContext()
-        return result
-    }
-}
-extension NSData{
-    func toBase64() -> String{
-        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
-    }
-}
 

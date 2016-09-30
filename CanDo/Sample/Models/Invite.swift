@@ -16,16 +16,16 @@ class Invite {
     var ownerEmail: String!
     var ownerFirstName: String!
     var ownerLastName: String!
-    
+    var avatar: String!
     
     // MARK: Initialization
     
-    init(teamId: Int, ownerEmail: String?, ownerFirstName: String?, ownerLastName: String? ) {
+    init(teamId: Int, ownerEmail: String?, ownerFirstName: String?, ownerLastName: String?, avatar: String? ) {
         self.teamId = teamId
         self.ownerEmail = ownerEmail ?? ""
         self.ownerLastName = ownerLastName ?? ""
         self.ownerFirstName = ownerFirstName ?? ""
-        
+        self.avatar = avatar ?? ""
     }
     
 }

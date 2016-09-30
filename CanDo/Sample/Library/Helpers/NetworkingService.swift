@@ -37,7 +37,7 @@ public enum NetworkingService {
     
     case NotificationsInfo()
     case PostNotification(post: String?, image: String?)
-    
+    case UpdateUser (avatar: String?, firstName:String?, lastName:String?)
 
     
 }
@@ -85,6 +85,8 @@ extension NetworkingService: TargetType {
             return "/user/reset"
         case .LoginUser(_, _, _):
             return "/user/login"
+        case .UpdateUser(_,_,_):
+            return "/user"
         case .ForgotPassword(_):
             return "/user/forgot"
         
@@ -173,6 +175,8 @@ extension NetworkingService: TargetType {
             return .GET
         case .PostNotification:
             return .POST
+        case .UpdateUser:
+            return .PUT
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -256,6 +260,13 @@ extension NetworkingService: TargetType {
             params["post"] = post
             params["image"] = image
             return params
+            
+        case .UpdateUser(let avatar, let firstName, let lastName):
+            var params: [String : AnyObject] = [:]
+            params["avatar"] = avatar
+            params["firts_name"] = firstName
+            params["last_name"] = lastName
+            return params
 
             
         }
@@ -311,6 +322,8 @@ extension NetworkingService: TargetType {
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
         case .PostNotification(let post, let image):
             return "{\"post\": \"\(post)\",\"image\": \"\(image)\"}".UTF8EncodedData
+        case .UpdateUser(let avatar, let firstName, let lastName):
+            return "{\"avatar\": \"\(avatar)\",\"first_name\": \"\(firstName)\",\"last_name\": \"\(lastName)\"}".UTF8EncodedData
         }
     }
     public var multipartBody: [MultipartFormData]? {

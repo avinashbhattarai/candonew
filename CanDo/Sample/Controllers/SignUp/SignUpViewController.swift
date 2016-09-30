@@ -198,6 +198,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
+                        
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     self.configureSignUpButton(sender,showSpinner: false)
@@ -275,6 +276,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
                     Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    if var imgURL = json["avatar"] as? String{
+                        imgURL = imgURL.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                        Helper.UserDefaults.kStandardUserDefaults.setObject(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
+                    }
+
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     SVProgressHUD.dismiss()

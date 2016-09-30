@@ -85,6 +85,7 @@
 		93F1631C1D7EFCB100100D90 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631B1D7EFCB100100D90 /* Member.swift */; };
 		93F1631E1D8193F100100D90 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631D1D8193F100100D90 /* Notification.swift */; };
 		93F163201D81BFCA00100D90 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */; };
+		93F4D8821D9D929700EF1C0F /* Unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 93F4D8811D9D929700EF1C0F /* Unknown.png */; };
 		93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D821D86B44A0059FEE5 /* BaseViewController.swift */; };
 		93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */; };
 		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
@@ -176,6 +177,7 @@
 		93F1631B1D7EFCB100100D90 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		93F1631D1D8193F100100D90 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		93F1631F1D81BFCA00100D90 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		93F4D8811D9D929700EF1C0F /* Unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Unknown.png; sourceTree = "<group>"; };
 		93F97D821D86B44A0059FEE5 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseSecondLineViewController.swift; sourceTree = "<group>"; };
 		93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTodoTableViewCell.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				EE4D01D81D9BFAC000C90B0B /* unnamed.png */,
+				93F4D8811D9D929700EF1C0F /* Unknown.png */,
 				93142E211D74641500CAC387 /* todoResponse.json */,
 				938FDC011D649FA200B2D070 /* Bolts.framework */,
 				938FDBF61D649BCC00B2D070 /* FBSDKCoreKit.framework */,
@@ -591,6 +594,7 @@
 				938FDBD51D64729200B2D070 /* Main.storyboard in Resources */,
 				938FDBF11D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf in Resources */,
 				93142E311D783DCE00CAC387 /* TodoSectionFooter.xib in Resources */,
+				93F4D8821D9D929700EF1C0F /* Unknown.png in Resources */,
 				938FDBEF1D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf in Resources */,
 				938FDBF31D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf in Resources */,
 				938FDBF01D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf in Resources */,

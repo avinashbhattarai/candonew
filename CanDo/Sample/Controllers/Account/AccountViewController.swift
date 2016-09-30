@@ -157,8 +157,8 @@ class AccountViewController: BaseViewController {
         var invitesArray = [Invite]()
         for invite in invitations{
             if let teamId = invite["team_id"] as? Int{
-               let newInvite = Invite(teamId: teamId, ownerEmail: invite["owner_email"] as? String, ownerFirstName: invite["owner_first_name"] as? String, ownerLastName: invite["owner_last_name"] as? String)
-                            invitesArray.append(newInvite)
+                let newInvite = Invite(teamId: teamId, ownerEmail: invite["owner_email"] as? String, ownerFirstName: invite["owner_first_name"] as? String, ownerLastName: invite["owner_last_name"] as? String, avatar:invite["avatar"] as? String)
+                    invitesArray.append(newInvite)
             }
         }
         
@@ -181,7 +181,7 @@ class AccountViewController: BaseViewController {
                                             }
                                         }
                         
-                                        let newMember = Member(memberId: memberId, userId: userId, email: member["email"] as? String, firstName: member["first_name"] as? String, lastName: member["last_name"] as? String, status: member["status"] as? String, facebook: facebook, owner: isOwner)
+                        let newMember = Member(memberId: memberId, userId: userId, email: member["email"] as? String, firstName: member["first_name"] as? String, lastName: member["last_name"] as? String, status: member["status"] as? String, facebook: facebook, owner: isOwner, avatar: member["avatar"] as? String)
                                         membersArray.append(newMember)
                     }
                 }

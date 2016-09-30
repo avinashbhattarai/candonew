@@ -66,7 +66,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.nameLabel.text = String(format: "%@ %@", invite.ownerFirstName, invite.ownerLastName)
         cell.acceptButton.tag = indexPath.row
         cell.acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        
+         cell.avatar.kf_setImageWithURL(NSURL(string:invite.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
         return cell
     }
     

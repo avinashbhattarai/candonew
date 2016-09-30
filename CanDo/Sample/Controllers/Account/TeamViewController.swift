@@ -98,6 +98,9 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.pendingInviteLabel.hidden = true
         }
         
+       
+        cell.memberAvatar.kf_setImageWithURL(NSURL(string:member.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        
         cell.removeFromTeamButton.tag = indexPath.row
         cell.removeFromTeamButton.addTarget(self, action: #selector(removeButtonTapped(_:)), forControlEvents: .TouchUpInside)
         
