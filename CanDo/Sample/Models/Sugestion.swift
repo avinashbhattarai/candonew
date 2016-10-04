@@ -13,18 +13,17 @@ class Suggestion {
     // MARK: Properties
     
     var name: String!
-    var items: NSArray!
+    var suggestionId: Int!
     var collapsed: Bool! = false
-    var addAllSelected :Bool! = false
+    var suggestionItems: [SuggestionsItem]?
     
     
     // MARK: Initialization
     
-    init(name: String, items: NSArray, collapsed: Bool = false , addAllSelected: Bool = false) {
-        self.name = name
-        self.items = items
+    init(name: String?, suggestionId: Int, collapsed: Bool = false ) {
+        self.name = name ?? ""
+        self.suggestionId = suggestionId
         self.collapsed = collapsed
-        self.addAllSelected = addAllSelected
     }
     
 }

@@ -13,13 +13,17 @@ class SuggestionsItem {
     // MARK: Properties
     
     var name: String!
+    var suggestionItemId: Int!
+    var suggestion: Suggestion!
     var selected: Bool!
     
     
     // MARK: Initialization
     
-    init(name: String, selected: Bool = false) {
-        self.name = name
+    init(name: String?,suggestionItemId: Int,suggestion: Suggestion, selected: Bool = false) {
+        self.name = name ?? ""
+        self.suggestionItemId = suggestionItemId
+        self.suggestion = suggestion
         self.selected = selected
     }
     

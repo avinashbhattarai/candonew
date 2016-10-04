@@ -14,11 +14,13 @@ class CalendarTodoTableViewCell: UITableViewCell {
     @IBOutlet weak var todoName: TodoNameTextField!
     @IBOutlet weak var assignPersonButton: ButtonWithIndexPath!
     @IBOutlet weak var dateButton: ButtonWithIndexPath!
+    @IBOutlet weak var syncButton: UIButton!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        syncButton.imageView?.contentMode = .ScaleAspectFit
       
     }
 

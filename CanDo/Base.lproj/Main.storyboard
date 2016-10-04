@@ -636,12 +636,28 @@ how can we help today?</string>
                                                         <constraint firstAttribute="height" constant="2" id="2ms-ok-Npg"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1C-pk-btC">
+                                                    <rect key="frame" x="20" y="43" width="23" height="23"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="23" id="Jvm-hn-Bk5"/>
+                                                        <constraint firstAttribute="width" constant="78" id="mds-Ep-uT0"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.050980392156862744" green="0.85490196078431369" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="Button" image="calendar-sync-512.png"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="mds-Ep-uT0"/>
+                                                        </mask>
+                                                    </variation>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="8hT-US-nkp" secondAttribute="trailing" constant="20" id="1bf-6e-B2r"/>
+                                                <constraint firstItem="5FW-Ca-Snw" firstAttribute="top" secondItem="p1C-pk-btC" secondAttribute="bottom" constant="6" id="2tW-N1-3LE"/>
                                                 <constraint firstAttribute="bottom" secondItem="5FW-Ca-Snw" secondAttribute="bottom" id="AI8-AO-zod"/>
                                                 <constraint firstItem="8hT-US-nkp" firstAttribute="width" secondItem="gcN-Vc-bJf" secondAttribute="width" priority="250" id="CTK-gv-LuK"/>
                                                 <constraint firstAttribute="trailing" secondItem="nck-qZ-bBk" secondAttribute="trailing" constant="20" id="LNp-Qi-D3b"/>
+                                                <constraint firstItem="p1C-pk-btC" firstAttribute="top" secondItem="5DT-Lp-Qfq" secondAttribute="bottom" constant="6" id="Nrm-Dy-Rb9"/>
                                                 <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leadingMargin" constant="100" id="Rxe-UK-u8E"/>
                                                 <constraint firstItem="gcN-Vc-bJf" firstAttribute="top" secondItem="nck-qZ-bBk" secondAttribute="bottom" constant="3" id="SPi-vC-aNT"/>
                                                 <constraint firstItem="nck-qZ-bBk" firstAttribute="leading" secondItem="5DT-Lp-Qfq" secondAttribute="trailing" constant="10" id="Teo-9o-pmS"/>
@@ -652,12 +668,20 @@ how can we help today?</string>
                                                 <constraint firstItem="5DT-Lp-Qfq" firstAttribute="top" secondItem="YUS-1b-Nqi" secondAttribute="top" constant="3" id="pok-jd-btb"/>
                                                 <constraint firstItem="5FW-Ca-Snw" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leading" id="qfV-7C-9I2"/>
                                                 <constraint firstItem="gcN-Vc-bJf" firstAttribute="leading" secondItem="nck-qZ-bBk" secondAttribute="leading" id="rtH-vk-C2n"/>
+                                                <constraint firstItem="p1C-pk-btC" firstAttribute="leading" secondItem="YUS-1b-Nqi" secondAttribute="leading" constant="20" id="sT4-aq-rvr"/>
+                                                <constraint firstItem="gcN-Vc-bJf" firstAttribute="leading" secondItem="p1C-pk-btC" secondAttribute="trailing" constant="65" id="u0r-eV-InD"/>
                                                 <constraint firstItem="nck-qZ-bBk" firstAttribute="top" secondItem="YUS-1b-Nqi" secondAttribute="top" constant="8" id="wGE-Zh-bE3"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Nrm-Dy-Rb9"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="assignPersonButton" destination="gcN-Vc-bJf" id="2c4-Pg-Is1"/>
                                             <outlet property="dateButton" destination="8hT-US-nkp" id="8qv-1c-kZ7"/>
+                                            <outlet property="syncButton" destination="p1C-pk-btC" id="AdS-rp-vVK"/>
                                             <outlet property="timeButton" destination="5DT-Lp-Qfq" id="cA2-Kw-l5s"/>
                                             <outlet property="todoName" destination="nck-qZ-bBk" id="dgj-DC-SyH"/>
                                         </connections>
@@ -2787,6 +2811,7 @@ receive a password reset email</string>
         <image name="Group 4" width="295" height="326"/>
         <image name="OFF.png" width="14" height="20"/>
         <image name="Unknown.png" width="225" height="225"/>
+        <image name="calendar-sync-512.png" width="512" height="512"/>
         <image name="icon-delete" width="10" height="11"/>
         <image name="iconChevronUpNavy" width="18" height="12"/>
         <image name="iconFb" width="13" height="24"/>
@@ -2803,7 +2828,7 @@ receive a password reset email</string>
         <image name="underlineTodoList" width="334" height="2"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qO6-7u-NnB"/>
+        <segue reference="bzo-zy-hhf"/>
         <segue reference="y5L-Mg-VrH"/>
         <segue reference="yeX-sn-hZu"/>
     </inferredMetricsTieBreakers>

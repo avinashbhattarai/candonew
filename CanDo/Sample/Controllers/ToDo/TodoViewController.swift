@@ -57,12 +57,15 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		
         toDoTableView.es_startPullToRefresh()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataTodo(_:)), name:"reloadDataTodo", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reDownloadDataTodo(_:)), name:"reDownloadDataTodo", object: nil)
        
 	}
     override func viewWillAppear(animated: Bool) {
        
     }
-    
+    func reDownloadDataTodo(n: NSNotification) {
+        toDoTableView.es_startPullToRefresh()
+    }
     func reloadDataTodo(n: NSNotification) {
         toDoTableView.reloadData()
         if (n.userInfo != nil) {

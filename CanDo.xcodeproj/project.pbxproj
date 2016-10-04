@@ -93,6 +93,10 @@
 		EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */; };
 		EE3C69121D8A84F10050A238 /* TipDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */; };
 		EE4D01D91D9BFAC000C90B0B /* unnamed.png in Resources */ = {isa = PBXBuildFile; fileRef = EE4D01D81D9BFAC000C90B0B /* unnamed.png */; };
+		EE6ED9891DA26469003A2990 /* calendar-sync-512.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED9881DA26469003A2990 /* calendar-sync-512.png */; };
+		EE6ED98B1DA28F69003A2990 /* basic3-098_cloud_sync-512.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */; };
+		EE6ED98F1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */; };
+		EE6ED9911DA29298003A2990 /* Sync.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED9901DA29298003A2990 /* Sync.png */; };
 		EEB18D521D897D9A007E655B /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB18D511D897D9A007E655B /* Tip.swift */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +192,10 @@
 		EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipTableViewCell.swift; sourceTree = "<group>"; };
 		EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipDetailsViewController.swift; sourceTree = "<group>"; };
 		EE4D01D81D9BFAC000C90B0B /* unnamed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unnamed.png; sourceTree = "<group>"; };
+		EE6ED9881DA26469003A2990 /* calendar-sync-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-sync-512.png"; sourceTree = "<group>"; };
+		EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic3-098_cloud_sync-512.png"; sourceTree = "<group>"; };
+		EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nexus2cee_Sync-Thumb.png"; sourceTree = "<group>"; };
+		EE6ED9901DA29298003A2990 /* Sync.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sync.png; sourceTree = "<group>"; };
 		EEB18D511D897D9A007E655B /* Tip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -228,6 +236,10 @@
 		938FDBC21D64729200B2D070 /* CanDo */ = {
 			isa = PBXGroup;
 			children = (
+				EE6ED9901DA29298003A2990 /* Sync.png */,
+				EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */,
+				EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */,
+				EE6ED9881DA26469003A2990 /* calendar-sync-512.png */,
 				EE4D01D81D9BFAC000C90B0B /* unnamed.png */,
 				93F4D8811D9D929700EF1C0F /* Unknown.png */,
 				93142E211D74641500CAC387 /* todoResponse.json */,
@@ -584,6 +596,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE6ED9911DA29298003A2990 /* Sync.png in Resources */,
 				938FDBD01D64729200B2D070 /* Views in Resources */,
 				938FDBDD1D64729200B2D070 /* LaunchScreen.storyboard in Resources */,
 				EE4D01D91D9BFAC000C90B0B /* unnamed.png in Resources */,
@@ -594,9 +607,12 @@
 				938FDBD51D64729200B2D070 /* Main.storyboard in Resources */,
 				938FDBF11D64809B00B2D070 /* exljbris - MuseoSansRounded-700.otf in Resources */,
 				93142E311D783DCE00CAC387 /* TodoSectionFooter.xib in Resources */,
+				EE6ED98B1DA28F69003A2990 /* basic3-098_cloud_sync-512.png in Resources */,
+				EE6ED9891DA26469003A2990 /* calendar-sync-512.png in Resources */,
 				93F4D8821D9D929700EF1C0F /* Unknown.png in Resources */,
 				938FDBEF1D64809B00B2D070 /* exljbris - MuseoSansRounded-300.otf in Resources */,
 				938FDBF31D64809B00B2D070 /* exljbris - MuseoSansRounded-1000.otf in Resources */,
+				EE6ED98F1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png in Resources */,
 				938FDBF01D64809B00B2D070 /* exljbris - MuseoSansRounded-500.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

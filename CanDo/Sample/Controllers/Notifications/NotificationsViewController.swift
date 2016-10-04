@@ -66,7 +66,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         notificationTableView.layoutIfNeeded()
         
         
-        self.notificationTableView.es_addPullToRefresh {
+        notificationTableView.es_addPullToRefresh {
             self.runNotificationsInfoRequest()
         }
         

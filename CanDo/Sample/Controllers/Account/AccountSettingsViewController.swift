@@ -177,7 +177,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserSecretCode)
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserToken)
         Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserAvatar)
-        
+        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserGroupOwner)
         Helper.UserDefaults.kStandardUserDefaults.synchronize()
         
     }

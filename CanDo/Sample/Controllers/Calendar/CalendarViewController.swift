@@ -10,8 +10,10 @@ import UIKit
 import FSCalendar
 import SVProgressHUD
 import ESPullToRefresh
+import EventKit
 class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UITextFieldDelegate {
 
+   
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var todoTableView: UITableView!
     var todos = [Todo]()
@@ -26,6 +28,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         cellDateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         cellTimeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
 
+       
       
         todoTableView.delegate = self
         todoTableView.dataSource = self
@@ -253,7 +256,14 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             cell.assignPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
             cell.timeButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
         }
-
+        if todo.assignedTo.personId == (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserId) as? Int){
+            cell.syncButton.hidden = false
+        }else{
+            cell.syncButton.hidden = true
+        }
+        
+        cell.syncButton.tag = indexPath.row
+        cell.syncButton.addTarget(self, action: #selector(syncButtonTapped(_:)), forControlEvents: .TouchUpInside)
         
         
         if todo.date == nil {
@@ -278,7 +288,133 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         
         return cell
     }
-   
+     func syncButtonTapped(sender: UIButton) {
+        
+        let optionMenu = UIAlertController(title: nil, message: "Create Event or Reminder in native Calendar or Reminders Apps", preferredStyle: .ActionSheet)
+        
+        // 2
+        let createEventAction = UIAlertAction(title: "Create Event", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.prepareForEventCreation(sender.tag)
+           
+        })
+        let createReminderAction = UIAlertAction(title: "Create Reminder", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.prepareForReminderCreation(sender.tag)
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+        })
+        // 4
+        optionMenu.addAction(createEventAction)
+        optionMenu.addAction(createReminderAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+    }
+    
+    func prepareForReminderCreation(senderTag:Int){
+        let todo:Todo = self.todos[senderTag]
+        var newDate:NSDate?
+        if ((todo.time) != nil) {
+            let calendar = NSCalendar.currentCalendar()
+            let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (todo.time)!)
+            let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (todo.date)!)
+            let date = calendar.dateFromComponents(dateComp)
+            newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+        }else{
+            newDate = todo.date
+        }
+        let eventStore = EKEventStore()
+    
+        eventStore.requestAccessToEntityType(EKEntityType.Reminder) { (granted: Bool, error: NSError?) -> Void in
+            
+            if granted{
+                
+                let reminder = EKReminder(eventStore: eventStore)
+                reminder.title = todo.name
+                reminder.dueDateComponents = self.dateComponentFromNSDate(newDate!)
+                reminder.calendar = eventStore.defaultCalendarForNewReminders()
+                do {
+                    try eventStore.saveReminder(reminder, commit: true)
+                    SVProgressHUD.showSuccessWithStatus("Done.\nPlease check native app.")
+                }catch{
+                    SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                }
+  
+            }else{
+                SVProgressHUD.showErrorWithStatus("The app is not permitted to access reminders, make sure to grant permission in the settings and try again")
+            }
+        }
+
+        
+        
+        
+        
+      
+    }
+    
+    func dateComponentFromNSDate(date: NSDate)-> NSDateComponents{
+        
+        let calendarUnit: NSCalendarUnit = [.Minute ,.Hour, .Day, .Month, .Year]
+        let dateComponents = NSCalendar.currentCalendar().components(calendarUnit, fromDate: date)
+        
+        
+        return dateComponents
+    }
+
+    func prepareForEventCreation(senderTag:Int){
+        
+        let todo:Todo = self.todos[senderTag]
+        var newDate:NSDate?
+        if ((todo.time) != nil) {
+            let calendar = NSCalendar.currentCalendar()
+            let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (todo.time)!)
+            let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (todo.date)!)
+            let date = calendar.dateFromComponents(dateComp)
+            newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+        }else{
+            newDate = todo.date
+        }
+        let eventStore = EKEventStore()
+        let startDate = newDate
+        let endDate = newDate
+        
+        if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
+            eventStore.requestAccessToEntityType(.Event, completion: {
+                granted, error in
+                self.createEvent(eventStore, title: todo.name, startDate: startDate ?? NSDate(), endDate: endDate ?? NSDate())
+            })
+        } else {
+            SVProgressHUD.showErrorWithStatus("The app is not permitted to access calendar, make sure to grant permission in the settings and try again")
+        }
+
+    }
+    
+    // Creates an event in the EKEventStore. The method assumes the eventStore is created and
+    // accessible
+    func createEvent(eventStore: EKEventStore, title: String, startDate: NSDate, endDate: NSDate) {
+        let event = EKEvent(eventStore: eventStore)
+        
+        event.title = title
+        event.startDate = startDate
+        event.endDate = endDate
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        
+        do {
+            try eventStore.saveEvent(event, span: .ThisEvent)
+           SVProgressHUD.showSuccessWithStatus("Done.\nPlease check native app.")
+        } catch {
+            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+        }
+    }
+
+    
+    
     func assignTodoButtonTapped(sender: ButtonWithIndexPath) {
         let row: Int = sender.indexPath!.row
         currentTodo = todos[row]

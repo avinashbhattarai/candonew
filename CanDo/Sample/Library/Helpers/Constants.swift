@@ -74,6 +74,7 @@ struct Helper {
         static let kUserSecretCode = "user_secret_code"
         static let kUserToken = "user_token"
         static let kUserAvatar = "user_avatar"
+        static let kUserGroupOwner = "user_group_owner"
         }
     
 

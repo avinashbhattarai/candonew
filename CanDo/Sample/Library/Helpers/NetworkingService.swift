@@ -38,7 +38,9 @@ public enum NetworkingService {
     case NotificationsInfo()
     case PostNotification(post: String?, image: String?)
     case UpdateUser (avatar: String?, firstName:String?, lastName:String?)
-
+    
+    case SuggestionsInfo()
+    case AddSuggestions(suggestions: NSArray)
     
 }
 
@@ -128,6 +130,11 @@ extension NetworkingService: TargetType {
         case .PostNotification(_,_):
             return "/notifications"
 
+        case .SuggestionsInfo():
+            return "/suggestions"
+        case .AddSuggestions(_):
+            return "/suggestions/create-todos"
+
             
         }
     }
@@ -177,6 +184,10 @@ extension NetworkingService: TargetType {
             return .POST
         case .UpdateUser:
             return .PUT
+        case .SuggestionsInfo:
+            return .GET
+        case .AddSuggestions:
+            return .POST
         }
     }
     public var parameters: [String: AnyObject]? {
@@ -248,6 +259,8 @@ extension NetworkingService: TargetType {
 
         case .ListsInfo(_):
             return nil
+        case .SuggestionsInfo(_):
+            return nil
 
         case .UpdateList(let listId, let name):
             return ["listId": listId, "name": name]
@@ -268,7 +281,8 @@ extension NetworkingService: TargetType {
             params["last_name"] = lastName
             return params
 
-            
+        case .AddSuggestions(let suggestions):
+            return ["suggestions": suggestions]
         }
     }
     public var sampleData: NSData {
@@ -324,6 +338,10 @@ extension NetworkingService: TargetType {
             return "{\"post\": \"\(post)\",\"image\": \"\(image)\"}".UTF8EncodedData
         case .UpdateUser(let avatar, let firstName, let lastName):
             return "{\"avatar\": \"\(avatar)\",\"first_name\": \"\(firstName)\",\"last_name\": \"\(lastName)\"}".UTF8EncodedData
+        case .SuggestionsInfo(_):
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .AddSuggestions(let suggestions):
+            return "{\"suggestions\": \"\(suggestions)\"}".UTF8EncodedData
         }
     }
     public var multipartBody: [MultipartFormData]? {

@@ -28,7 +28,9 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
         tipsTableView.emptyDataSetSource = self;
         tipsTableView.emptyDataSetDelegate = self;
 
-
+        headerLabel.text = String(format:"Here are some tips and resources\nto help you support %@", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserGroupOwner) as? String) ?? "")
+        
+        
 		tipsTableView.es_addPullToRefresh {
 
 			/// Do anything you want...
