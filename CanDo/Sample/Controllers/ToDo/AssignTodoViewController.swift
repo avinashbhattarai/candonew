@@ -31,8 +31,10 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         
         
         
-        if (currentTodo != nil) {
+        if (currentTodo?.name != "") {
             todoTitleLabel.text = currentTodo?.name
+        }else{
+            todoTitleLabel.text = "Untitled To Do"
         }
         
         
@@ -154,6 +156,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                     self.persons.insert(anyOnePerson, atIndex: 0)
                     
                     for person:Person in self.persons{
+                        print(" currnttodo \(self.currentTodo?.assignedTo)")
                         if self.currentTodo?.assignedTo.personId == person.personId{
                             person.selected = true
                             break

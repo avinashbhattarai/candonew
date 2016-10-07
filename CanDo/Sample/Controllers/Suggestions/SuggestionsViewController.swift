@@ -39,7 +39,8 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         suggestionsTableView.delegate = self
         suggestionsTableView.dataSource = self;
         suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
+        suggestionsTableView.emptyDataSetSource = self;
+        suggestionsTableView.emptyDataSetDelegate = self;
         
         suggestionsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
@@ -125,6 +126,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
+    
     func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
         return true
     }

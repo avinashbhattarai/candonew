@@ -7,17 +7,16 @@
 //
 
 import UIKit
-import ImagePicker
 import Moya
 import SVProgressHUD
 import Kingfisher
-class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDelegate {
+class AccountSettingsViewController: BaseSecondLineViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
   
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var leaveTeamButton: UIButton!
-    
+    let imagePicker = UIImagePickerController()
     var iamOwner : Bool = false
     var iamInTeam : Bool = false
     
@@ -26,7 +25,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
 
         
         self.title = "Account"
-        
+        imagePicker.delegate = self
         userNameLabel.text = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserLastName) as? String) ?? "")
         
         avatarButton.layer.cornerRadius = 5
@@ -161,11 +160,36 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
     
     
     @IBAction func avatarButtonTapped(sender: AnyObject) {
-        let imagePicker = ImagePickerController()
-        imagePicker.imageLimit = 1
-        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        let optionMenu = UIAlertController(title: nil, message: "Set a Photo", preferredStyle: .ActionSheet)
+        
+        // 2
+        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.imagePicker.sourceType = .Camera
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            
+        })
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.imagePicker.sourceType = .PhotoLibrary
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+        })
+        // 4
+        optionMenu.addAction(createPhotoAction)
+        optionMenu.addAction(chooseFromLibraryAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+
     }
     
     func cleanUserDefaults() {
@@ -184,32 +208,18 @@ class AccountSettingsViewController: BaseSecondLineViewController, ImagePickerDe
 
     // MARK: - ImagePickerDelegate
     
-    func cancelButtonDidPress(imagePicker: ImagePickerController) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
-        /*
-         guard images.count > 0 else { return }
-         
-         let lightboxImages = images.map {
-         return LightboxImage(image: $0)
-         }
-         
-         let lightbox = LightboxController(images: lightboxImages, startIndex: 0)
-         imagePicker.presentViewController(lightbox, animated: true, completion: nil)
-         */
-    }
-    
-    
-    func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        print(images)
-        let data = resizeImage(images[0])
-        let  dataString = data!.toBase64()
-        
-        runUpdateUserRequest(dataString, firstName: nil, lastName: nil, image: images[0])
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            let data = resizeImage(pickedImage)
+            let  dataString = data!.toBase64()
+            
+            runUpdateUserRequest(dataString, firstName: nil, lastName: nil, image: pickedImage)
+            
         }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
     
     func resizeImage(image:UIImage) -> NSData? {
         let resizedImage = image.resizeWithPercentage(0.9)

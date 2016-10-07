@@ -13,7 +13,8 @@ import ESPullToRefresh
 import SVProgressHUD
 import Kingfisher
 
-class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+class NotificationsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
 
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
@@ -24,7 +25,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
     var heightAtIndexPath = NSMutableDictionary()
     var dateFormatter : NSDateFormatter?
     var selectedImage: UIImage?
-    
+    let imagePicker = UIImagePickerController()
     var isHeaderOpened:Bool = false
     var notifications = [Notification]()
     
@@ -33,7 +34,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
 
         // Do any additional setup after loading the view.
         //test
-        
+        imagePicker.delegate = self
         postTextView.layer.cornerRadius = 5
         postTextView.layer.borderWidth = 1
         postTextView.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
@@ -277,7 +278,7 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
         
         
         if !postTextView.hasText() && selectedImage == nil {
-            SVProgressHUD.showErrorWithStatus("Post field is empty")
+            SVProgressHUD.showErrorWithStatus("Post or image field is empty")
             return
         }
         var dataString:String?
@@ -346,13 +347,36 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
    
     @IBAction func addPhotoTapped(sender: AnyObject) {
         
-        let imagePicker = ImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.imageLimit = 1
+        imagePicker.allowsEditing = false
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        let optionMenu = UIAlertController(title: nil, message: "Add a Photo", preferredStyle: .ActionSheet)
+        
+        // 2
+        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.imagePicker.sourceType = .Camera
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            
+        })
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.imagePicker.sourceType = .PhotoLibrary
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+        })
+        // 4
+        optionMenu.addAction(createPhotoAction)
+        optionMenu.addAction(chooseFromLibraryAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.presentViewController(optionMenu, animated: true, completion: nil)
 
-        
     }
     @IBAction func postUpdateButtonTapped(sender: AnyObject) {
         
@@ -380,35 +404,20 @@ class NotificationsViewController: BaseViewController, ImagePickerDelegate, UITa
     
     // MARK: - ImagePickerDelegate
     
-    func cancelButtonDidPress(imagePicker: ImagePickerController) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
-    }
     
-    func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
-        /*
-        guard images.count > 0 else { return }
-        
-        let lightboxImages = images.map {
-            return LightboxImage(image: $0)
+      func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            selectedImage = pickedImage
+            self.selectedImageButton.setImage(pickedImage, forState: .Normal)
+            self.selectedImageButton.hidden = false
+            self.addPhotoButton.hidden = true
+
         }
         
-        let lightbox = LightboxController(images: lightboxImages, startIndex: 0)
-        imagePicker.presentViewController(lightbox, animated: true, completion: nil)
- */
+        dismissViewControllerAnimated(true, completion: nil)
     }
- 
     
-    func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        print(images)
-        selectedImage = images[0]
-        self.selectedImageButton.setImage(images[0], forState: .Normal)
-        self.selectedImageButton.hidden = false
-        self.addPhotoButton.hidden = true
-       
-    }
-
-
+   
     /*
     // MARK: - Navigation
 

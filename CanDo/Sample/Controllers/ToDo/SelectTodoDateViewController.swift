@@ -30,10 +30,11 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
             self.title = "Calendar"
         }
 
-      
         
         if (currentTodo?.name != "") {
              todoTitle.text = currentTodo?.name
+        }else{
+            todoTitle.text = "Untitled To Do"
         }
        
         if ((currentTodo?.time) == nil) {

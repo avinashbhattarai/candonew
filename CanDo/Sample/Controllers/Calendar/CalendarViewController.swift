@@ -283,6 +283,8 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
 
         cell.dateButton.indexPath = indexPath
         cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.timeButton.indexPath = indexPath
+        cell.timeButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
       
        
         

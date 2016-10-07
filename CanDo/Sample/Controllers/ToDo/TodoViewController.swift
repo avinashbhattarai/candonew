@@ -218,6 +218,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		let footer = cell as! TodoTableSectionFooter
 		footer.addTodoButton.tag = section
 		footer.dateButton.tag = section
+        footer.assignTodoButton.tag = section
 		footer.addNewTodoButton.tag = section
 		footer.titleTextField.tag = section
 		footer.titleTextField.delegate = self
@@ -282,10 +283,11 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	}
 
 	func assignNewTodoButtonTapped(sender: DateUnderlineButton) {
-
+         print(sender.tag)
         if  let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter {
 		    currentTodo = footer.newTodo
             performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+            
         }
 
 	}
@@ -599,9 +601,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let newTodo:Todo = Todo(name: "", list: list, updatedAt: nil, createdAt: nil, date: nil, time: nil, status: "", todoId: 0, assignedTo: person)
             footer.newTodo = newTodo
             newTodo.footer = footer
-            
-            
-            
+           
 		}
 
 	}
