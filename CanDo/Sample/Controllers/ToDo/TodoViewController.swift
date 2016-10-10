@@ -378,13 +378,18 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             
+            if footer.newTodo?.assignedTo.personId != 0 {
+                runAddTodoRequest(todoTitle!, listId: (footer.newTodo?.list.listId)!, assignTo: (footer.newTodo?.assignedTo.personId)!, date:selectedDate, time:selectedTime, section: section, list: list)
+            }else{
+                runAddTodoRequest(todoTitle!, listId: (footer.newTodo?.list.listId)!, assignTo:nil, date:selectedDate, time:selectedTime, section: section, list: list)
+            }
             
-            runAddTodoRequest(todoTitle!, listId: (footer.newTodo?.list.listId)!, assignTo: (footer.newTodo?.assignedTo.personId)!, date:selectedDate, time:selectedTime, section: section, list: list)
+            
            
 		}
 	}
 
-    func runAddTodoRequest(todoName: String, listId: Int, assignTo: Int, date:String?, time:String?, section:Int, list: List) {
+    func runAddTodoRequest(todoName: String, listId: Int, assignTo: Int?, date:String?, time:String?, section:Int, list: List) {
 
 		SVProgressHUD.show()
         provider.request(.AddTodo(listId: listId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
