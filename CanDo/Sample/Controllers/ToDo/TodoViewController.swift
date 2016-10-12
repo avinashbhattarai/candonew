@@ -19,8 +19,8 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	@IBOutlet weak var headerView: UIView!
 	@IBOutlet weak var toDoTableView: UITableView!
     
-    var cellDateFormatter = NSDateFormatter()
-    var cellTimeFormatter = NSDateFormatter()
+    var cellDateFormatter = DateFormatter()
+    var cellTimeFormatter = DateFormatter()
 
 	var selectedIndex: NSInteger?
 	var isHeaderOpened: Bool = false
@@ -36,13 +36,13 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		toDoTableView.dataSource = self;
         toDoTableView.emptyDataSetSource = self;
         toDoTableView.emptyDataSetDelegate = self;
-		toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+		toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.none
 
 		let nib = UINib(nibName: "TodoSectionFooter", bundle: nil)
-		toDoTableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TodoSectionFooter")
+		toDoTableView.register(nib, forHeaderFooterViewReuseIdentifier: "TodoSectionFooter")
         
-        cellDateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        cellTimeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        cellDateFormatter.dateStyle = DateFormatter.Style.medium
+        cellTimeFormatter.timeStyle = DateFormatter.Style.short
 
         
 		toDoTableView.es_addPullToRefresh {
@@ -56,37 +56,37 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 		
         toDoTableView.es_startPullToRefresh()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataTodo(_:)), name:"reloadDataTodo", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reDownloadDataTodo(_:)), name:"reDownloadDataTodo", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataTodo(_:)), name:NSNotification.Name(rawValue: "reloadDataTodo"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reDownloadDataTodo(_:)), name:NSNotification.Name(rawValue: "reDownloadDataTodo"), object: nil)
        
 	}
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
        
     }
-    func reDownloadDataTodo(n: NSNotification) {
+    func reDownloadDataTodo(_ n: Foundation.Notification) {
         toDoTableView.es_startPullToRefresh()
     }
-    func reloadDataTodo(n: NSNotification) {
+    func reloadDataTodo(_ n: Foundation.Notification) {
         toDoTableView.reloadData()
-        if (n.userInfo != nil) {
-            if let todo = n.userInfo!["todo"] as? Todo{
+        if ((n as NSNotification).userInfo != nil) {
+            if let todo = (n as NSNotification).userInfo!["todo"] as? Todo{
                 
                 
-                let dateFormatter: NSDateFormatter = NSDateFormatter()
+                let dateFormatter: DateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                let timeFormatter: NSDateFormatter = NSDateFormatter()
+                let timeFormatter: DateFormatter = DateFormatter()
                 timeFormatter.dateFormat = "HH:mm:ss"
                 // get the date string applied date format
                 var selectedDate:String?
                 var selectedTime:String?
                
                     if todo.date != nil {
-                        selectedDate = dateFormatter.stringFromDate(todo.date!)
+                        selectedDate = dateFormatter.string(from: todo.date! as Date)
                     }else{
                         selectedDate = nil
                     }
                     if todo.time != nil {
-                        selectedTime = timeFormatter.stringFromDate(todo.time!)
+                        selectedTime = timeFormatter.string(from: todo.time! as Date)
                     }else{
                         selectedTime = nil
                     }
@@ -100,25 +100,25 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	func runListsInfoRequest() {
 
 		
-        provider.request(.ListsInfo(date:nil)) { result in
+        provider.request(.listsInfo(date:nil)) { result in
 			switch result {
-			case let .Success(moyaResponse):
+			case let .success(moyaResponse):
 
 				do {
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
                         self.toDoTableView.es_stopPullToRefresh(completion: true)
-						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 						return;
 					}
                     self.lists = [List]()
-					for list: NSDictionary in json {
+					for list: Dictionary in json {
 						if let listId = list["id"] as? Int {
 							let newList = List(name: list["name"] as? String, listId: listId)
 							var todosArray = [Todo]()
 							if let todos = list["todo"] as? [[String: AnyObject]] {
-								for todo: NSDictionary in todos {
+								for todo: Dictionary in todos {
 									if let todoId = todo["id"] as? Int {
 										var person:Person?
 										if let assignedToId = todo["assign_to_id"] as? Int {
@@ -147,74 +147,74 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
 						let item = json[0] as? [String: AnyObject],
 						let message = item["message"] as? String else {
-							SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+							SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 							self.toDoTableView.es_stopPullToRefresh(completion: true)
 							return;
 					}
-					SVProgressHUD.showErrorWithStatus("\(message)")
+					SVProgressHUD.showError(withStatus: "\(message)")
 					self.toDoTableView.es_stopPullToRefresh(completion: true)
 
 				}
 
-			case let .Failure(error):
+			case let .failure(error):
 				guard let error = error as? CustomStringConvertible else {
 					break
 				}
 				print(error.description)
-				SVProgressHUD.showErrorWithStatus("\(error.description)")
+				SVProgressHUD.showError(withStatus: "\(error.description)")
 				self.toDoTableView.es_stopPullToRefresh(completion: true)
 
 			}
 		}
 
 	}
-    func cleanFooterView(footer: TodoTableSectionFooter){
+    func cleanFooterView(_ footer: TodoTableSectionFooter){
         
-        footer.addTodoView.hidden = true
+        footer.addTodoView.isHidden = true
         footer.titleTextField.text=""
-        footer.assignTodoButton.setTitle("Assign to do", forState: .Normal)
-        footer.dateButton.setTitle("Date", forState: .Normal)
-        footer.addTodoButton.hidden = false
+        footer.assignTodoButton.setTitle("Assign to do", for: UIControlState())
+        footer.dateButton.setTitle("Date", for: UIControlState())
+        footer.addTodoButton.isHidden = false
         footer.newTodo = nil
 
     }
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return lists.count
 	}
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return lists[section].todos!.count
 	}
 
-	func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 60
 	}
-	func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		return 90
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 90
 	}
 
-	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let contentView: UIView = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 60))
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let contentView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
 		contentView.backgroundColor = Helper.Colors.RGBCOLOR(250, green: 255, blue: 254)
-		let listTitle: TodoListSectionTextField = TodoListSectionTextField(frame: CGRectMake(20, 0, self.view.frame.width - 40, 29))
-		listTitle.center = CGPointMake(listTitle.center.x, contentView.frame.size.height / 2)
+		let listTitle: TodoListSectionTextField = TodoListSectionTextField(frame: CGRect(x: 20, y: 0, width: self.view.frame.width - 40, height: 29))
+		listTitle.center = CGPoint(x: listTitle.center.x, y: contentView.frame.size.height / 2)
 		listTitle.text = lists[section].name
 		listTitle.placeholder = "List title"
 		listTitle.tag = section
 		listTitle.delegate = self
-		listTitle.returnKeyType = .Done
+		listTitle.returnKeyType = .done
 		contentView.addSubview(listTitle)
 		return contentView
 	}
-	func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 
 		// Dequeue with the reuse identifier
-		let cell = toDoTableView.dequeueReusableHeaderFooterViewWithIdentifier("TodoSectionFooter")
+		let cell = toDoTableView.dequeueReusableHeaderFooterView(withIdentifier: "TodoSectionFooter")
 		let footer = cell as! TodoTableSectionFooter
 		footer.addTodoButton.tag = section
 		footer.dateButton.tag = section
@@ -222,25 +222,25 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		footer.addNewTodoButton.tag = section
 		footer.titleTextField.tag = section
 		footer.titleTextField.delegate = self
-		footer.dateButton.addTarget(self, action: #selector(dateNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-		footer.assignTodoButton.addTarget(self, action: #selector(assignNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-		footer.addNewTodoButton.addTarget(self, action: #selector(addNewTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
-		footer.addTodoButton.addTarget(self, action: #selector(addTodoTapped(_:)), forControlEvents: .TouchUpInside)
+		footer.dateButton.addTarget(self, action: #selector(dateNewTodoButtonTapped(_:)), for: .touchUpInside)
+		footer.assignTodoButton.addTarget(self, action: #selector(assignNewTodoButtonTapped(_:)), for: .touchUpInside)
+		footer.addNewTodoButton.addTarget(self, action: #selector(addNewTodoButtonTapped(_:)), for: .touchUpInside)
+		footer.addTodoButton.addTarget(self, action: #selector(addTodoTapped(_:)), for: .touchUpInside)
         
         cleanFooterView(footer)
         
         return footer
     }
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-		let todo: Todo = lists[indexPath.section].todos![indexPath.row]
-		let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TodoTableViewCell
+		let todo: Todo = lists[(indexPath as NSIndexPath).section].todos![(indexPath as NSIndexPath).row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TodoTableViewCell
 
 		if todo.status == Helper.TodoStatusKey.kActive {
-            cell.selectedButton .setImage(UIImage(), forState: .Normal)
+            cell.selectedButton .setImage(UIImage(), for: UIControlState())
 		} else {
-			cell.selectedButton .setImage(UIImage(named: "iconHelpAssignTickCopy"), forState: .Normal)
+			cell.selectedButton .setImage(UIImage(named: "iconHelpAssignTickCopy"), for: UIControlState())
 		}
 
 		cell.titleTextField.text = todo.name
@@ -251,79 +251,79 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		cell.assignedPersonButton.indexPath = indexPath
         
         if todo.date == nil {
-           cell.dateButton.setTitle("Anytime", forState: .Normal)
+           cell.dateButton.setTitle("Anytime", for: UIControlState())
         }else{
-            let selectedDate = cellDateFormatter.stringFromDate(todo.date!)
+            let selectedDate = cellDateFormatter.string(from: todo.date! as Date)
             
             var selectedTime:String?
             if todo.time == nil {
                 selectedTime = "Any time"
             }else{
-                selectedTime = cellTimeFormatter.stringFromDate(todo.time!)
+                selectedTime = cellTimeFormatter.string(from: todo.time! as Date)
             }
-            cell.dateButton.setTitle(String(format: "%@, %@", selectedTime!, selectedDate), forState: .Normal)
+            cell.dateButton.setTitle(String(format: "%@, %@", selectedTime!, selectedDate), for: UIControlState())
         }
 
-		cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
-		cell.selectedButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
-		cell.assignedPersonButton.setTitle(todo.assignedTo.name, forState: .Normal)
-		cell.assignedPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+		cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), for: .touchUpInside)
+		cell.selectedButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), for: .touchUpInside)
+		cell.assignedPersonButton.setTitle(todo.assignedTo.name, for: UIControlState())
+		cell.assignedPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), for: .touchUpInside)
         if todo.assignedTo.personId == 0 {
-            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
-            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
-            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(167, green: 90, blue: 255).CGColor
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), for: UIControlState())
+            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), for: UIControlState())
+            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(167, green: 90, blue: 255).cgColor
         }else{
-            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
-            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
-            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).CGColor
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), for: UIControlState())
+            cell.assignedPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), for: UIControlState())
+            cell.selectedButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).cgColor
         }
         
 
 		return cell
 	}
 
-	func assignNewTodoButtonTapped(sender: DateUnderlineButton) {
+	func assignNewTodoButtonTapped(_ sender: DateUnderlineButton) {
          print(sender.tag)
-        if  let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter {
+        if  let footer = toDoTableView.footerView(forSection: sender.tag) as? TodoTableSectionFooter {
 		    currentTodo = footer.newTodo
-            performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+            performSegue(withIdentifier: Helper.SegueKey.kToAssignTodoViewController, sender: self)
             
         }
 
 	}
 
-	func assignTodoButtonTapped(sender: ButtonWithIndexPath) {
-		let section: Int = sender.indexPath!.section
-		let row: Int = sender.indexPath!.row
+	func assignTodoButtonTapped(_ sender: ButtonWithIndexPath) {
+		let section: Int = (sender.indexPath! as NSIndexPath).section
+		let row: Int = (sender.indexPath! as NSIndexPath).row
 		let list = lists[section]
 		currentTodo = list.todos![row]
 		print(currentTodo)
-		performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+		performSegue(withIdentifier: Helper.SegueKey.kToAssignTodoViewController, sender: self)
 
 	}
 
-	func dateNewTodoButtonTapped(sender: DateUnderlineButton) {
+	func dateNewTodoButtonTapped(_ sender: DateUnderlineButton) {
 
-        if let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter {
+        if let footer = toDoTableView.footerView(forSection: sender.tag) as? TodoTableSectionFooter {
            
             currentTodo = footer.newTodo
-            performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+            performSegue(withIdentifier: Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
         }
 	}
   
-	func dateButtonTapped(sender: ButtonWithIndexPath) {
-		let section: Int = sender.indexPath!.section
-		let row: Int = sender.indexPath!.row
+	func dateButtonTapped(_ sender: ButtonWithIndexPath) {
+		let section: Int = (sender.indexPath! as NSIndexPath).section
+		let row: Int = (sender.indexPath! as NSIndexPath).row
 		let list = lists[section]
 		currentTodo = list.todos![row]
 		print(currentTodo)
-		performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+		performSegue(withIdentifier: Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
 
 	}
 
-	func selectedButtonTapped(sender: ButtonWithIndexPath) {
-		let section: Int = sender.indexPath!.section
-		let row: Int = sender.indexPath!.row
+	func selectedButtonTapped(_ sender: ButtonWithIndexPath) {
+		let section: Int = (sender.indexPath! as NSIndexPath).section
+		let row: Int = (sender.indexPath! as NSIndexPath).row
 		let list = lists[section]
 		let todo = list.todos![row]
         var status:String?
@@ -339,9 +339,9 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 	}
 
-	func addNewTodoButtonTapped(sender: UIButton) {
+	func addNewTodoButtonTapped(_ sender: UIButton) {
 
-		if let footer = toDoTableView.footerViewForSection(sender.tag) as? TodoTableSectionFooter {
+		if let footer = toDoTableView.footerView(forSection: sender.tag) as? TodoTableSectionFooter {
 			
             
             let section: Int = sender.tag
@@ -349,32 +349,32 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
             
             var todoTitle:String?
-            if footer.titleTextField.hasText() {
+            if footer.titleTextField.hasText {
                 todoTitle = footer.titleTextField.text
             }else{
                 todoTitle = "Untitled To Do"
             }
-            let dateFormatter: NSDateFormatter = NSDateFormatter()
+            let dateFormatter: DateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            let timeFormatter: NSDateFormatter = NSDateFormatter()
+            let timeFormatter: DateFormatter = DateFormatter()
             timeFormatter.dateFormat = "HH:mm:ss"
             // get the date string applied date format
             var selectedDate:String?
             var selectedTime:String?
             if footer.newTodo != nil {
                 if footer.newTodo!.date != nil {
-                     selectedDate = dateFormatter.stringFromDate(footer.newTodo!.date!)
+                     selectedDate = dateFormatter.string(from: footer.newTodo!.date! as Date)
                 }else{
                      selectedDate = nil
                 }
                 if footer.newTodo!.time != nil {
-                    selectedTime = timeFormatter.stringFromDate(footer.newTodo!.time!)
+                    selectedTime = timeFormatter.string(from: footer.newTodo!.time! as Date)
                 }else{
                     selectedTime = nil
                 }
 
             }else{
-                SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                 return
             }
             
@@ -389,18 +389,18 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		}
 	}
 
-    func runAddTodoRequest(todoName: String, listId: Int, assignTo: Int?, date:String?, time:String?, section:Int, list: List) {
+    func runAddTodoRequest(_ todoName: String, listId: Int, assignTo: Int?, date:String?, time:String?, section:Int, list: List) {
 
 		SVProgressHUD.show()
-        provider.request(.AddTodo(listId: listId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
+        provider.request(.addTodo(listId: listId, name: todoName, assign_to :assignTo, date: date, time: time)) { result in
 			switch result {
-			case let .Success(moyaResponse):
+			case let .success(moyaResponse):
 
 				do {
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
 						print("wrong json format")
-						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 						return;
 					}
 					print(json)
@@ -419,11 +419,11 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         list.todos?.append(newTodo)
                         
 
-                        self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                        self.toDoTableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
                         
                         
-                        let lastRow: Int = self.toDoTableView.numberOfRowsInSection(section)-1
-                        self.toDoTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+                        let lastRow: Int = self.toDoTableView.numberOfRows(inSection: section)-1
+                        self.toDoTableView.scrollToRow(at: IndexPath(row: lastRow, section: section), at: .bottom, animated: true)
 
                         
                     }
@@ -434,37 +434,37 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
 						let item = json[0] as? [String: AnyObject],
 						let message = item["message"] as? String else {
-							SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+							SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 							return;
 					}
-					SVProgressHUD.showErrorWithStatus("\(message)")
+					SVProgressHUD.showError(withStatus: "\(message)")
 
 				}
 
-			case let .Failure(error):
+			case let .failure(error):
 				guard let error = error as? CustomStringConvertible else {
 					break
 				}
 				print(error.description)
-				SVProgressHUD.showErrorWithStatus("\(error.description)")
+				SVProgressHUD.showError(withStatus: "\(error.description)")
 
 			}
 		}
 
 	}
     
-    func runUpdateTodoRequest(todoName: String, todoId: Int, assignToId: Int?,assignToName: String?, date:String?, time:String?, status:String?, todo:Todo) {
+    func runUpdateTodoRequest(_ todoName: String, todoId: Int, assignToId: Int?,assignToName: String?, date:String?, time:String?, status:String?, todo:Todo) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateTodo(todoId: todoId, name: todoName, assign_to: assignToId, date: date, time: time, status:status)) { result in
+        provider.request(.updateTodo(todoId: todoId, name: todoName, assign_to: assignToId, date: date, time: time, status:status)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
                     if let todoId = json["id"] as? Int {
@@ -505,63 +505,63 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
             }
         }
         
     }
     
-    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    func stringCreateUpdateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd HH:mm:ss"))
     }
     
-    func stringDateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd"))
+    func stringDateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd"))
     }
-    func stringTimeToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
+    func stringTimeToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("HH:mm:ss"))
     }
 
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No todos"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
 
-    func runUpdateListRequest(listName: String, section:Int, list:List) {
+    func runUpdateListRequest(_ listName: String, section:Int, list:List) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateList(listId:list.listId, name: listName)) { result in
+        provider.request(.updateList(listId:list.listId, name: listName)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
                     if let listName = json["name"] as? String {
                        list.name = listName
-                       self.toDoTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+                        self.toDoTableView.reloadSections(IndexSet(integer:section), with: .automatic)
                     }
                     SVProgressHUD.dismiss()
                     
@@ -572,19 +572,19 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
             }
         }
@@ -593,12 +593,12 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 
 
-	func addTodoTapped(sender: UIButton) {
+	func addTodoTapped(_ sender: UIButton) {
 		print(sender.superview)
-		sender.hidden = true
+		sender.isHidden = true
 
 		if let footer = sender.superview as? TodoTableSectionFooter {
-			footer.addTodoView.hidden = false
+			footer.addTodoView.isHidden = false
             let section: Int = sender.tag
             let list = lists[section]
 			footer.titleTextField.becomeFirstResponder()
@@ -611,33 +611,33 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 	}
 
-	func textFieldDidBeginEditing(textField: UITextField) {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
 
 		if let todoName = textField as? TodoNameTextField {
 			print("show \(todoName.indexPath)")
-			toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = true
+			toDoTableView.footerView(forSection: (todoName.indexPath! as NSIndexPath).section)?.isHidden = true
 
 		}
 
 	}
 
-	func textFieldDidEndEditing(textField: UITextField) {
+	func textFieldDidEndEditing(_ textField: UITextField) {
 		if let todoName = textField as? TodoNameTextField {
 			print("hide \(todoName.indexPath)")
-			toDoTableView.footerViewForSection(todoName.indexPath!.section)?.hidden = false
+			toDoTableView.footerView(forSection: (todoName.indexPath! as NSIndexPath).section)?.isHidden = false
             
         }
         if let newTodoName = textField as? AddTodoTitleTextField {
-          if let footer = toDoTableView.footerViewForSection(newTodoName.tag) as? TodoTableSectionFooter {
+          if let footer = toDoTableView.footerView(forSection: newTodoName.tag) as? TodoTableSectionFooter {
             footer.newTodo?.name = textField.text
             }
         }
 	}
 
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
 		if textField is TodoListSectionTextField {
-			if textField.hasText() {
+			if textField.hasText {
 				textField.resignFirstResponder()
 				let section: Int = textField.tag
                 let list = lists[section]
@@ -648,14 +648,14 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		if let todoName = textField as? TodoNameTextField {
 			
 				todoName.resignFirstResponder()
-				let section: Int = todoName.indexPath!.section
-				let row: Int = todoName.indexPath!.row
+				let section: Int = (todoName.indexPath! as NSIndexPath).section
+				let row: Int = (todoName.indexPath! as NSIndexPath).row
 				let list = lists[section]
 				let todo = list.todos![row]
 				
                 
                 var todoTitle:String?
-                if todoName.hasText() {
+                if todoName.hasText {
                     todoTitle = todoName.text
                 }else{
                     todoTitle = "Untitled To Do"
@@ -677,35 +677,35 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-	@IBAction func addNewListTapped(sender: AnyObject) {
+	@IBAction func addNewListTapped(_ sender: AnyObject) {
 
-		if !listTextField.hasText() {
-			SVProgressHUD.showErrorWithStatus("List field is empty")
+		if !listTextField.hasText {
+			SVProgressHUD.showError(withStatus: "List field is empty")
 			return
 		}
 
 		runAddListRequest(listTextField.text!)
 	}
 
-	func runAddListRequest(listName: String) {
+	func runAddListRequest(_ listName: String) {
 
 		SVProgressHUD.show()
-		provider.request(.AddList(name: listName)) { result in
+		provider.request(.addList(name: listName)) { result in
 			switch result {
-			case let .Success(moyaResponse):
+			case let .success(moyaResponse):
 
 				do {
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
 						print("wrong json format")
-						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 						return;
 					}
 					print(json)
 
 					guard let listId = json["id"] as? Int else {
 						print("wrong list id")
-						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 						return;
 					}
 
@@ -713,7 +713,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 					let newList = List(name: self.listTextField.text!, listId: listId)
 					newList.todos = [Todo]()
-					self.lists.insert(newList, atIndex: 0)
+					self.lists.insert(newList, at: 0)
 
 					self.listTextField.text = ""
 					self.toDoTableView.reloadData()
@@ -725,26 +725,26 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
 						let item = json[0] as? [String: AnyObject],
 						let message = item["message"] as? String else {
-							SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+							SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 							return;
 					}
-					SVProgressHUD.showErrorWithStatus("\(message)")
+					SVProgressHUD.showError(withStatus: "\(message)")
 
 				}
 
-			case let .Failure(error):
+			case let .failure(error):
 				guard let error = error as? CustomStringConvertible else {
 					break
 				}
 				print(error.description)
-				SVProgressHUD.showErrorWithStatus("\(error.description)")
+				SVProgressHUD.showError(withStatus: "\(error.description)")
 
 			}
 		}
 
 	}
 
-	@IBAction func addLIstButtonTaped(sender: AnyObject) {
+	@IBAction func addLIstButtonTaped(_ sender: AnyObject) {
 
 		var height: CGFloat = 0
 		if isHeaderOpened {
@@ -762,26 +762,26 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		// Get the reference to the header view
 		let tblHeaderView = toDoTableView.tableHeaderView
 		// Animate the height change
-		UIView.animateWithDuration(0.2, animations: { () -> Void in
+		UIView.animate(withDuration: 0.2, animations: { () -> Void in
 			tblHeaderView?.frame = newRect!
 			self.toDoTableView.tableHeaderView = tblHeaderView
 
 		})
 
 	}
-	@IBAction func suggestionButtonTapped(sender: AnyObject) {
-		performSegueWithIdentifier(Helper.SegueKey.kToSuggestionsViewController, sender: self)
+	@IBAction func suggestionButtonTapped(_ sender: AnyObject) {
+		performSegue(withIdentifier: Helper.SegueKey.kToSuggestionsViewController, sender: self)
 	}
 
 	// MARK: - Navigation
 
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// Get the new view controller using segue.destinationViewController.
 		// Pass the selected object to the new view controller.
 
 		if segue.identifier == Helper.SegueKey.kToSelectTodoDateViewController {
-			let viewController: SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
+			let viewController: SelectTodoDateViewController = segue.destination as! SelectTodoDateViewController
 			if (currentTodo != nil) {
 				viewController.currentTodo = currentTodo
 			}
@@ -790,7 +790,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		}
 
 		if segue.identifier == Helper.SegueKey.kToAssignTodoViewController {
-			let viewController: AssignTodoViewController = segue.destinationViewController as! AssignTodoViewController
+			let viewController: AssignTodoViewController = segue.destination as! AssignTodoViewController
 			if (currentTodo != nil) {
 				viewController.currentTodo = currentTodo
 			}

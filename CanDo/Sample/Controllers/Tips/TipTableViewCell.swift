@@ -35,12 +35,12 @@ class TipTableViewCell: UITableViewCell {
         aspectConstraint = nil
     }
     
-    func setPostedImage(image : UIImage?) {
+    func setPostedImage(_ image : UIImage?) {
         
         if (image != nil) {
             let aspect = image!.size.width / image!.size.height
             
-            aspectConstraint = NSLayoutConstraint(item: coverImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: coverImageView, attribute: NSLayoutAttribute.Height, multiplier: aspect, constant: 0.0)
+            aspectConstraint = NSLayoutConstraint(item: coverImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: coverImageView, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
             
             coverImageView.image = image
         }else{
@@ -49,7 +49,7 @@ class TipTableViewCell: UITableViewCell {
         
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

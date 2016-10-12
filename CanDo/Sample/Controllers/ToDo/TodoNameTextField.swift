@@ -10,7 +10,7 @@ import UIKit
 
 class TodoNameTextField: UITextField {
     
-    var indexPath: NSIndexPath?
+    var indexPath: IndexPath?
 
     /*
     // Only override drawRect: if you perform custom drawing.

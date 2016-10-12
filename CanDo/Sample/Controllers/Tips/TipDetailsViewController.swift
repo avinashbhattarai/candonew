@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, NSXMLParserDelegate {
+class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, XMLParserDelegate {
 
     @IBOutlet weak var tipsScrollView: UIScrollView!
     @IBOutlet weak var webViewHeight: NSLayoutConstraint!
@@ -28,15 +28,15 @@ class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, 
         tipWebView.delegate = self
        
         
-        let session = NSURLSession.sharedSession()
-        let request = NSURLRequest(URL: (NSURL(string: currentTip!.url)!))
+        let session = URLSession.shared
+        let request = URLRequest(url: (URL(string: currentTip!.url)!))
         
-        let task = session.dataTaskWithRequest(request, completionHandler: { data, response, error in
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if (error == nil && data != nil) {
                 guard let json = data!.nsdataToJSON() as? [String: AnyObject],
                 let jsonText = json["text"] as? String
                     else {
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
                 }
  
@@ -51,12 +51,12 @@ class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, 
         // Do any additional setup after loading the view.
     }
    
-    func setPostedImage(image : UIImage?) {
+    func setPostedImage(_ image : UIImage?) {
         
         if (image != nil) {
             let aspect = image!.size.width / image!.size.height
             
-            aspectConstraint = NSLayoutConstraint(item: tipImage, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: tipImage, attribute: NSLayoutAttribute.Height, multiplier: aspect, constant: 0.0)
+            aspectConstraint = NSLayoutConstraint(item: tipImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: tipImage, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
             
             tipImage.image = image
         }else{
@@ -76,23 +76,23 @@ class TipDetailsViewController: BaseSecondLineViewController,UIWebViewDelegate, 
         }
     }
     
-    func webViewDidStartLoad(webView : UIWebView) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    func webViewDidStartLoad(_ webView : UIWebView) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         SVProgressHUD.show()
     }
     
-    func webViewDidFinishLoad(webView : UIWebView) {
+    func webViewDidFinishLoad(_ webView : UIWebView) {
       //  webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.fontFamily =\"HelveticaNeue\"")
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         SVProgressHUD.dismiss()
         print(webView.scrollView.contentSize.height)
         self.webViewHeight.constant = webView.scrollView.contentSize.height
         self.view.layoutIfNeeded()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        SVProgressHUD.showErrorWithStatus("Can not download content")
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        SVProgressHUD.showError(withStatus: "Can not download content")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

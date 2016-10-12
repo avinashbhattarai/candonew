@@ -28,7 +28,7 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
         tipsTableView.emptyDataSetSource = self;
         tipsTableView.emptyDataSetDelegate = self;
 
-        headerLabel.text = String(format:"Here are some tips and resources\nto help you support %@", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserGroupOwner) as? String) ?? "")
+        headerLabel.text = String(format:"Here are some tips and resources\nto help you support %@", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserGroupOwner) as? String) ?? "")
         
         
 		tipsTableView.es_addPullToRefresh {
@@ -44,12 +44,12 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
         tipsTableView.es_startPullToRefresh()
 
 	}
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No tips"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
 
@@ -61,16 +61,16 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
 	func runTipsInfoRequest() {
 
 		
-		provider.request(.TipsInfo()) { result in
+		provider.request(.tipsInfo()) { result in
 			switch result {
-			case let .Success(moyaResponse):
+			case let .success(moyaResponse):
 
 				do {
 					try moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
                         self.tipsTableView.es_stopPullToRefresh(completion: true)
-						SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 						return
 					}
 					self.tipsArray.removeAll()
@@ -87,22 +87,22 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
 				catch {
 
 					guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-						item = json[0] as? [String: AnyObject],
-						message = item["message"] as? String else {
-							SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+						let item = json[0] as? [String: AnyObject],
+						let message = item["message"] as? String else {
+							SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 							self.tipsTableView.es_stopPullToRefresh(completion: true)
 							return
 					}
-					SVProgressHUD.showErrorWithStatus("\(message)")
+					SVProgressHUD.showError(withStatus: "\(message)")
 					self.tipsTableView.es_stopPullToRefresh(completion: true)
 				}
 
-			case let .Failure(error):
+			case let .failure(error):
 				guard let error = error as? CustomStringConvertible else {
 					break
 				}
 				print(error.description)
-				SVProgressHUD.showErrorWithStatus("\(error.description)")
+				SVProgressHUD.showError(withStatus: "\(error.description)")
 				self.tipsTableView.es_stopPullToRefresh(completion: true)
 
 			}
@@ -110,45 +110,43 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
 
 	}
 
-	func loadImage(indexPath: NSIndexPath, tip: Tip) {
-
-		ImageDownloader(name: "imageDownloader").downloadImageWithURL(NSURL(string: tip.cover)!, progressBlock: { (receivedSize: Int64, expectedSize: Int64) -> Void in
+	func loadImage(_ indexPath: IndexPath, tip: Tip) {
+       
+        ImageDownloader(name: "imageDownloader").downloadImage(with:URL(string: tip.cover)!, progressBlock: { (receivedSize: Int64, expectedSize: Int64) -> Void in
 			// progression tracking code
 
-			}, completionHandler: { (image: Kingfisher.Image?, error: NSError?, imageURL: NSURL?, originalData: NSData?) -> Void in
+			}, completionHandler: { (image: Image?, error: NSError?, imageURL: URL?, originalData: Data?) -> Void in
 
 			print("image \(image)  url \(NSURL(string:tip.cover))  error \(error)")
 
 			if image != nil {
 				let localImage: UIImage = image!
 
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async{
 					tip.image = localImage
 					self.tipsTableView.beginUpdates()
-					self.tipsTableView.reloadRowsAtIndexPaths(
-						[indexPath],
-						withRowAnimation: .None)
+                    self.tipsTableView.reloadRows(at: [indexPath],with: .none)
 					self.tipsTableView.endUpdates()
-				})
+				}
 			}
 
 		})
 
 	}
 
-	func readMoreButtonTapped(sender: ButtonWithIndexPath) {
-		selectedTip = tipsArray[(sender.indexPath?.row)!]
-		performSegueWithIdentifier(Helper.SegueKey.kToTipDetailsViewController, sender: self)
+	func readMoreButtonTapped(_ sender: ButtonWithIndexPath) {
+		selectedTip = tipsArray[((sender.indexPath as NSIndexPath?)?.row)!]
+		performSegue(withIdentifier: Helper.SegueKey.kToTipDetailsViewController, sender: self)
 	}
 
 	// MARK: - Navigation
 
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// Get the new view controller using segue.destinationViewController.
 		// Pass the selected object to the new view controller.
 		if segue.identifier == Helper.SegueKey.kToTipDetailsViewController {
-			let viewController: TipDetailsViewController = segue.destinationViewController as! TipDetailsViewController
+			let viewController: TipDetailsViewController = segue.destination as! TipDetailsViewController
 			if (selectedTip != nil) {
 				viewController.currentTip = selectedTip
 			}
@@ -162,35 +160,20 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
 // MARK: - UITableViewDataSource
 extension TipsViewController: UITableViewDataSource {
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return UITableViewAutomaticDimension
-	}
+	
 
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let height = self.heightAtIndexPath.objectForKey(indexPath)
-        if ((height) != nil) {
-            return CGFloat(height!.floatValue)
-        } else {
-            return UITableViewAutomaticDimension
-        }
-    }
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        let height = cell.frame.size.height
-        self.heightAtIndexPath.setObject(height, forKey: indexPath)
-    }
-
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+ 
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return tipsArray.count
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-		let tip: Tip = tipsArray[indexPath.row]
-		let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TipTableViewCell
+		let tip: Tip = tipsArray[(indexPath as NSIndexPath).row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TipTableViewCell
 
 		cell.titleLabel.text = tip.title
 		if tip.cover.characters.count > 0 && tip.image == nil {
@@ -199,7 +182,7 @@ extension TipsViewController: UITableViewDataSource {
 			cell.setPostedImage(tip.image)
 		}
 		cell.readMoreButton.indexPath = indexPath
-		cell.readMoreButton.addTarget(self, action: #selector(readMoreButtonTapped(_:)), forControlEvents: .TouchUpInside)
+		cell.readMoreButton.addTarget(self, action: #selector(readMoreButtonTapped(_:)), for: .touchUpInside)
 
 		return cell
 	}
@@ -207,6 +190,23 @@ extension TipsViewController: UITableViewDataSource {
 }
 // MARK: - UITableViewDelegate
 extension TipsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = self.heightAtIndexPath.object(forKey: indexPath)
+        if ((height) != nil) {
+            return CGFloat((height! as AnyObject).floatValue)
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let height = cell.frame.size.height
+        self.heightAtIndexPath.setObject(height, forKey: indexPath as NSCopying)
+    }
 
 }
 

@@ -26,39 +26,39 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
         
         self.title = "Account"
         imagePicker.delegate = self
-        userNameLabel.text = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserLastName) as? String) ?? "")
+        userNameLabel.text = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserLastName) as? String) ?? "")
         
         avatarButton.layer.cornerRadius = 5
         avatarButton.clipsToBounds = true
         
-        let imageUrl = NSURL(string:(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserAvatar) as? String) ?? "")
+        let imageUrl = URL(string:(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserAvatar) as? String) ?? "")
         
-        avatarButton.kf_setImageWithURL(imageUrl, forState: .Normal, placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        avatarButton.kf.setImage(with: imageUrl, for: .normal, placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
         
         
 
         if iamInTeam {
-            leaveTeamButton.hidden = false
+            leaveTeamButton.isHidden = false
         }else{
-            leaveTeamButton.hidden = true
+            leaveTeamButton.isHidden = true
         }
         
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func logoutButtonTapped(sender: AnyObject) {
+    @IBAction func logoutButtonTapped(_ sender: AnyObject) {
         
         cleanUserDefaults()
         
-        self.performSegueWithIdentifier("unwindToSignUpViewController", sender: self)
+        self.performSegue(withIdentifier: "unwindToSignUpViewController", sender: self)
     }
     
     func runDeleteTeamRequest() {
         
         SVProgressHUD.show()
-        provider.request(.DeleteTeam()) { result in
+        provider.request(.deleteTeam()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -66,33 +66,33 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
                     SVProgressHUD.dismiss()
                     print(json)
-                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
-                    self.navigationController?.popViewControllerAnimated(true)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
+                    self.navigationController?.popViewController(animated: true)
                     
                 }
                 catch {
                          guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -103,9 +103,9 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
     func runLeaveTeamRequest() {
         
         SVProgressHUD.show()
-        provider.request(.LeaveTeam()) { result in
+        provider.request(.leaveTeam()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -113,14 +113,14 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
                     SVProgressHUD.dismiss()
                     print(json)
-                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
-                    self.navigationController?.popViewControllerAnimated(true)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 catch {
                     
@@ -128,19 +128,19 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -148,7 +148,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
 
     }
     
-    @IBAction func leaveTemaTapped(sender: AnyObject) {
+    @IBAction func leaveTemaTapped(_ sender: AnyObject) {
         
         
         if iamOwner {
@@ -159,26 +159,26 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
      }
     
     
-    @IBAction func avatarButtonTapped(sender: AnyObject) {
+    @IBAction func avatarButtonTapped(_ sender: AnyObject) {
         imagePicker.allowsEditing = false
         
-        let optionMenu = UIAlertController(title: nil, message: "Set a Photo", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Set a Photo", preferredStyle: .actionSheet)
         
         // 2
-        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .Default, handler: {
+        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.imagePicker.sourceType = .Camera
-            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
             
         })
-        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .Default, handler: {
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.imagePicker.sourceType = .PhotoLibrary
-            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
         })
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             
         })
@@ -188,27 +188,27 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
         optionMenu.addAction(cancelAction)
         
         // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
 
     }
     
     func cleanUserDefaults() {
         
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserEmail)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserFirstName)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserId)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserLastName)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserSecretCode)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserToken)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserAvatar)
-        Helper.UserDefaults.kStandardUserDefaults.removeObjectForKey(Helper.UserDefaults.kUserGroupOwner)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserEmail)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserFirstName)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserId)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserLastName)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserSecretCode)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserToken)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserAvatar)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserGroupOwner)
         Helper.UserDefaults.kStandardUserDefaults.synchronize()
         
     }
 
     // MARK: - ImagePickerDelegate
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let data = resizeImage(pickedImage)
             let  dataString = data!.toBase64()
@@ -217,15 +217,15 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
             
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     
-    func resizeImage(image:UIImage) -> NSData? {
+    func resizeImage(_ image:UIImage) -> Data? {
         let resizedImage = image.resizeWithPercentage(0.9)
-        let data:NSData = UIImageJPEGRepresentation(resizedImage!, 1)!
-        print(resizedImage, data.length)
-        if data.length > Helper.UploadImageSize.kUploadSize as Int
+        let data:Data = UIImageJPEGRepresentation(resizedImage!, 1)!
+        print(resizedImage, data.count)
+        if data.count > Helper.UploadImageSize.kUploadSize as Int
         {
             let newData = resizeImage(resizedImage!)
             return newData
@@ -235,12 +235,12 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
     }
 
 
-    func runUpdateUserRequest(avatar:String?,firstName:String?,lastName:String?, image:UIImage) {
+    func runUpdateUserRequest(_ avatar:String?,firstName:String?,lastName:String?, image:UIImage) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateUser(avatar:avatar,firstName:firstName,lastName:lastName)) { result in
+        provider.request(.updateUser(avatar:avatar,firstName:firstName,lastName:lastName)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -248,18 +248,18 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
                     SVProgressHUD.dismiss()
-                    self.avatarButton .setImage(image, forState: .Normal)
+                    self.avatarButton .setImage(image, for: .normal)
                     if var imgURL = json["avatar"] as? String{
-                         imgURL = imgURL.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                        Helper.UserDefaults.kStandardUserDefaults.setObject(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
+                         imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
+                        Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
                         Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     }
-                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
                    
                 }
                 catch {
@@ -268,19 +268,19 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }

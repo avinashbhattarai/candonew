@@ -74,7 +74,6 @@
 		939DE54D1D703B5300CE3751 /* NSdata+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */; };
 		939DE54F1D7065CE00CE3751 /* PostUpdateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */; };
 		939DE5511D7071F300CE3751 /* AddPhotoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939DE5501D7071F300CE3751 /* AddPhotoButton.swift */; };
-		93B75F721D8C215C00DA87C3 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */; };
 		93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1630B1D7D7FF200100D90 /* AccountSettingsViewController.swift */; };
 		93F1630E1D7D9E6C00100D90 /* TeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1630D1D7D9E6C00100D90 /* TeamViewController.swift */; };
 		93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F163111D7DA57E00100D90 /* InviteTableViewCell.swift */; };
@@ -90,6 +89,7 @@
 		93F97D851D86B5220059FEE5 /* BaseSecondLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D841D86B5220059FEE5 /* BaseSecondLineViewController.swift */; };
 		93F97D871D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D861D86D96B0059FEE5 /* CalendarTodoTableViewCell.swift */; };
 		93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */; };
+		EE018A6A1DAD0BEA0036E76E /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE018A691DAD0BEA0036E76E /* DateHelper.swift */; };
 		EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */; };
 		EE3C69121D8A84F10050A238 /* TipDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */; };
 		EE4D01D91D9BFAC000C90B0B /* unnamed.png in Resources */ = {isa = PBXBuildFile; fileRef = EE4D01D81D9BFAC000C90B0B /* unnamed.png */; };
@@ -170,7 +170,6 @@
 		939DE54C1D703B5300CE3751 /* NSdata+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSdata+JSON.swift"; sourceTree = "<group>"; };
 		939DE54E1D7065CE00CE3751 /* PostUpdateButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostUpdateButton.swift; path = Views/PostUpdateButton.swift; sourceTree = "<group>"; };
 		939DE5501D7071F300CE3751 /* AddPhotoButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPhotoButton.swift; path = Views/AddPhotoButton.swift; sourceTree = "<group>"; };
-		93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		93F1630B1D7D7FF200100D90 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		93F1630D1D7D9E6C00100D90 /* TeamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamViewController.swift; sourceTree = "<group>"; };
 		93F163111D7DA57E00100D90 /* InviteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteTableViewCell.swift; sourceTree = "<group>"; };
@@ -189,6 +188,8 @@
 		93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		AFBC583C0C907E9A94277023 /* Pods-CanDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanDo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CanDo/Pods-CanDo.debug.xcconfig"; sourceTree = "<group>"; };
 		E5264983FEE28E187F441EC8 /* Pods_CanDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CanDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE018A691DAD0BEA0036E76E /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		EE018A6B1DAD32FE0036E76E /* CanDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CanDo.entitlements; sourceTree = "<group>"; };
 		EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipTableViewCell.swift; sourceTree = "<group>"; };
 		EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipDetailsViewController.swift; sourceTree = "<group>"; };
 		EE4D01D81D9BFAC000C90B0B /* unnamed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unnamed.png; sourceTree = "<group>"; };
@@ -236,6 +237,7 @@
 		938FDBC21D64729200B2D070 /* CanDo */ = {
 			isa = PBXGroup;
 			children = (
+				EE018A6B1DAD32FE0036E76E /* CanDo.entitlements */,
 				EE6ED9901DA29298003A2990 /* Sync.png */,
 				EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */,
 				EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */,
@@ -348,7 +350,7 @@
 		938FDBCD1D64729200B2D070 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				93B75F711D8C215C00DA87C3 /* AFDateExtension.swift */,
+				EE018A691DAD0BEA0036E76E /* DateHelper.swift */,
 				93F97D881D883A790059FEE5 /* UIScrollView+EmptyDataSet.h */,
 				93F97D891D883A790059FEE5 /* UIScrollView+EmptyDataSet.m */,
 				938FDC181D65B47300B2D070 /* UIImage+TabbarItem.swift */,
@@ -570,6 +572,12 @@
 					938FDBBF1D64729200B2D070 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 2L2NN67GS6;
+						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -694,6 +702,7 @@
 				93F163181D7ED84E00100D90 /* String+Base64.swift in Sources */,
 				938FDC3D1D6C8F3300B2D070 /* SuggestionsItem.swift in Sources */,
 				938FDC271D65EEAE00B2D070 /* AddListButton.swift in Sources */,
+				EE018A6A1DAD0BEA0036E76E /* DateHelper.swift in Sources */,
 				93F1630E1D7D9E6C00100D90 /* TeamViewController.swift in Sources */,
 				93142E471D7C316600CAC387 /* ButtonWithIndexPath.swift in Sources */,
 				939DE54B1D6F6A4500CE3751 /* Constants.swift in Sources */,
@@ -727,7 +736,6 @@
 				93F1630C1D7D7FF200100D90 /* AccountSettingsViewController.swift in Sources */,
 				938FDC291D65EFB500B2D070 /* SuggestionsButton.swift in Sources */,
 				93F97D831D86B44A0059FEE5 /* BaseViewController.swift in Sources */,
-				93B75F721D8C215C00DA87C3 /* AFDateExtension.swift in Sources */,
 				938FDBD21D64729200B2D070 /* ViewController.swift in Sources */,
 				93142E2D1D76EB3C00CAC387 /* UINavigationController+Completion.swift in Sources */,
 				93142E1C1D745B6400CAC387 /* List.swift in Sources */,
@@ -870,8 +878,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CanDo/CanDo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2L2NN67GS6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
@@ -881,9 +891,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ca147548-e940-4a14-923e-41d6e4c440f8";
+				PROVISIONING_PROFILE_SPECIFIER = CanDoDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -895,8 +907,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CanDo/CanDo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
+				DEVELOPMENT_TEAM = 2L2NN67GS6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
@@ -906,8 +920,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1410ee3a-682e-488f-a92f-35b38f0529c5";
+				PROVISIONING_PROFILE_SPECIFIER = CanDoAdHoc1;
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

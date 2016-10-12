@@ -11,8 +11,8 @@ import UIKit
 class SelectTodoDateViewController: BaseSecondLineViewController {
 
     var currentTodo: Todo?
-    var selectedDate: NSDate?
-    var selectedTime: NSDate?
+    var selectedDate: Date?
+    var selectedTime: Date?
     var senderViewController: UIViewController?
     var isUpdate: Bool = false
     
@@ -38,36 +38,36 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
         }
        
         if ((currentTodo?.time) == nil) {
-            anyTimeButton.selected = true
-            datePicker.datePickerMode = .Date
+            anyTimeButton.isSelected = true
+            datePicker.datePickerMode = .date
             
             
         }
         if ((currentTodo?.date) != nil) {
-            datePicker.date = currentTodo?.date ?? NSDate()
+            datePicker.date = currentTodo?.date as Date? ?? Date()
             if ((currentTodo?.time) != nil) {
-                let calendar = NSCalendar.currentCalendar()
-                let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (currentTodo?.time)!)
-                let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (currentTodo?.date)!)
-                let date = calendar.dateFromComponents(dateComp)
-                let newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+                let calendar = Calendar.current
+                let timeComp = (calendar as NSCalendar).components([.hour, .minute, .second], from: (currentTodo?.time)! as Date)
+                let dateComp = (calendar as NSCalendar).components([.year, .month, .day], from: (currentTodo?.date)! as Date)
+                let date = calendar.date(from: dateComp)
+                let newDate = (calendar as NSCalendar).date(byAdding: timeComp, to: date!, options: NSCalendar.Options(rawValue: 0))
                 datePicker.date = newDate!
                 
             }
         }
         
         
-        anyTimeButton.backgroundColor = UIColor.clearColor()
+        anyTimeButton.backgroundColor = UIColor.clear
         anyTimeButton.layer.cornerRadius = 5
         anyTimeButton.layer.borderWidth = 1
-        anyTimeButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).CGColor
+        anyTimeButton.layer.borderColor = Helper.Colors.RGBCOLOR(228, green: 241, blue: 240).cgColor
 
-        anyTimeButton.setImage(UIImage(), forState: .Normal)
-        anyTimeButton.setImage(UIImage(named: "iconHelpAssignTickCopy"), forState: .Selected)
+        anyTimeButton.setImage(UIImage(), for: UIControlState())
+        anyTimeButton.setImage(UIImage(named: "iconHelpAssignTickCopy"), for: .selected)
         
         
         // add an event called when value is changed.
-        datePicker.addTarget(self, action: #selector(pickerDidChangeDate(_:)), forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(pickerDidChangeDate(_:)), for: .valueChanged)
 
         
         // Do any additional setup after loading the view.
@@ -75,14 +75,14 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
   
     
        // called when the date picker called.
-    func pickerDidChangeDate(sender: UIDatePicker){
+    func pickerDidChangeDate(_ sender: UIDatePicker){
         
         // date format
-        let myDateFormatter: NSDateFormatter = NSDateFormatter()
+        let myDateFormatter: DateFormatter = DateFormatter()
         myDateFormatter.dateFormat = "MM/dd/yyyy hh:mm"
         
         // get the date string applied date format
-        let mySelectedDate: NSString = myDateFormatter.stringFromDate(sender.date)
+        let mySelectedDate: NSString = myDateFormatter.string(from: sender.date) as NSString
         selectedDate = sender.date
         selectedTime = sender.date
         print(mySelectedDate)
@@ -93,53 +93,53 @@ class SelectTodoDateViewController: BaseSecondLineViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func anyTimeButtonTapped(sender: ButtonWithIndexPath) {
-        sender.selected = !sender.selected
-        if sender.selected {
-            datePicker.datePickerMode = .Date
+    @IBAction func anyTimeButtonTapped(_ sender: ButtonWithIndexPath) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            datePicker.datePickerMode = .date
         }else{
-            datePicker.datePickerMode = .DateAndTime
+            datePicker.datePickerMode = .dateAndTime
         }
     
     }
     
     
-    @IBAction func setDateButtonTapped(sender: AnyObject) {
+    @IBAction func setDateButtonTapped(_ sender: AnyObject) {
         currentTodo?.date = datePicker.date
-        let dateFormatter = NSDateFormatter()
-        let timeFormater = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        timeFormater.timeStyle = NSDateFormatterStyle.ShortStyle
-        let dateInFormat = dateFormatter.stringFromDate(datePicker.date)
+        let dateFormatter = DateFormatter()
+        let timeFormater = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        timeFormater.timeStyle = DateFormatter.Style.short
+        let dateInFormat = dateFormatter.string(from: datePicker.date)
         var timeInFormat:String?
        
-        if anyTimeButton.selected {
+        if anyTimeButton.isSelected {
             currentTodo?.time = nil
             timeInFormat = "Any time"
         }else{
             currentTodo?.time = datePicker.date
-            timeInFormat = timeFormater.stringFromDate(datePicker.date)
+            timeInFormat = timeFormater.string(from: datePicker.date)
             
         }
         print(timeInFormat)
         print(dateInFormat)
         
         if currentTodo?.footer != nil {
-            currentTodo?.footer?.dateButton.setTitle(String(format: "%@, %@",timeInFormat!,dateInFormat), forState: .Normal)
-            currentTodo?.footer?.dateButton.setImage(nil, forState: .Normal)
-            currentTodo?.footer?.undelineImage.hidden = true
+            currentTodo?.footer?.dateButton.setTitle(String(format: "%@, %@",timeInFormat!,dateInFormat), for: UIControlState())
+            currentTodo?.footer?.dateButton.setImage(nil, for: UIControlState())
+            currentTodo?.footer?.undelineImage.isHidden = true
         }else{
             if currentTodo != nil {
                 if senderViewController is TodoViewController {
-                     NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataTodo"), object: nil, userInfo: ["todo":currentTodo!])
                 }else if senderViewController is CalendarViewController{
-                     NSNotificationCenter.defaultCenter().postNotificationName("reloadDataCalendar", object: nil, userInfo: ["todo":currentTodo!])
+                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataCalendar"), object: nil, userInfo: ["todo":currentTodo!])
                 }
             }
             
         }
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
         
     }
 

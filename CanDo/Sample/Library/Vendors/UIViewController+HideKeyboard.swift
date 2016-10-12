@@ -18,8 +18,8 @@ extension UIViewController {
     }
     
     func isUserLogined() -> Bool {
-        guard (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserToken) != nil) &&
-            (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserId) != nil)
+        guard (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserToken) != nil) &&
+            (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId) != nil)
             else {
                 return false
         }

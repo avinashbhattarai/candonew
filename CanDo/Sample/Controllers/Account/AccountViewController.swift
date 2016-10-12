@@ -20,10 +20,10 @@ class AccountViewController: BaseViewController {
   
   lazy  var teamViewController: TeamViewController = {
         // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("TeamViewController") as! TeamViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "TeamViewController") as! TeamViewController
         
         // Add View Controller as Child View Controller
         self.addViewControllerAsChildViewController(viewController)
@@ -33,10 +33,10 @@ class AccountViewController: BaseViewController {
     
  lazy   var sessionsViewController: InvitesViewController = {
         // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("InvitesViewController") as! InvitesViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "InvitesViewController") as! InvitesViewController
         
         // Add View Controller as Child View Controller
         self.addViewControllerAsChildViewController(viewController)
@@ -53,14 +53,14 @@ class AccountViewController: BaseViewController {
        
         runTeamInfoRequest()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataNotification(_:)), name:"reloadDataNotification", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataNotification(_:)), name:NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
        
         
         
         
     }
     
-    func reloadDataNotification(notification: NSNotification){
+    func reloadDataNotification(_ notification: Foundation.Notification){
         //Take Action on Notification
         runTeamInfoRequest()
     }
@@ -68,9 +68,9 @@ class AccountViewController: BaseViewController {
     
     func runTeamInfoRequest(){
         // SVProgressHUD.show()
-        provider.request(.TeamInfo()) { result in
+        provider.request(.teamInfo()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -84,7 +84,7 @@ class AccountViewController: BaseViewController {
                         else {
                             
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
@@ -99,7 +99,7 @@ class AccountViewController: BaseViewController {
                                 
                                 self.iamOwner = false
                                 if let receivedOwnerId = owner["id"] as? Int{
-                                    Helper.UserDefaults.kStandardUserDefaults.setObject(owner["first_name"] as? String ?? "", forKey: Helper.UserDefaults.kUserGroupOwner)
+                                    Helper.UserDefaults.kStandardUserDefaults.set(owner["first_name"] as? String ?? "", forKey: Helper.UserDefaults.kUserGroupOwner)
                                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                                      if let receivedIamId = iam["id"] as? Int{
                                     if receivedOwnerId == receivedIamId{
@@ -109,7 +109,7 @@ class AccountViewController: BaseViewController {
                                     }
                                 }
                                 var parsedMembersArray : [Member] = self.parseMembers(members, owner: owner)
-                                parsedMembersArray.sortInPlace({$0.owner && !$1.owner})
+                                parsedMembersArray.sort(by: {$0.owner && !$1.owner})
                                 membersVC.iamOwner = self.iamOwner
                                 membersVC.members = parsedMembersArray
                                 membersVC.updateTeamTableView()
@@ -135,19 +135,19 @@ class AccountViewController: BaseViewController {
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -155,7 +155,7 @@ class AccountViewController: BaseViewController {
 
     }
     
-    func parseInvites(invitations :[[String: AnyObject]]) -> [Invite] {
+    func parseInvites(_ invitations :[[String: AnyObject]]) -> [Invite] {
         var invitesArray = [Invite]()
         for invite in invitations{
             if let teamId = invite["team_id"] as? Int{
@@ -168,7 +168,7 @@ class AccountViewController: BaseViewController {
 
     }
     
-    func parseMembers(members :[[String: AnyObject]], owner: [String: AnyObject]) -> [Member] {
+    func parseMembers(_ members :[[String: AnyObject]], owner: [String: AnyObject]) -> [Member] {
         
         var membersArray = [Member]()
         for member in members{
@@ -196,7 +196,7 @@ class AccountViewController: BaseViewController {
 
     
     
-    private func addViewControllerAsChildViewController(viewController: UIViewController) {
+    fileprivate func addViewControllerAsChildViewController(_ viewController: UIViewController) {
         // Add Child View Controller
         addChildViewController(viewController)
         
@@ -205,17 +205,17 @@ class AccountViewController: BaseViewController {
         
         // Configure Child View
         viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Notify Child View Controller
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
     }
 
   
-    func updateContainerViews(showInvites:Bool, showTeam:Bool)
+    func updateContainerViews(_ showInvites:Bool, showTeam:Bool)
     {
-        self.InvitesView.hidden = !showInvites
-        self.TeamView.hidden = !showTeam
+        self.InvitesView.isHidden = !showInvites
+        self.TeamView.isHidden = !showTeam
 
     }
    
@@ -229,11 +229,11 @@ class AccountViewController: BaseViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == Helper.SegueKey.kToAccountSettingsViewController {
-            let viewController:AccountSettingsViewController = segue.destinationViewController as! AccountSettingsViewController
+            let viewController:AccountSettingsViewController = segue.destination as! AccountSettingsViewController
             viewController.iamInTeam = self.iamInTeam
             viewController.iamOwner = self.iamOwner
             

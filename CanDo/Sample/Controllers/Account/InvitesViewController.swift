@@ -28,15 +28,8 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         
         
-        invitesTableView.es_addPullToRefresh {
-         
-            /// Do anything you want...
-            /// ...
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
-            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
-            
-            /// Set ignore footer or not
-           //  self?.invitesTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
+         invitesTableView.es_addPullToRefresh {
+            NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
         }
       
                // Do any additional setup after loading the view.
@@ -46,27 +39,27 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-       func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+       func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invites.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-         let invite : Invite = invites[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! InviteTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         let invite : Invite = invites[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! InviteTableViewCell
         
         
         cell.nameLabel.text = String(format: "%@ %@", invite.ownerFirstName, invite.ownerLastName)
-        cell.acceptButton.tag = indexPath.row
-        cell.acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), forControlEvents: .TouchUpInside)
-         cell.avatar.kf_setImageWithURL(NSURL(string:invite.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        cell.acceptButton.tag = (indexPath as NSIndexPath).row
+        cell.acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), for: .touchUpInside)
+         cell.avatar.kf.setImage(with: URL(string:invite.avatar), placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
         return cell
     }
     
@@ -79,13 +72,13 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     
-     func startTeamTapped(sender: AnyObject) {
+     func startTeamTapped(_ sender: AnyObject) {
         
         
         SVProgressHUD.show()
-        provider.request(.CreateTeam()) { result in
+        provider.request(.createTeam()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -93,7 +86,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
@@ -107,19 +100,19 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -127,7 +120,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
        
     }
 
-    func acceptButtonTapped(sender: UIButton){
+    func acceptButtonTapped(_ sender: UIButton){
         print("accept tapped \(sender.tag)")
          let invite : Invite = invites[sender.tag]
         if invites.count == 1 {
@@ -136,29 +129,29 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         }else{
             
-            let alert = UIAlertController(title: "", message: "You can only join one team at a time. Choose this team?", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            let alert = UIAlertController(title: "", message: "You can only join one team at a time. Choose this team?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
                 print("OK")
                 
             self.runAcceptTeamRequest(invite.teamId)
             
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
                 print("Cancel")
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         }
     }
     
-    func runAcceptTeamRequest(teamId:Int){
+    func runAcceptTeamRequest(_ teamId:Int){
         
         print("team_id \(teamId)")
         
         SVProgressHUD.show()
-        provider.request(.AcceptInvite(teamId: teamId)) { result in
+        provider.request(.acceptInvite(teamId: teamId)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -166,7 +159,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
@@ -180,19 +173,19 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -202,26 +195,26 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func hideInvitesView() {
         
-        if  let parentViewController: AccountViewController = self.parentViewController as? AccountViewController{
+        if  let parentViewController: AccountViewController = self.parent as? AccountViewController{
             parentViewController.runTeamInfoRequest()
         }
 
     }
     
     
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No invites"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func buttonTitleForEmptyDataSet(scrollView: UIScrollView, forState state: UIControlState) -> NSAttributedString? {
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
         let str = "Start my own team"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-700", size: 24)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(65, green: 207, blue: 108)]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func emptyDataSetDidTapButton(scrollView: UIScrollView) {
+    func emptyDataSetDidTapButton(_ scrollView: UIScrollView) {
         startTeamTapped(UIButton())
     }
     /*
@@ -229,7 +222,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return -100
     }
  */
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
 

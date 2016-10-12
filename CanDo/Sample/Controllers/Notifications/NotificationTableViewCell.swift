@@ -37,12 +37,12 @@ class NotificationTableViewCell: UITableViewCell {
         aspectConstraint = nil
     }
     
-    func setPostedImage(image : UIImage?) {
+    func setPostedImage(_ image : UIImage?) {
         
         if (image != nil) {
             let aspect = image!.size.width / image!.size.height
             
-            aspectConstraint = NSLayoutConstraint(item: contentImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: contentImageView, attribute: NSLayoutAttribute.Height, multiplier: aspect, constant: 0.0)
+            aspectConstraint = NSLayoutConstraint(item: contentImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: contentImageView, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
             
             contentImageView.image = image
         }else{
@@ -52,7 +52,7 @@ class NotificationTableViewCell: UITableViewCell {
         
        
     }
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state

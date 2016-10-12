@@ -13,12 +13,12 @@ class BaseTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
          // UITabBar.appearance().tintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
-UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.greenColor()], forState: .Normal)
+UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.green], for: UIControlState())
         
         for item in self.tabBar.items! as [UITabBarItem] {
             
             if let image = item.image {
-                item.image = image.imageWithColor(UIColor.whiteColor()).imageWithRenderingMode(.AlwaysOriginal)
+                item.image = image.imageWithColor(UIColor.white).withRenderingMode(.alwaysOriginal)
             }
         }
 

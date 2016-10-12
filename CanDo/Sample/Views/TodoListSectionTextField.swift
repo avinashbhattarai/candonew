@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListSectionTextField: UITextField {
     
-    var indexPath: NSIndexPath?
+    var indexPath: IndexPath?
     
     required override init(frame: CGRect) {
         super.init(frame: frame)

@@ -23,11 +23,11 @@ class Tip {
         
         self.title = title ?? ""
         var newCover = cover ?? ""
-        newCover = newCover.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        newCover = newCover.replacingOccurrences(of: "\\", with: "", options: NSString.CompareOptions.literal, range: nil)
         print(newCover)
         self.cover = newCover//"http://www.trakm8.com/wp-content/uploads/2013/11/customer_support_2.jpg"//
         var newUrl = url ?? ""
-        newUrl = newUrl.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        newUrl = newUrl.replacingOccurrences(of: "\\", with: "", options: NSString.CompareOptions.literal, range: nil)
         print(newUrl)
         self.url = newUrl
        

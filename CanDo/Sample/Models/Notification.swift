@@ -16,8 +16,8 @@ class Notification {
    // var userId: Int!
     
     var name: String!
-    var createdDate: NSDate!
-    var updatedDate: NSDate!
+    var createdDate: Date!
+    var updatedDate: Date!
     var text: String!
     var imageURL : String!
     var notificationId: Int!
@@ -29,8 +29,8 @@ class Notification {
     init(text: String?, name: String?, createdDate: String?, updatedDate: String?, imageURL: String?, notificationId: Int!, avatar:String?) {
         
      
-        self.createdDate = createdDate != nil ? stringCreateUpdateToDate(createdDate!) : NSDate()
-        self.updatedDate = updatedDate != nil ? stringCreateUpdateToDate(updatedDate!) : NSDate()
+        self.createdDate = createdDate != nil ? stringCreateUpdateToDate(createdDate!) : Date()
+        self.updatedDate = updatedDate != nil ? stringCreateUpdateToDate(updatedDate!) : Date()
         self.text = text ?? ""
         self.name = name ?? ""
         self.imageURL = imageURL ?? ""
@@ -40,8 +40,8 @@ class Notification {
         
     }
     
-    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    func stringCreateUpdateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd HH:mm:ss"))
     }
 
     

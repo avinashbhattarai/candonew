@@ -18,15 +18,15 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     @IBOutlet weak var todoTableView: UITableView!
     var todos = [Todo]()
     var currentTodo: Todo?
-    var cellDateFormatter = NSDateFormatter()
-    var cellTimeFormatter = NSDateFormatter()
+    var cellDateFormatter = DateFormatter()
+    var cellTimeFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        cellDateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        cellTimeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        cellDateFormatter.dateStyle = DateFormatter.Style.medium
+        cellTimeFormatter.timeStyle = DateFormatter.Style.short
 
        
       
@@ -51,37 +51,37 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             
             /// Do anything you want...
             /// ...
-            let dateString = self.calendarView.currentPage.toString(format: .Custom("YYYY-MM"))
+            let dateString = self.calendarView.currentPage.toString(.custom("YYYY-MM"))
             self.runListsInfoRequest(dateString)
             /// Stop refresh when your job finished, it will reset refresh footer if completion is true
         }
 
          todoTableView.es_startPullToRefresh()
-      NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadDataCalendar(_:)), name:"reloadDataCalendar", object: nil)
+      NotificationCenter.default.addObserver(self, selector: #selector(reloadDataCalendar(_:)), name:NSNotification.Name(rawValue: "reloadDataCalendar"), object: nil)
         
     }
     
-    func reloadDataCalendar(n: NSNotification) {
+    func reloadDataCalendar(_ n: Foundation.Notification) {
         todoTableView.reloadData()
-        if (n.userInfo != nil) {
-            if let todo = n.userInfo!["todo"] as? Todo{
+        if ((n as NSNotification).userInfo != nil) {
+            if let todo = (n as NSNotification).userInfo!["todo"] as? Todo{
                 
                 
-                let dateFormatter: NSDateFormatter = NSDateFormatter()
+                let dateFormatter: DateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                let timeFormatter: NSDateFormatter = NSDateFormatter()
+                let timeFormatter: DateFormatter = DateFormatter()
                 timeFormatter.dateFormat = "HH:mm:ss"
                 // get the date string applied date format
                 var selectedDate:String?
                 var selectedTime:String?
                 
                 if todo.date != nil {
-                    selectedDate = dateFormatter.stringFromDate(todo.date!)
+                    selectedDate = dateFormatter.string(from: todo.date! as Date)
                 }else{
                     selectedDate = nil
                 }
                 if todo.time != nil {
-                    selectedTime = timeFormatter.stringFromDate(todo.time!)
+                    selectedTime = timeFormatter.string(from: todo.time! as Date)
                 }else{
                     selectedTime = nil
                 }
@@ -92,39 +92,39 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         }
     }
 
-    func verticalOffsetForEmptyDataSet(scrollView: UIScrollView) -> CGFloat {
+    func verticalOffset(forEmptyDataSet scrollView: UIScrollView) -> CGFloat {
         return self.calendarView.frame.size.height/2
     }
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No todos"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
-    func runListsInfoRequest(date:String) {
+    func runListsInfoRequest(_ date:String) {
         
         
-        provider.request(.ListsInfo(date:date)) { result in
+        provider.request(.listsInfo(date:date)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                        self.todoTableView.es_stopPullToRefresh(completion: true)
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
                     
                     self.todos = [Todo]()
-                    for list: NSDictionary in json {
+                    for list: Dictionary in json {
                         if let listId = list["id"] as? Int {
                             let newList = List(name: list["name"] as? String, listId: listId)
                             if let todos = list["todo"] as? [[String: AnyObject]] {
-                                for todo: NSDictionary in todos {
+                                for todo: Dictionary in todos {
                                     if let todoId = todo["id"] as? Int {
                                         var person:Person?
                                         if let assignedToId = todo["assign_to_id"] as? Int {
@@ -152,47 +152,47 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             self.todoTableView.es_stopPullToRefresh(completion: true)
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     self.todoTableView.es_stopPullToRefresh(completion: true)
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     
                     
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
                 self.todoTableView.es_stopPullToRefresh(completion: true)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                
                 
             }
         }
         
     }
-    func calendarCurrentPageDidChange(calendar: FSCalendar) {
-        let dateString = calendarView.currentPage.toString(format: .Custom("YYYY-MM"))
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        let dateString = calendarView.currentPage.toString(.custom("YYYY-MM"))
         runListsInfoRequest(dateString)
     }
   
-    func calendar(calendar: FSCalendar, didSelectDate date: NSDate) {
+    func calendar(_ calendar: FSCalendar, didSelect date: Date) {
         print(date)
     }
    
-    func calendar(calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsForDate date: NSDate) -> [UIColor]?{
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]?{
         print("color")
       
         var set = Set<UIColor>()
         for todo:Todo in todos {
             if (todo.date != nil) {
-                if NSCalendar.currentCalendar().isDate(todo.date!, inSameDayAsDate:date) {
+                if Calendar.current.isDate(todo.date! as Date, inSameDayAs:date) {
                     if todo.assignedTo.personId == 0 {
                         set.insert(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255))
-                    }else if todo.assignedTo.personId == (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserId) as? Int){
+                    }else if todo.assignedTo.personId == (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId) as? Int){
                         set.insert(Helper.Colors.RGBCOLOR(13, green: 218, blue: 157))
                     }else{
                         set.insert(Helper.Colors.RGBCOLOR(185, green: 212, blue: 214))
@@ -202,18 +202,18 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         }
         return Array(set)
     }
-    func calendar(calendar: FSCalendar, appearance: FSCalendarAppearance, eventOffsetForDate date: NSDate) -> CGPoint{
-        return CGPointMake(0, -5)
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventOffsetFor date: Date) -> CGPoint{
+        return CGPoint(x: 0, y: -5)
     }
-    func calendar(calendar: FSCalendar, shouldSelectDate date: NSDate) -> Bool{
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date) -> Bool{
         return false
     }
     
-    func calendar(calendar: FSCalendar, numberOfEventsForDate date: NSDate) -> Int {
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         var events = [Todo]()
         for todo:Todo in todos {
             if (todo.date != nil) {
-                if NSCalendar.currentCalendar().isDate(todo.date!, inSameDayAsDate:date) {
+                if Calendar.current.isDate(todo.date! as Date, inSameDayAs:date) {
                     events.append(todo)
                 }
             }
@@ -222,91 +222,91 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         return events.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 74
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let todo: Todo = todos[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! CalendarTodoTableViewCell
+        let todo: Todo = todos[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CalendarTodoTableViewCell
         
         cell.todoName.text = todo.name
         cell.todoName.delegate = self
         cell.todoName.indexPath = indexPath
-        cell.assignPersonButton.setTitle(todo.assignedTo.name, forState: .Normal)
+        cell.assignPersonButton.setTitle(todo.assignedTo.name, for: UIControlState())
         cell.assignPersonButton.indexPath = indexPath
-        cell.assignPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.assignPersonButton.addTarget(self, action: #selector(assignTodoButtonTapped(_:)), for: .touchUpInside)
         
         if todo.assignedTo.personId == 0 {
-            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
-            cell.assignPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
-            cell.timeButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), forState: .Normal)
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), for: UIControlState())
+            cell.assignPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), for: UIControlState())
+            cell.timeButton.setTitleColor(Helper.Colors.RGBCOLOR(167, green: 90, blue: 255), for: UIControlState())
         }else{
-            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
-            cell.assignPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
-            cell.timeButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), forState: .Normal)
+            cell.dateButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), for: UIControlState())
+            cell.assignPersonButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), for: UIControlState())
+            cell.timeButton.setTitleColor(Helper.Colors.RGBCOLOR(135, green: 135, blue: 135), for: UIControlState())
         }
-        if todo.assignedTo.personId == (Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserId) as? Int){
-            cell.syncButton.hidden = false
+        if todo.assignedTo.personId == (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId) as? Int){
+            cell.syncButton.isHidden = false
         }else{
-            cell.syncButton.hidden = true
+            cell.syncButton.isHidden = true
         }
         
-        cell.syncButton.tag = indexPath.row
-        cell.syncButton.addTarget(self, action: #selector(syncButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.syncButton.tag = (indexPath as NSIndexPath).row
+        cell.syncButton.addTarget(self, action: #selector(syncButtonTapped(_:)), for: .touchUpInside)
         
         
         if todo.date == nil {
-            cell.dateButton.setTitle("Anytime", forState: .Normal)
+            cell.dateButton.setTitle("Anytime", for: UIControlState())
         }else{
-            let selectedDate = cellDateFormatter.stringFromDate(todo.date!)
+            let selectedDate = cellDateFormatter.string(from: todo.date! as Date)
             
             var selectedTime:String?
             if todo.time == nil {
                 selectedTime = "Any time"
             }else{
-                selectedTime = cellTimeFormatter.stringFromDate(todo.time!)
+                selectedTime = cellTimeFormatter.string(from: todo.time! as Date)
             }
-            cell.dateButton.setTitle(String(format: "%@", selectedDate), forState: .Normal)
-            cell.timeButton.setTitle(String(format: "%@", selectedTime!), forState: .Normal)
+            cell.dateButton.setTitle(String(format: "%@", selectedDate), for: UIControlState())
+            cell.timeButton.setTitle(String(format: "%@", selectedTime!), for: UIControlState())
         }
 
         cell.dateButton.indexPath = indexPath
-        cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.dateButton.addTarget(self, action: #selector(dateButtonTapped(_:)), for: .touchUpInside)
         cell.timeButton.indexPath = indexPath
-        cell.timeButton.addTarget(self, action: #selector(dateButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.timeButton.addTarget(self, action: #selector(dateButtonTapped(_:)), for: .touchUpInside)
       
        
         
         return cell
     }
-     func syncButtonTapped(sender: UIButton) {
+     func syncButtonTapped(_ sender: UIButton) {
         
-        let optionMenu = UIAlertController(title: nil, message: "Create Event or Reminder in native Calendar or Reminders Apps", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Create Event or Reminder in native Calendar or Reminders Apps", preferredStyle: .actionSheet)
         
         // 2
-        let createEventAction = UIAlertAction(title: "Create Event", style: .Default, handler: {
+        let createEventAction = UIAlertAction(title: "Create Event", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.prepareForEventCreation(sender.tag)
            
         })
-        let createReminderAction = UIAlertAction(title: "Create Reminder", style: .Default, handler: {
+        let createReminderAction = UIAlertAction(title: "Create Reminder", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.prepareForReminderCreation(sender.tag)
         })
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             
         })
@@ -316,24 +316,26 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         optionMenu.addAction(cancelAction)
         
         // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func prepareForReminderCreation(senderTag:Int){
+    func prepareForReminderCreation(_ senderTag:Int){
         let todo:Todo = self.todos[senderTag]
-        var newDate:NSDate?
+        var newDate:Date?
         if ((todo.time) != nil) {
-            let calendar = NSCalendar.currentCalendar()
-            let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (todo.time)!)
-            let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (todo.date)!)
-            let date = calendar.dateFromComponents(dateComp)
-            newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+            let calendar = Calendar.current
+            let timeComp = (calendar as NSCalendar).components([.hour, .minute, .second], from: (todo.time)! as Date)
+            let dateComp = (calendar as NSCalendar).components([.year, .month, .day], from: (todo.date)! as Date)
+            let date = calendar.date(from: dateComp)
+            newDate = (calendar as NSCalendar).date(byAdding: timeComp, to: date!, options: NSCalendar.Options(rawValue: 0))
         }else{
-            newDate = todo.date
+            newDate = todo.date as Date?
         }
         let eventStore = EKEventStore()
     
-        eventStore.requestAccessToEntityType(EKEntityType.Reminder) { (granted: Bool, error: NSError?) -> Void in
+        eventStore.requestAccess(to: EKEntityType.reminder, completion: {
+            granted, error in
+
             
             if granted{
                 
@@ -342,64 +344,58 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                 reminder.dueDateComponents = self.dateComponentFromNSDate(newDate!)
                 reminder.calendar = eventStore.defaultCalendarForNewReminders()
                 do {
-                    try eventStore.saveReminder(reminder, commit: true)
-                    SVProgressHUD.showSuccessWithStatus("Done.\nPlease check native app.")
+                    try eventStore.save(reminder, commit: true)
+                    SVProgressHUD.showSuccess(withStatus: "Done.\nPlease check native app.")
                 }catch{
-                    SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                    SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                 }
   
             }else{
-                SVProgressHUD.showErrorWithStatus("The app is not permitted to access reminders, make sure to grant permission in the settings and try again")
+                SVProgressHUD.showError(withStatus: "The app is not permitted to access reminders, make sure to grant permission in the settings and try again")
             }
-        }
-
-        
-        
-        
-        
-      
+        })
     }
     
-    func dateComponentFromNSDate(date: NSDate)-> NSDateComponents{
+    func dateComponentFromNSDate(_ date: Date)-> DateComponents{
         
-        let calendarUnit: NSCalendarUnit = [.Minute ,.Hour, .Day, .Month, .Year]
-        let dateComponents = NSCalendar.currentCalendar().components(calendarUnit, fromDate: date)
+        let calendarUnit: NSCalendar.Unit = [.minute ,.hour, .day, .month, .year]
+        let dateComponents = (Calendar.current as NSCalendar).components(calendarUnit, from: date)
         
         
         return dateComponents
     }
 
-    func prepareForEventCreation(senderTag:Int){
+    func prepareForEventCreation(_ senderTag:Int){
         
         let todo:Todo = self.todos[senderTag]
-        var newDate:NSDate?
+        var newDate:Date?
         if ((todo.time) != nil) {
-            let calendar = NSCalendar.currentCalendar()
-            let timeComp = calendar.components([.Hour, .Minute, .Second], fromDate: (todo.time)!)
-            let dateComp = calendar.components([.Year, .Month, .Day], fromDate: (todo.date)!)
-            let date = calendar.dateFromComponents(dateComp)
-            newDate = calendar.dateByAddingComponents(timeComp, toDate: date!, options: NSCalendarOptions(rawValue: 0))
+            let calendar = Calendar.current
+            let timeComp = (calendar as NSCalendar).components([.hour, .minute, .second], from: (todo.time)! as Date)
+            let dateComp = (calendar as NSCalendar).components([.year, .month, .day], from: (todo.date)! as Date)
+            let date = calendar.date(from: dateComp)
+            newDate = (calendar as NSCalendar).date(byAdding: timeComp, to: date!, options: NSCalendar.Options(rawValue: 0))
         }else{
-            newDate = todo.date
+            newDate = todo.date as Date?
         }
         let eventStore = EKEventStore()
         let startDate = newDate
         let endDate = newDate
         
-        if (EKEventStore.authorizationStatusForEntityType(.Event) != EKAuthorizationStatus.Authorized) {
-            eventStore.requestAccessToEntityType(.Event, completion: {
+        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+            eventStore.requestAccess(to: .event, completion: {
                 granted, error in
-                self.createEvent(eventStore, title: todo.name, startDate: startDate ?? NSDate(), endDate: endDate ?? NSDate())
+                self.createEvent(eventStore, title: todo.name, startDate: startDate ?? Date(), endDate: endDate ?? Date())
             })
         } else {
-            SVProgressHUD.showErrorWithStatus("The app is not permitted to access calendar, make sure to grant permission in the settings and try again")
+            SVProgressHUD.showError(withStatus: "The app is not permitted to access calendar, make sure to grant permission in the settings and try again")
         }
 
     }
     
     // Creates an event in the EKEventStore. The method assumes the eventStore is created and
     // accessible
-    func createEvent(eventStore: EKEventStore, title: String, startDate: NSDate, endDate: NSDate) {
+    func createEvent(_ eventStore: EKEventStore, title: String, startDate: Date, endDate: Date) {
         let event = EKEvent(eventStore: eventStore)
         
         event.title = title
@@ -408,42 +404,42 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         event.calendar = eventStore.defaultCalendarForNewEvents
         
         do {
-            try eventStore.saveEvent(event, span: .ThisEvent)
-           SVProgressHUD.showSuccessWithStatus("Done.\nPlease check native app.")
+            try eventStore.save(event, span: .thisEvent)
+           SVProgressHUD.showSuccess(withStatus: "Done.\nPlease check native app.")
         } catch {
-            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
         }
     }
 
     
     
-    func assignTodoButtonTapped(sender: ButtonWithIndexPath) {
-        let row: Int = sender.indexPath!.row
+    func assignTodoButtonTapped(_ sender: ButtonWithIndexPath) {
+        let row: Int = (sender.indexPath! as NSIndexPath).row
         currentTodo = todos[row]
         print(currentTodo)
         
-        performSegueWithIdentifier(Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        performSegue(withIdentifier: Helper.SegueKey.kToAssignTodoViewController, sender: self)
         
     }
     
-    func dateButtonTapped(sender: ButtonWithIndexPath) {
-        let row: Int = sender.indexPath!.row
+    func dateButtonTapped(_ sender: ButtonWithIndexPath) {
+        let row: Int = (sender.indexPath! as NSIndexPath).row
         currentTodo = todos[row]
         
-        performSegueWithIdentifier(Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
+        performSegue(withIdentifier: Helper.SegueKey.kToSelectTodoDateViewController, sender: self)
         
     }
 
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if let todoName = textField as? TodoNameTextField {
             
             todoName.resignFirstResponder()
-            let row: Int = todoName.indexPath!.row
+            let row: Int = (todoName.indexPath! as NSIndexPath).row
             let todo = todos[row]
             var todoTitle:String?
-            if todoName.hasText() {
+            if todoName.hasText {
                 todoTitle = todoName.text
             }else{
                 todoTitle = "Untitled To Do"
@@ -457,18 +453,18 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         return false
     }
 
-    func runUpdateTodoRequest(todoName: String, todoId: Int, assignToId: Int?,assignToName: String?, date:String?, time:String?, status:String?, todo:Todo) {
+    func runUpdateTodoRequest(_ todoName: String, todoId: Int, assignToId: Int?,assignToName: String?, date:String?, time:String?, status:String?, todo:Todo) {
         
         SVProgressHUD.show()
-        provider.request(.UpdateTodo(todoId: todoId, name: todoName, assign_to: assignToId, date: date, time: time, status:status)) { result in
+        provider.request(.updateTodo(todoId: todoId, name: todoName, assign_to: assignToId, date: date, time: time, status:status)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
                     }
                     if let todoId = json["id"] as? Int {
@@ -496,8 +492,8 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                         todo.status = json["status"] as? String ?? Helper.TodoStatusKey.kActive
                         if (todo.date != nil){
                             if !todo.date!.isSameMonthAsDate(self.calendarView.currentPage){
-                                if let index = self.todos.indexOf({$0.todoId == todo.todoId}) {
-                                    self.todos.removeAtIndex(index)
+                                if let index = self.todos.index(where: {$0.todoId == todo.todoId}) {
+                                    self.todos.remove(at: index)
                                 }
                             }
                         }
@@ -516,34 +512,34 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
             }
         }
         
     }
     
-    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    func stringCreateUpdateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd HH:mm:ss"))
     }
     
-    func stringDateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd"))
+    func stringDateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd"))
     }
-    func stringTimeToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
+    func stringTimeToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("HH:mm:ss"))
     }
 
     
@@ -555,12 +551,12 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         if segue.identifier == Helper.SegueKey.kToSelectTodoDateViewController {
-            let viewController:SelectTodoDateViewController = segue.destinationViewController as! SelectTodoDateViewController
+            let viewController:SelectTodoDateViewController = segue.destination as! SelectTodoDateViewController
             
             if (currentTodo != nil) {
                 viewController.currentTodo = currentTodo
@@ -572,7 +568,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         }
         
         if segue.identifier == Helper.SegueKey.kToAssignTodoViewController {
-            let viewController:AssignTodoViewController = segue.destinationViewController as! AssignTodoViewController
+            let viewController:AssignTodoViewController = segue.destination as! AssignTodoViewController
             
             if (currentTodo != nil) {
                 viewController.currentTodo = currentTodo

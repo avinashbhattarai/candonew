@@ -17,11 +17,11 @@ class AssignTodoUndelineButton: UIButton {
         // Drawing code
     }
     */
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         
         var r: CGRect = contentRect;
         
-        r.size = CGSizeMake(108, 2);
+        r.size = CGSize(width: 108, height: 2);
         
         r.origin.x = 0;
         
@@ -30,7 +30,7 @@ class AssignTodoUndelineButton: UIButton {
         return r;
     }
     
-    override func titleRectForContentRect(contentRect: CGRect) -> CGRect
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect
     {
         var r: CGRect = contentRect;
         

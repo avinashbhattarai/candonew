@@ -9,8 +9,8 @@
 import Foundation
 extension UINavigationController {
     
-    func pushViewController(viewController: UIViewController,
-                            animated: Bool, completion: Void -> Void) {
+    func pushViewController(_ viewController: UIViewController,
+                            animated: Bool, completion: @escaping (Void) -> Void) {
         
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)

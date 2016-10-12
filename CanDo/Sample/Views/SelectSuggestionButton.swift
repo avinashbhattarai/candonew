@@ -11,7 +11,7 @@ import UIKit
 class SelectSuggestionButton: UIButton {
 
     
-    var indexPath: NSIndexPath?
+    var indexPath: IndexPath?
     
     
     /*

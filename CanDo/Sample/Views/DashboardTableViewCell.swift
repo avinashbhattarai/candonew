@@ -21,11 +21,11 @@ class DashboardTableViewCell: UITableViewCell {
         self.textLabel?.frame = CGRect(x: 104, y: (textLabel?.frame.origin.y)!, width: (textLabel?.frame.size.width)!, height: (textLabel?.frame.size.height)!)
         self.accessoryView?.frame = CGRect(x: (accessoryView?.frame.origin.x)!-20, y: (accessoryView?.frame.origin.y)!, width: (accessoryView?.frame.size.width)!, height: (accessoryView?.frame.size.height)!)
         self.textLabel?.font = UIFont(name:"MuseoSansRounded-700", size: 26)
-        self.textLabel?.textColor = UIColor.whiteColor()
-        self.imageView?.contentMode = .Center
+        self.textLabel?.textColor = UIColor.white
+        self.imageView?.contentMode = .center
 
     }
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

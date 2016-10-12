@@ -10,11 +10,11 @@ import UIKit
 
 class AddListButton: UIButton {
     
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         
         var r: CGRect = contentRect;
         
-        r.size = CGSizeMake(34, 34);
+        r.size = CGSize(width: 34, height: 34);
         
         r.origin.x = 15;
         
@@ -23,7 +23,7 @@ class AddListButton: UIButton {
         return r;
     }
     
-    override func titleRectForContentRect(contentRect: CGRect) -> CGRect
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect
     {
         var r: CGRect = contentRect;
         

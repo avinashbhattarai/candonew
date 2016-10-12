@@ -11,11 +11,11 @@ import UIKit
 class SuggestionsButton: UIButton {
     
     
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         
         var r: CGRect = contentRect;
         
-        r.size = CGSizeMake(20, 19);
+        r.size = CGSize(width: 20, height: 19);
         
        r.origin.x = contentRect.size.width-35;
         
@@ -25,7 +25,7 @@ class SuggestionsButton: UIButton {
     }
 
   
-    override func titleRectForContentRect(contentRect: CGRect) -> CGRect
+    override func titleRect(forContentRect contentRect: CGRect) -> CGRect
     {
     var r: CGRect = contentRect;
     

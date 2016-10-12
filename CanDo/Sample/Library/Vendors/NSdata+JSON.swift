@@ -7,16 +7,16 @@
 //
 
 import Foundation
-extension NSData {
-    func nsdataToJSON() -> AnyObject? {
+extension Data {
+    func nsdataToJSON() -> Any? {
         do {
-            return try NSJSONSerialization.JSONObjectWithData(self, options: .MutableContainers)
+            return try JSONSerialization.jsonObject(with: self, options: .mutableContainers)
         } catch let myJSONError {
             print(myJSONError)
         }
         return nil
     }
     func toBase64() -> String{
-        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+        return self.base64EncodedString(options: NSData.Base64EncodingOptions())
     }
 }

@@ -11,17 +11,17 @@ import UIKit
 
 extension UIButton {
     
-    func setUnderlineTitle(title: String?) {
-        self.setTitle(title, forState: .Normal)
-        self.setAttributedTitle(self.attributedString(), forState: .Normal)
+    func setUnderlineTitle(_ title: String?) {
+        self.setTitle(title, for: UIControlState())
+        self.setAttributedTitle(self.attributedString(), for: UIControlState())
     }
     
-    private func attributedString() -> NSAttributedString? {
+    fileprivate func attributedString() -> NSAttributedString? {
         let attributes = [
             NSFontAttributeName : UIFont(name: "MuseoSansRounded-300", size: 18)!,
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-            NSUnderlineStyleAttributeName : NSUnderlineStyle.StyleSingle.rawValue
-        ]
+            NSForegroundColorAttributeName : UIColor.white,
+            NSUnderlineStyleAttributeName : NSUnderlineStyle.styleSingle.rawValue
+        ] as [String : Any]
         let attributedString = NSAttributedString(string: self.currentTitle!, attributes: attributes)
         return attributedString
     }

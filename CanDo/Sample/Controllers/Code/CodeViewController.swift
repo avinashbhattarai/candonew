@@ -17,7 +17,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
        
        codeTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
+         self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         codeTextField.delegate = self
       
         codeTextField.addDoneOnKeyboardWithTarget(self, action: #selector(doneButtonTapped))
@@ -31,15 +31,15 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
           }
     
-    override func viewWillDisappear(animated: Bool)
+    override func viewWillDisappear(_ animated: Bool)
     {
          
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     func doneButtonTapped() {
@@ -48,16 +48,16 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
              print("textfield \(self.codeTextField.text)")
             codeTextField.resignFirstResponder()
             let code :String = codeTextField.text!
-            let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+            let email: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserEmail) as! String
             runVerificateUserRequest(email, code: code)
         }else{
-            SVProgressHUD.showErrorWithStatus("Entered code is not valid")
+            SVProgressHUD.showError(withStatus: "Entered code is not valid")
             
         }
     }
     
     
-    func runVerificateUserRequest(email: String, code :String) {
+    func runVerificateUserRequest(_ email: String, code :String) {
         
         
         SVProgressHUD.show()
@@ -65,22 +65,22 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         let code :Int = Int(code)!
         let email: String = email
        
-        provider.request(.VerificateUser(code: code, email: email)) { result in
+        provider.request(.verificateUser(code: code, email: email)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let secretCode = json["code"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                      SVProgressHUD.dismiss()
-                     Helper.UserDefaults.kStandardUserDefaults.setObject(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
+                     Helper.UserDefaults.kStandardUserDefaults.set(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
                      Helper.UserDefaults.kStandardUserDefaults.synchronize()
-                     self.performSegueWithIdentifier(Helper.SegueKey.kToSetPasswordViewController, sender: self)
+                     self.performSegue(withIdentifier: Helper.SegueKey.kToSetPasswordViewController, sender: self)
                     
                 }
                 catch {
@@ -89,10 +89,10 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     
                     
                     
@@ -100,12 +100,12 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -116,17 +116,17 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     
     
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         
         let newLength = text.utf16.count + string.utf16.count - range.length
         return newLength <= 6 // Bool
     }
          
-    func generateGradientForFrame(frame: CGRect) -> CAGradientLayer {
+    func generateGradientForFrame(_ frame: CGRect) -> CAGradientLayer {
         let gradient: CAGradientLayer = CAGradientLayer()
         
-        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).CGColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).CGColor]
+        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).cgColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).cgColor]
         
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)

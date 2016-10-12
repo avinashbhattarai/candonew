@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ImagePicker
+//import ImagePicker
 //import Lightbox
 import ESPullToRefresh
 import SVProgressHUD
@@ -23,7 +23,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     @IBOutlet weak var addPhotoButton: AddPhotoButton!
     @IBOutlet weak var selectedImageButton: UIButton!
     var heightAtIndexPath = NSMutableDictionary()
-    var dateFormatter : NSDateFormatter?
+    var dateFormatter : DateFormatter?
     var selectedImage: UIImage?
     let imagePicker = UIImagePickerController()
     var isHeaderOpened:Bool = false
@@ -37,16 +37,16 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         imagePicker.delegate = self
         postTextView.layer.cornerRadius = 5
         postTextView.layer.borderWidth = 1
-        postTextView.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+        postTextView.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).cgColor
     
         selectedImageButton.layer.borderWidth = 1
-        selectedImageButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).CGColor
+        selectedImageButton.layer.borderColor = UIColor(red: 228/255.0, green: 241/255.0, blue: 240/255.0, alpha: 1.0).cgColor
         selectedImageButton.clipsToBounds = true
         
         
-        let imageUrl = NSURL(string:(Helper.UserDefaults.kStandardUserDefaults.valueForKey(Helper.UserDefaults.kUserAvatar) as? String) ?? "")
+        let imageUrl = URL(string:(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserAvatar) as? String) ?? "")
         
-        userAvatar.kf_setImageWithURL(imageUrl, placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        userAvatar.kf.setImage(with: imageUrl, placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
 
         notificationTableView.delegate = self
         notificationTableView.dataSource = self
@@ -54,9 +54,9 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         notificationTableView.emptyDataSetDelegate = self;
 
         
-        dateFormatter = NSDateFormatter()
-        dateFormatter?.dateStyle = .LongStyle
-        dateFormatter?.timeStyle = .ShortStyle
+        dateFormatter = DateFormatter()
+        dateFormatter?.dateStyle = .long
+        dateFormatter?.timeStyle = .short
         
         
         
@@ -78,16 +78,16 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     func runNotificationsInfoRequest() {
         
         
-        provider.request(.NotificationsInfo()) { result in
+        provider.request(.notificationsInfo()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                         self.notificationTableView.es_stopPullToRefresh(completion: true)
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return
                     }
                     self.notifications.removeAll()
@@ -106,22 +106,22 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
                 catch {
                     
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        item = json[0] as? [String: AnyObject],
-                        message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             self.notificationTableView.es_stopPullToRefresh(completion: true)
                             return
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     self.notificationTableView.es_stopPullToRefresh(completion: true)
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 self.notificationTableView.es_stopPullToRefresh(completion: true)
                 
             }
@@ -129,48 +129,48 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
     }
 
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No notifications"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count
     }
     
    // func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
       //  return 370
    // }
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let height = self.heightAtIndexPath.objectForKey(indexPath)
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = self.heightAtIndexPath.object(forKey: indexPath)
         if ((height) != nil) {
-            return CGFloat(height!.floatValue)
+            return CGFloat((height! as AnyObject).floatValue)
         } else {
             return UITableViewAutomaticDimension
         }
     }
     
-     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let height = cell.frame.size.height
-        self.heightAtIndexPath.setObject(height, forKey: indexPath)
+        self.heightAtIndexPath.setObject(height, forKey: indexPath as NSCopying)
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let notification : Notification = notifications[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! NotificationTableViewCell
+        let notification : Notification = notifications[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NotificationTableViewCell
         
        cell.nameLabel.text = notification.name
        cell.contentLabel.text = notification.text
-       cell.avatarImageView.kf_setImageWithURL(NSURL(string:notification.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
-       cell.dateLabel.text = dateFormatter?.stringFromDate(notification.createdDate)
+       cell.avatarImageView.kf.setImage(with: URL(string:notification.avatar), placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
+       cell.dateLabel.text = dateFormatter?.string(from: notification.createdDate as Date)
         if notification.imageURL.characters.count > 0 && notification.image == nil {
             loadImage(indexPath, notification: notification)
         } else {
@@ -184,46 +184,44 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func loadImage(indexPath: NSIndexPath, notification: Notification) {
+    func loadImage(_ indexPath: IndexPath, notification: Notification) {
         
-        ImageDownloader(name: "imageDownloader").downloadImageWithURL(NSURL(string: notification.imageURL)!, progressBlock: { (receivedSize: Int64, expectedSize: Int64) -> Void in
+        ImageDownloader(name: "imageDownloader").downloadImage(with: URL(string: notification.imageURL)!, progressBlock: { (receivedSize: Int64, expectedSize: Int64) -> Void in
             // progression tracking code
             
-            }, completionHandler: { (image: Kingfisher.Image?, error: NSError?, imageURL: NSURL?, originalData: NSData?) -> Void in
+            }, completionHandler: { (image: Image?, error: NSError?, imageURL: URL?, originalData: Data?) -> Void in
                 
                 print("image \(image)  url \(NSURL(string:notification.imageURL))  error \(error)")
                 
                 if image != nil {
                     let localImage: UIImage = image!
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                   DispatchQueue.main.async{
                         notification.image = localImage
                         self.notificationTableView.beginUpdates()
-                        self.notificationTableView.reloadRowsAtIndexPaths(
-                            [indexPath],
-                            withRowAnimation: .Automatic)
+                        self.notificationTableView.reloadRows(at: [indexPath],with: .automatic)
                         self.notificationTableView.endUpdates()
-                    })
+                    }
                 }
                 
         })
         
     }
 
-    func runPostNotificationRequest(text:String?, imageData: String?) {
+    func runPostNotificationRequest(_ text:String?, imageData: String?) {
         
         SVProgressHUD.show()
        
-        provider.request(.PostNotification(post:text, image:imageData)) { result in
+        provider.request(.postNotification(post:text, image:imageData)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
                        
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return
                     }
                     
@@ -231,54 +229,50 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
                     if let notificationId = json["id"] as? Int {
                         let newNotification = Notification(text: json["post"] as? String, name: json["user"] as? String, createdDate: json["created_at"] as? String, updatedDate: json["updated_at"] as? String, imageURL: json["image"] as? String, notificationId: notificationId, avatar:json["avatar"] as? String)
                     
-                    self.notifications.insert(newNotification, atIndex: 0)
+                    self.notifications.insert(newNotification, at: 0)
                     self.notificationTableView.beginUpdates()
-                    self.notificationTableView.insertRowsAtIndexPaths([
-                        NSIndexPath(forRow: 0, inSection: 0)
-                        ], withRowAnimation: .Automatic)
+                    self.notificationTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                     self.notificationTableView.endUpdates()
-                    
-                    
                     self.postTextView.text = ""
-                    self.selectedImageButton.hidden = true
-                    self.addPhotoButton.hidden = false
+                    self.selectedImageButton.isHidden = true
+                    self.addPhotoButton.isHidden = false
                     self.selectedImage = nil
                         SVProgressHUD.dismiss()
                         
                     }else{
                         
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                     }
 
                 }
                 catch {
                     
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        item = json[0] as? [String: AnyObject],
-                        message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                            
                             return
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
             }
         }
         
     }
 
-    @IBAction func postButtonTapped(sender: AnyObject) {
+    @IBAction func postButtonTapped(_ sender: AnyObject) {
         
         
-        if !postTextView.hasText() && selectedImage == nil {
-            SVProgressHUD.showErrorWithStatus("Post or image field is empty")
+        if !postTextView.hasText && selectedImage == nil {
+            SVProgressHUD.showError(withStatus: "Post or image field is empty")
             return
         }
         var dataString:String?
@@ -296,11 +290,11 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         runPostNotificationRequest(postTextView.text, imageData:dataString)
         
     }
-    func resizeImage(image:UIImage) -> NSData? {
+    func resizeImage(_ image:UIImage) -> Data? {
         let resizedImage = image.resizeWithPercentage(0.9)
-        let data:NSData = UIImageJPEGRepresentation(resizedImage!, 1)!
-        print(resizedImage, data.length)
-        if data.length > Helper.UploadImageSize.kUploadSize as Int {
+        let data:Data = UIImageJPEGRepresentation(resizedImage!, 1)!
+        print(resizedImage, data.count)
+        if data.count > Helper.UploadImageSize.kUploadSize as Int {
           let newData = resizeImage(resizedImage!)
           return newData
             
@@ -308,26 +302,26 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         return data
     }
     
-    @IBAction func selectedButtonTapped(sender: AnyObject) {
+    @IBAction func selectedButtonTapped(_ sender: AnyObject) {
         
-        let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .actionSheet)
         
         // 2
-        let deleteAction = UIAlertAction(title: "Choose new photo", style: .Default, handler: {
+        let deleteAction = UIAlertAction(title: "Choose new photo", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
            self.addPhotoTapped(UIButton())
         })
-        let saveAction = UIAlertAction(title: "Remove selected photo", style: .Destructive, handler: {
+        let saveAction = UIAlertAction(title: "Remove selected photo", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
            
-            self.selectedImageButton.hidden = true
-            self.addPhotoButton.hidden = false
+            self.selectedImageButton.isHidden = true
+            self.addPhotoButton.isHidden = false
             self.selectedImage = nil
             
         })
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
            
         })
@@ -339,33 +333,33 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         optionMenu.addAction(cancelAction)
         
         // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
         
         
     }
     
    
-    @IBAction func addPhotoTapped(sender: AnyObject) {
+    @IBAction func addPhotoTapped(_ sender: AnyObject) {
         
         imagePicker.allowsEditing = false
         
-        let optionMenu = UIAlertController(title: nil, message: "Add a Photo", preferredStyle: .ActionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Add a Photo", preferredStyle: .actionSheet)
         
         // 2
-        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .Default, handler: {
+        let createPhotoAction = UIAlertAction(title: "Create Photo", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.imagePicker.sourceType = .Camera
-            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
             
         })
-        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .Default, handler: {
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose from Library", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            self.imagePicker.sourceType = .PhotoLibrary
-            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
         })
         
         //
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             
         })
@@ -375,10 +369,10 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         optionMenu.addAction(cancelAction)
         
         // 5
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        self.present(optionMenu, animated: true, completion: nil)
 
     }
-    @IBAction func postUpdateButtonTapped(sender: AnyObject) {
+    @IBAction func postUpdateButtonTapped(_ sender: AnyObject) {
         
         
         var height:CGFloat = 0
@@ -396,7 +390,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         // Get the reference to the header view
         let tblHeaderView = self.notificationTableView.tableHeaderView
         // Animate the height change
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             tblHeaderView?.frame = newRect!
             self.notificationTableView.tableHeaderView = tblHeaderView
         })
@@ -405,16 +399,16 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     // MARK: - ImagePickerDelegate
     
     
-      func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+      func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             selectedImage = pickedImage
-            self.selectedImageButton.setImage(pickedImage, forState: .Normal)
-            self.selectedImageButton.hidden = false
-            self.addPhotoButton.hidden = true
+            self.selectedImageButton.setImage(pickedImage, for: UIControlState())
+            self.selectedImageButton.isHidden = false
+            self.addPhotoButton.isHidden = true
 
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
    

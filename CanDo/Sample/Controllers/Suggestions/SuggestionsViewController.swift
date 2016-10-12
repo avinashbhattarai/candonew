@@ -13,16 +13,18 @@ import SVProgressHUD
 
 extension UIView {
     
-    func rotate(toValue: CGFloat, duration: CFTimeInterval = 0.2, completionDelegate: AnyObject? = nil) {
+    func rotate(_ toValue: CGFloat, duration: CFTimeInterval = 0.2, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotateAnimation.toValue = toValue
         rotateAnimation.duration = duration
-        rotateAnimation.removedOnCompletion = false
+        rotateAnimation.isRemovedOnCompletion = false
         rotateAnimation.fillMode = kCAFillModeForwards
+        /*
         if let delegate: AnyObject = completionDelegate {
             rotateAnimation.delegate = delegate
         }
-        self.layer.addAnimation(rotateAnimation, forKey: nil)
+ */
+        self.layer.add(rotateAnimation, forKey: nil)
     }
 }
 
@@ -38,7 +40,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         
         suggestionsTableView.delegate = self
         suggestionsTableView.dataSource = self;
-        suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        suggestionsTableView.separatorStyle = UITableViewCellSeparatorStyle.none
         suggestionsTableView.emptyDataSetSource = self;
         suggestionsTableView.emptyDataSetDelegate = self;
         
@@ -56,16 +58,16 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
     func runSuggestionsInfoRequest() {
         
         
-        provider.request(.SuggestionsInfo()) { result in
+        provider.request(.suggestionsInfo()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                         self.suggestionsTableView.es_stopPullToRefresh(completion: true)
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return
                     }
                     
@@ -98,22 +100,22 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
                 catch {
                     
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        item = json[0] as? [String: AnyObject],
-                        message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             self.suggestionsTableView.es_stopPullToRefresh(completion: true)
                             return
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     self.suggestionsTableView.es_stopPullToRefresh(completion: true)
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 self.suggestionsTableView.es_stopPullToRefresh(completion: true)
                 
             }
@@ -121,13 +123,13 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         
     }
 
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No suggestions"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
 
@@ -137,59 +139,59 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
-     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return (sections[section].collapsed!) ? 0 : sections[section].suggestionItems!.count
     }
     
     
     
     
-     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableCellWithIdentifier("header") as! CollapsibleTableViewHeader
+     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableCell(withIdentifier: "header") as! CollapsibleTableViewHeader
         header.toggleButton.tag = section
-        header.backgroundColor = UIColor.whiteColor()
+        header.backgroundColor = UIColor.white
         header.titleLabel.text = sections[section].name
         header.toggleButton.rotate(sections[section].collapsed! ? CGFloat(M_PI) : 0.0)
-        header.toggleButton.addTarget(self, action: #selector(SuggestionsViewController.toggleCollapse), forControlEvents: .TouchUpInside)
+        header.toggleButton.addTarget(self, action: #selector(SuggestionsViewController.toggleCollapse), for: .touchUpInside)
         
         return header.contentView
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 76
     }
     
-     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! SuggestionsItemCell!
-            let item = sections[indexPath.section].suggestionItems![indexPath.row]
-            cell.nameLabel?.text = item.name
-            cell.selectedButton.backgroundColor = UIColor.clearColor()
-            cell.selectedButton.layer.cornerRadius = 5
-            cell.selectedButton.layer.borderWidth = 1
-            cell.selectedButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).CGColor
-            cell.selectedButton.indexPath = indexPath
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! SuggestionsItemCell!
+            let item = sections[(indexPath as NSIndexPath).section].suggestionItems![(indexPath as NSIndexPath).row]
+            cell?.nameLabel?.text = item.name
+            cell?.selectedButton.backgroundColor = UIColor.clear
+            cell?.selectedButton.layer.cornerRadius = 5
+            cell?.selectedButton.layer.borderWidth = 1
+            cell?.selectedButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).cgColor
+            cell?.selectedButton.indexPath = indexPath
             if item.selected! {
                 print(indexPath)
-                cell.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
+                cell?.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), for: UIControlState())
             }else{
-                cell.selectedButton .setImage(UIImage(), forState: .Normal)
+                cell?.selectedButton .setImage(UIImage(), for: UIControlState())
             }
-            cell.selectedButton.addTarget(self, action: #selector(SuggestionsViewController.selectSuggestionsItem), forControlEvents: .TouchUpInside)
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-             return cell
+            cell?.selectedButton.addTarget(self, action: #selector(SuggestionsViewController.selectSuggestionsItem), for: .touchUpInside)
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+             return cell!
 
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
     }
     
    
-    @IBAction func allSelectedButtonTapped(sender: AnyObject) {
+    @IBAction func allSelectedButtonTapped(_ sender: AnyObject) {
         
         var selectedTodos = [Int]()
         for suggestion in sections {
@@ -201,69 +203,69 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         }
         
         print(selectedTodos)
-        runAddSuggestionsRequest(selectedTodos)
+        runAddSuggestionsRequest(selectedTodos as NSArray)
         
     }
-    func runAddSuggestionsRequest(suggestions:NSArray) {
+    func runAddSuggestionsRequest(_ suggestions:NSArray) {
         
         SVProgressHUD.show()
-        provider.request(.AddSuggestions(suggestions: suggestions)) { result in
+        provider.request(.addSuggestions(suggestions: suggestions)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
-                    NSNotificationCenter.defaultCenter().postNotificationName("reDownloadDataTodo", object: nil)
-                    self.navigationController?.popViewControllerAnimated(true)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reDownloadDataTodo"), object: nil)
+                    self.navigationController?.popViewController(animated: true)
                     SVProgressHUD.dismiss()
                 }
                 catch {
                     
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        item = json[0] as? [String: AnyObject],
-                        message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        let item = json[0] as? [String: AnyObject],
+                        let message = item["message"] as? String else {
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
             }
         }
         
     }
     
     
-    func selectSuggestionsItem(button:SelectSuggestionButton) {
+    func selectSuggestionsItem(_ button:SelectSuggestionButton) {
         print(button.indexPath)
-        let item = sections[button.indexPath!.section].suggestionItems![button.indexPath!.row]
+        let item = sections[(button.indexPath! as NSIndexPath).section].suggestionItems![(button.indexPath! as NSIndexPath).row]
         item.selected = !item.selected
-        suggestionsTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: (button.indexPath?.row)!, inSection: (button.indexPath?.section)!)], withRowAnimation: .Automatic)
+        suggestionsTableView.reloadRows(at: [IndexPath(row: ((button.indexPath as NSIndexPath?)?.row)!, section: ((button.indexPath as NSIndexPath?)?.section)!)], with: .automatic)
     }
     //
     // MARK: - Event Handlers
     //
-    func toggleCollapse(sender: UIButton) {
+    func toggleCollapse(_ sender: UIButton) {
         let section = sender.tag
         let collapsed = sections[section].collapsed
         
         // Toggle collapse
-        sections[section].collapsed = !collapsed
+        sections[section].collapsed = !collapsed!
         sender.rotate(0.0)
         
         // Reload section
-        suggestionsTableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+        suggestionsTableView.reloadSections(IndexSet(integer: section), with: .automatic)
         
         if sections[section].collapsed == false
         {
-            let lastRow: Int = suggestionsTableView.numberOfRowsInSection(section)-1
-            suggestionsTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: section), atScrollPosition: .Bottom, animated: true)
+            let lastRow: Int = suggestionsTableView.numberOfRows(inSection: section)-1
+            suggestionsTableView.scrollToRow(at: IndexPath(row: lastRow, section: section), at: .bottom, animated: true)
         }
        
     }

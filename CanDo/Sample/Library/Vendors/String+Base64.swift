@@ -13,13 +13,13 @@ extension String
 {
     func fromBase64() -> String
     {
-        let data = NSData(base64EncodedString: self, options: NSDataBase64DecodingOptions(rawValue: 0))
-        return String(data: data!, encoding: NSUTF8StringEncoding)!
+        let data = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
+        return String(data: data!, encoding: String.Encoding.utf8)!
     }
     
     func toBase64() -> String
     {
-        let data = self.dataUsingEncoding(NSUTF8StringEncoding)
-        return data!.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        let data = self.data(using: String.Encoding.utf8)
+        return data!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
 }

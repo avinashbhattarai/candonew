@@ -60,13 +60,13 @@ struct Helper {
 
 
     struct Colors {
-        static func RGBCOLOR(red: Int, green: Int, blue: Int) -> UIColor {
+        static func RGBCOLOR(_ red: Int, green: Int, blue: Int) -> UIColor {
             return UIColor(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1)
         }
     }
     
     struct UserDefaults {
-        static let kStandardUserDefaults = NSUserDefaults.standardUserDefaults()
+        static let kStandardUserDefaults = Foundation.UserDefaults.standard
         static let kUserFirstName = "user_first_name"
         static let kUserId = "user_id"
         static let kUserLastName = "user_last_name"

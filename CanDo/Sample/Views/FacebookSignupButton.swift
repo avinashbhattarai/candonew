@@ -10,11 +10,11 @@ import UIKit
 
 class FacebookSignupButton: UIButton {
     
-     override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
     
     var r: CGRect = contentRect;
     
-    r.size = CGSizeMake(12, 24);
+    r.size = CGSize(width: 12, height: 24);
     
     r.origin.x = 15;
     

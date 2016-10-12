@@ -18,11 +18,11 @@ class DateUnderlineButton: UIButton {
     }
     */
     
-    override func imageRectForContentRect(contentRect: CGRect) -> CGRect {
+    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         
         var r: CGRect = contentRect;
         
-        r.size = CGSizeMake(42, 2);
+        r.size = CGSize(width: 42, height: 2);
         
         r.origin.x = contentRect.size.width-42;
         

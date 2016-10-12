@@ -28,11 +28,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
+     self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         hideKeyboardWhenTappedAround()
         
         if isUserLogined() {
-            performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+            performSegue(withIdentifier: Helper.SegueKey.kToDashboardViewController, sender: self)
         }
         
        
@@ -45,14 +45,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     emailTextfield.delegate = self
     lastNameTextField.delegate = self
     firstNameTextField.delegate = self
-    cancelButton.hidden = true
+    cancelButton.isHidden = true
     firstNameTextField.alpha = 0;
     
         
 
     }
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+    @IBAction func prepareForUnwind(_ segue: UIStoryboardSegue){
         
     }
     
@@ -66,36 +66,36 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         answerLabel.alpha = 1.0
          fadeViewInThenOut(answerLabel, delay: 1.0)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
-       NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SignUpViewController.keyboardWillShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
+       NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
            }
     
-    override func viewWillDisappear(animated: Bool)
+    override func viewWillDisappear(_ animated: Bool)
     {
         
         super.viewWillDisappear(animated)
         IQKeyboardManager.sharedManager().enable = true
         IQKeyboardManager.sharedManager().enableAutoToolbar = true
-        self.navigationController?.navigationBarHidden = false
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
+        self.navigationController?.isNavigationBarHidden = false
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
     }
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
    
-        emailTextfield.textAlignment = .Left
+        emailTextfield.textAlignment = .left
         
         return true
         
     }
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         let nextTage=textField.tag+1;
         // Try to find next responder
@@ -113,22 +113,22 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return false // We do not want UITextField to insert line-breaks.
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Foundation.Notification) {
         
         if !isKeyboardOpened {
             isKeyboardOpened = true
             print("show")
             firstNameTextField.alpha = 1.0
-            cancelButton.hidden = false
-            loginButton.hidden = true
+            cancelButton.isHidden = false
+            loginButton.isHidden = true
             let y = emailTextfield.frame.origin.y-28
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 
                 for view in self.view.subviews {
                     view.translatesAutoresizingMaskIntoConstraints = true
-                    view.center = CGPointMake(view.center.x, view.center.y-y)
+                    view.center = CGPoint(x: view.center.x, y: view.center.y-y)
                      }
-                self.cancelButton.frame = CGRectMake(self.cancelButton.frame.origin.x, self.view.frame.size.height - self.cancelButton.frame.size.height - 10, self.cancelButton.frame.size.width, self.cancelButton.frame.size.height)
+                self.cancelButton.frame = CGRect(x: self.cancelButton.frame.origin.x, y: self.view.frame.size.height - self.cancelButton.frame.size.height - 10, width: self.cancelButton.frame.size.width, height: self.cancelButton.frame.size.height)
                 
             })
 
@@ -138,22 +138,22 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
     }
    
-    @IBAction func loginButtonTapped(sender: AnyObject) {
-          performSegueWithIdentifier(Helper.SegueKey.kToLoginViewController, sender: self)
+    @IBAction func loginButtonTapped(_ sender: AnyObject) {
+          performSegue(withIdentifier: Helper.SegueKey.kToLoginViewController, sender: self)
     }
-    @IBAction func signUpButtonTapped(sender: UIButton) {
+    @IBAction func signUpButtonTapped(_ sender: UIButton) {
         
         
         if !isValidEmail(emailTextfield.text!) {
-            SVProgressHUD.showErrorWithStatus("Entered email is not valid")
+            SVProgressHUD.showError(withStatus: "Entered email is not valid")
                  return
         }
-        if !firstNameTextField.hasText() {
-            SVProgressHUD.showErrorWithStatus("First name field is empty")
+        if !firstNameTextField.hasText {
+            SVProgressHUD.showError(withStatus: "First name field is empty")
             return
         }
-        if !lastNameTextField.hasText() {
-            SVProgressHUD.showErrorWithStatus("Last name field is empty")
+        if !lastNameTextField.hasText {
+            SVProgressHUD.showError(withStatus: "Last name field is empty")
             return
         }
  
@@ -163,7 +163,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         
     }
-    func runSignUpRequest(sender:UIButton) {
+    func runSignUpRequest(_ sender:UIButton) {
         
         configureSignUpButton(sender,showSpinner: true)
         var firstName: String?
@@ -177,32 +177,32 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             email = emailTextfield.text
             facebookId = nil
         }else{
-            firstName = facebookData?.valueForKey("first_name") as? String
-            lastName = facebookData?.valueForKey("last_name") as? String
-            email = facebookData?.valueForKey("email") as? String
-            facebookId = facebookData?.valueForKey("id") as? String
+            firstName = facebookData?.value(forKey: "first_name") as? String
+            lastName = facebookData?.value(forKey: "last_name") as? String
+            email = facebookData?.value(forKey: "email") as? String
+            facebookId = facebookData?.value(forKey: "id") as? String
             SVProgressHUD.show()
             
         }
        
         
-        provider.request(.CreateUser(firstName: firstName!, lastName: lastName!, email: email!, facebookId:facebookId)) { result in
+        provider.request(.createUser(firstName: firstName!, lastName: lastName!, email: email!, facebookId:facebookId)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                
                 do {
                     try moyaResponse.filterSuccessfulStatusCodes()
                     
                     if((facebookId) == nil){
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.set(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
                         
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     self.configureSignUpButton(sender,showSpinner: false)
-                    self.performSegueWithIdentifier(Helper.SegueKey.kToCodeViewController, sender: self)
+                    self.performSegue(withIdentifier: Helper.SegueKey.kToCodeViewController, sender: self)
                         SVProgressHUD.dismiss()
                     }else{
                         
@@ -219,10 +219,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         let item = json[0] as? [String: AnyObject],
                     let message = item["message"] as? String else {
                         self.configureSignUpButton(sender,showSpinner: false)
-                        SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender,showSpinner: false)
                     
 
@@ -230,12 +230,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 self.configureSignUpButton(sender,showSpinner: false)
 
             }
@@ -247,12 +247,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         var facebookId: String?
         if((facebookData) != nil){
-            facebookId = facebookData?.valueForKey("id") as? String
+            facebookId = facebookData?.value(forKey: "id") as? String
         }
         
-        provider.request(.LoginUser(password: nil, email: nil, facebookId: facebookId)) { result in
+        provider.request(.loginUser(password: nil, email: nil, facebookId: facebookId)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -267,25 +267,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         else {
                             
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(email, forKey: Helper.UserDefaults.kUserEmail)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(first_name, forKey: Helper.UserDefaults.kUserFirstName)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.set(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.set(first_name, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
                     if var imgURL = json["avatar"] as? String{
-                        imgURL = imgURL.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                        Helper.UserDefaults.kStandardUserDefaults.setObject(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
+                        imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
+                        Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
                     }
 
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     SVProgressHUD.dismiss()
                    
-                    self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    self.performSegue(withIdentifier: Helper.SegueKey.kToDashboardViewController, sender: self)
                     
                 }
                 catch {
@@ -294,19 +294,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                    }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -315,41 +315,41 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
   
     
-    func configureSignUpButton(button:UIButton,showSpinner:Bool)  {
+    func configureSignUpButton(_ button:UIButton,showSpinner:Bool)  {
         if showSpinner {
             
-            button.backgroundColor = UIColor.clearColor()
-            button.setTitle("Signing up", forState: .Normal)
-            button.contentHorizontalAlignment = .Left
+            button.backgroundColor = UIColor.clear
+            button.setTitle("Signing up", for: UIControlState())
+            button.contentHorizontalAlignment = .left
             activityIndicatorView?.removeFromSuperview()
-            activityIndicatorView = NVActivityIndicatorView(frame: CGRectMake(button.frame.size.width-30, (button.frame.size.height-30)/2, 30, 30), type: .BallClipRotate, color: UIColor.whiteColor(), padding: 0)
+            activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: button.frame.size.width-30, y: (button.frame.size.height-30)/2, width: 30, height: 30), type: .ballClipRotate, color: UIColor.white, padding: 0)
             button.addSubview(activityIndicatorView!)
             activityIndicatorView!.startAnimating()
-            button.userInteractionEnabled = false
+            button.isUserInteractionEnabled = false
            
            
             
            
         }else{
             button.backgroundColor =  UIColor(red: 44/255.0, green: 89/255.0, blue: 134/255.0, alpha: 1.0)
-            button.setTitle("Sign Up", forState: .Normal)
+            button.setTitle("Sign Up", for: UIControlState())
             activityIndicatorView?.stopAnimating()
-            button.contentHorizontalAlignment = .Center
+            button.contentHorizontalAlignment = .center
             activityIndicatorView?.removeFromSuperview()
-            button.userInteractionEnabled = true
+            button.isUserInteractionEnabled = true
            
         }
 
     }
   
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
         cleanTextFields()
-        cancelButton.hidden = true
+        cancelButton.isHidden = true
         isKeyboardOpened = false
         firstNameTextField.alpha=0
-        loginButton.hidden = false
-        emailTextfield.textAlignment = .Center
+        loginButton.isHidden = false
+        emailTextfield.textAlignment = .center
         for view in self.view.subviews {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -357,15 +357,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     // Facebook Delegate Methods
     
-    @IBAction func facebookLoginButtonTapped(sender: AnyObject) {
+    @IBAction func facebookLoginButtonTapped(_ sender: AnyObject) {
         
         //commented for debug
         
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
-        fbLoginManager.logInWithReadPermissions(["email"], fromViewController: self) { (result, error) -> Void in
+        fbLoginManager.logIn(withReadPermissions: ["email"], from: self) { (result, error) -> Void in
             if (error == nil){
-                let fbloginresult : FBSDKLoginManagerLoginResult = result
-                if result.isCancelled {
+                let fbloginresult : FBSDKLoginManagerLoginResult = result!
+                if (result?.isCancelled)! {
                     return
                 }
                 
@@ -385,30 +385,32 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func returnUserData()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,first_name, last_name"])
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+        graphRequest.start(completionHandler: { (connection, result, error) -> Void in
             
             if ((error) != nil)
             {
                 // Process error
                 print("Error: \(error)")
-                SVProgressHUD.showErrorWithStatus("\(error)")
+                SVProgressHUD.showError(withStatus: "\(error)")
             }
             else
             {
                 print("fetched user: \(result)")
-                
-                guard let userId = result.valueForKey("id") as? String,
-                let userFirstName  = result.valueForKey("first_name") as? String,
-                let userLastName  = result.valueForKey("last_name") as? String,
-                let userEmail = result.valueForKey("email") as? String else{
+                guard  let facebookResponse = result as? [String:AnyObject] else{
+                    SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+                    return
+                }
+                guard let userId = facebookResponse["id"] as? String,
+                let userFirstName  = facebookResponse["first_name"] as? String,
+                let userLastName  = facebookResponse["last_name"] as? String,
+                let userEmail = facebookResponse["email"] as? String else{
                  
-                    SVProgressHUD.showErrorWithStatus("Can not get all needed data from Facebook")
+                    SVProgressHUD.showError(withStatus: "Can not get all needed data from Facebook")
                 
                         return;
                 }
                 self.facebookData = ["id":userId,"first_name":userFirstName,"last_name":userLastName,"email":userEmail]
                self.runSignUpRequest(UIButton())
-
                 
                 
                 
@@ -426,31 +428,31 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(_ testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
+        return emailTest.evaluate(with: testStr)
     }
     
-    func fadeViewInThenOut(view : UIView, delay: NSTimeInterval) {
+    func fadeViewInThenOut(_ view : UIView, delay: TimeInterval) {
         
         let animationDuration = 1.0
         
       // Fade out the view after a delay
             
-        UIView.animateWithDuration(animationDuration, delay: delay, options: .CurveEaseInOut, animations: { () -> Void in
+        UIView.animate(withDuration: animationDuration, delay: delay, options: UIViewAnimationOptions(), animations: { () -> Void in
                 view.alpha = 0
                 },
                                        completion: nil)
         
     }
     
-    func generateGradientForFrame(frame: CGRect) -> CAGradientLayer {
+    func generateGradientForFrame(_ frame: CGRect) -> CAGradientLayer {
         let gradient: CAGradientLayer = CAGradientLayer()
         
-        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).CGColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).CGColor]
+        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).cgColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).cgColor]
         
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)

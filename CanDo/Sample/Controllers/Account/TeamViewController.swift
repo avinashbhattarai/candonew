@@ -32,7 +32,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
          
             /// Do anything you want...
             /// ...
-             NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+             NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
             /// Stop refresh when your job finished, it will reset refresh footer if completion is true
             
             /// Set ignore footer or not
@@ -49,33 +49,33 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let member : Member = members[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TeamMemberTableViewCell
+        let member : Member = members[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TeamMemberTableViewCell
         
         cell.memberName.text = String(format: "%@ %@", member.firstName, member.lastName)
         
        
         if iamOwner {
-            cell.removeFromTeamButton.hidden = false
-            if indexPath.row == 0 {
-                cell.removeFromTeamButton.hidden = true
+            cell.removeFromTeamButton.isHidden = false
+            if (indexPath as NSIndexPath).row == 0 {
+                cell.removeFromTeamButton.isHidden = true
             }
         }else{
-            cell.removeFromTeamButton.hidden = true
+            cell.removeFromTeamButton.isHidden = true
         }
         
         if member.owner == true {
@@ -84,47 +84,47 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.backgroundColor = Helper.Colors.RGBCOLOR(246, green: 249, blue: 249)
         }
         if member.facebook == true {
-            cell.prividerButton.setImage(UIImage(named:"iconFb"), forState: .Normal)
+            cell.prividerButton.setImage(UIImage(named:"iconFb"), for: UIControlState())
             cell.prividerButton.backgroundColor = Helper.Colors.RGBCOLOR(95, green: 145, blue: 255)
             cell.providerDetails.text = String(format: "%@ %@", member.firstName, member.lastName)
         }else{
-            cell.prividerButton.setImage(UIImage(named:"icon-email"), forState: .Normal)
+            cell.prividerButton.setImage(UIImage(named:"icon-email"), for: UIControlState())
             cell.prividerButton.backgroundColor = Helper.Colors.RGBCOLOR(179, green: 183, blue: 194)
             cell.providerDetails.text = member.email
         }
         if member.status == Helper.AccountStatusKey.kInvited {
-            cell.pendingInviteLabel.hidden = false
+            cell.pendingInviteLabel.isHidden = false
         }else{
-            cell.pendingInviteLabel.hidden = true
+            cell.pendingInviteLabel.isHidden = true
         }
         
        
-        cell.memberAvatar.kf_setImageWithURL(NSURL(string:member.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+        cell.memberAvatar.kf.setImage(with: URL(string:member.avatar), placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
         
-        cell.removeFromTeamButton.tag = indexPath.row
-        cell.removeFromTeamButton.addTarget(self, action: #selector(removeButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.removeFromTeamButton.tag = (indexPath as NSIndexPath).row
+        cell.removeFromTeamButton.addTarget(self, action: #selector(removeButtonTapped(_:)), for: .touchUpInside)
         
         return cell
     }
     
-    func removeButtonTapped(sender:UIButton) {
+    func removeButtonTapped(_ sender:UIButton) {
         
         
         
-        let alert = UIAlertController(title: "", message: "Do you want to remove this user from team?", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+        let alert = UIAlertController(title: "", message: "Do you want to remove this user from team?", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
             print("OK")
             
             self.runRemoveUserFromTeamRequest(sender)
             
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
             print("Cancel")
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     
     }
-    func runRemoveUserFromTeamRequest(sender: UIButton) {
+    func runRemoveUserFromTeamRequest(_ sender: UIButton) {
         
         print(sender.tag)
         
@@ -133,9 +133,9 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
         SVProgressHUD.show()
-        provider.request(.RemoveFromTeam(memberId: member.memberId)) { result in
+        provider.request(.removeFromTeam(memberId: member.memberId)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -143,12 +143,12 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     SVProgressHUD.dismiss()
-                    self.members.removeAtIndex(sender.tag)
-                    self.teamTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: sender.tag, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.members.remove(at: sender.tag)
+                    self.teamTableView.deleteRows(at: [IndexPath(row: sender.tag, section: 0)], with: .automatic)
                     print(json)
                     
                     
@@ -159,19 +159,19 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -183,10 +183,10 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         teamTableView.reloadData()
         if !iamOwner{
-            inviteView.hidden = true
+            inviteView.isHidden = true
             teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         }else{
-            inviteView.hidden = false
+            inviteView.isHidden = false
              teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         }
         
@@ -194,18 +194,18 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     }
     
-    @IBAction func inviteButtonTapped(sender: AnyObject) {
+    @IBAction func inviteButtonTapped(_ sender: AnyObject) {
         
-        if !inviteTextField.hasText() {
-            SVProgressHUD.showErrorWithStatus("Invite field is empty")
+        if !inviteTextField.hasText {
+            SVProgressHUD.showError(withStatus: "Invite field is empty")
             return
         }
         
         
         SVProgressHUD.show()
-        provider.request(.InviteToTeam(email: inviteTextField.text!)) { result in
+        provider.request(.inviteToTeam(email: inviteTextField.text!)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -213,12 +213,12 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
                     SVProgressHUD.dismiss()
-                    NSNotificationCenter.defaultCenter().postNotificationName("reloadDataNotification", object: nil)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
                     self.inviteTextField.text = ""
                     print(json)
                     
@@ -230,19 +230,19 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }

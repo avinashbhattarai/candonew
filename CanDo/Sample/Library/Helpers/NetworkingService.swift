@@ -12,43 +12,44 @@ import Moya
 
 
 public enum NetworkingService {
-    case CreateUser(firstName: String, lastName: String, email: String, facebookId: String?)
-    case VerificateUser(code: Int, email: String)
-    case SetPasswordForUser(password: String, code: Int, email: String)
-    case ResetPasswordForUser(password: String, code: Int, email: String)
-    case LoginUser(password: String?, email: String?, facebookId: String?)
-    case ForgotPassword(email: String)
     
-    case TeamInfo()
-    case CreateTeam()
-    case DeleteTeam()
-    case LeaveTeam()
-    case InviteToTeam(email: String)
-    case AcceptInvite(teamId: Int)
-    case RemoveFromTeam(memberId: Int)
+    case createUser(firstName: String, lastName: String, email: String, facebookId: String?)
+    case verificateUser(code: Int, email: String)
+    case setPasswordForUser(password: String, code: Int, email: String)
+    case resetPasswordForUser(password: String, code: Int, email: String)
+    case loginUser(password: String?, email: String?, facebookId: String?)
+    case forgotPassword(email: String)
     
-    case TipsInfo()
+    case teamInfo()
+    case createTeam()
+    case deleteTeam()
+    case leaveTeam()
+    case inviteToTeam(email: String)
+    case acceptInvite(teamId: Int)
+    case removeFromTeam(memberId: Int)
     
-    case AddList(name: String)
-    case AddTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
-    case UpdateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?, status:String?)
-    case ListsInfo(date: String?)
-    case UpdateList(listId: Int, name: String)
+    case tipsInfo()
     
-    case NotificationsInfo()
-    case PostNotification(post: String?, image: String?)
-    case UpdateUser (avatar: String?, firstName:String?, lastName:String?)
+    case addList(name: String)
+    case addTodo(listId: Int, name: String, assign_to :Int?, date: String?, time: String?)
+    case updateTodo(todoId: Int, name: String, assign_to :Int?, date: String?, time: String?, status:String?)
+    case listsInfo(date: String?)
+    case updateList(listId: Int, name: String)
     
-    case SuggestionsInfo()
-    case AddSuggestions(suggestions: NSArray)
+    case notificationsInfo()
+    case postNotification(post: String?, image: String?)
+    case updateUser (avatar: String?, firstName:String?, lastName:String?)
+    
+    case suggestionsInfo()
+    case addSuggestions(suggestions: NSArray)
     
 }
 
 let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingService> in
-    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    let endpoint: Endpoint<NetworkingService> = Endpoint<NetworkingService>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<NetworkingService> = Endpoint<NetworkingService>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     
-   if let token: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserToken) as? String
+   if let token: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserToken) as? String
    {
      let encodedToken: String = token.toBase64()
     
@@ -57,10 +58,10 @@ let endpointClosure = { (target: NetworkingService) -> Endpoint<NetworkingServic
     return endpoint
     
 }
-private func JSONResponseDataFormatter(data: NSData) -> NSData {
+private func JSONResponseDataFormatter(_ data: Data) -> Data {
     do {
-        let dataAsJSON = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-        let prettyData =  try NSJSONSerialization.dataWithJSONObject(dataAsJSON, options: .PrettyPrinted)
+        let dataAsJSON = try JSONSerialization.jsonObject(with: data, options: [])
+        let prettyData =  try JSONSerialization.data(withJSONObject: dataAsJSON, options: .prettyPrinted)
         return prettyData
     } catch {
         return data //fallback to original data if it cant be serialized
@@ -73,277 +74,287 @@ let provider = MoyaProvider<NetworkingService>(endpointClosure: endpointClosure,
 
 // MARK: - TargetType Protocol Implementation
 extension NetworkingService: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "http://api.cando.dev.letzgro.net")! }
-    public var path: String {
+  
+    
+     public var baseURL: URL { return URL(string: "http://api.cando.dev.letzgro.net")! }
+    
+     public var path: String {
         switch self {
         
-        case .CreateUser(_, _, _, _):
+        case .createUser(_, _, _, _):
             return "/user/register"
-        case .VerificateUser(_, _):
+        case .verificateUser(_, _):
             return "/user/verification"
-        case .SetPasswordForUser(_, _,_):
+        case .setPasswordForUser(_, _,_):
             return "/user/set-password"
-        case .ResetPasswordForUser(_, _,_):
+        case .resetPasswordForUser(_, _,_):
             return "/user/reset"
-        case .LoginUser(_, _, _):
+        case .loginUser(_, _, _):
             return "/user/login"
-        case .UpdateUser(_,_,_):
+        case .updateUser(_,_,_):
             return "/user"
-        case .ForgotPassword(_):
+        case .forgotPassword(_):
             return "/user/forgot"
         
-        case .TeamInfo():
+        case .teamInfo():
             return "/team"
-        case .CreateTeam():
+        case .createTeam():
             return "/team"
-        case .DeleteTeam():
+        case .deleteTeam():
             return "/team"
-        case .LeaveTeam():
+        case .leaveTeam():
             return "/team/leave"
-        case .InviteToTeam(_):
+        case .inviteToTeam(_):
             return "/team/member"
-        case .AcceptInvite(_):
+        case .acceptInvite(_):
             return "/team/accept"
-        case .RemoveFromTeam(let memberId):
+        case .removeFromTeam(let memberId):
             return "/team/member/\(memberId)"
             
-        case .TipsInfo():
+        case .tipsInfo():
             return "/tips"
             
-        case .AddList(_):
+        case .addList(_):
             return "/lists"
-        case .AddTodo(_,_,_,_,_):
+        case .addTodo(_,_,_,_,_):
             return "/todo"
-        case .UpdateTodo(let todoId,_,_,_,_,_):
+        case .updateTodo(let todoId,_,_,_,_,_):
             return "/todo/\(todoId)"
-        case .ListsInfo(let date):
+        case .listsInfo(let date):
             if (date != nil) {
                  return "/lists/\(date!)"
             }else{
                 return "/lists"
             }
-        case .UpdateList(let listId,_):
+        case .updateList(let listId,_):
             return "/lists/\(listId)"
             
-        case .NotificationsInfo():
+        case .notificationsInfo():
             return "/notifications"
-        case .PostNotification(_,_):
+        case .postNotification(_,_):
             return "/notifications"
 
-        case .SuggestionsInfo():
+        case .suggestionsInfo():
             return "/suggestions"
-        case .AddSuggestions(_):
+        case .addSuggestions(_):
             return "/suggestions/create-todos"
-
-            
+    
         }
     }
     public var method: Moya.Method {
         switch self {
-        case .CreateUser:
+        case .createUser:
             return .POST
-        case .VerificateUser:
+        case .verificateUser:
             return .POST
-        case .SetPasswordForUser:
+        case .setPasswordForUser:
             return .POST
-        case .ResetPasswordForUser:
+        case .resetPasswordForUser:
             return .POST
-        case .LoginUser:
+        case .loginUser:
             return .POST
-        case .ForgotPassword:
+        case .forgotPassword:
             return .POST
-        case .TeamInfo:
+        case .teamInfo:
             return .GET
-        case .CreateTeam:
+        case .createTeam:
             return .POST
-        case .DeleteTeam:
+        case .deleteTeam:
             return .DELETE
-        case .InviteToTeam:
+        case .inviteToTeam:
             return .POST
-        case .AcceptInvite:
+        case .acceptInvite:
             return .POST
-        case .RemoveFromTeam:
+        case .removeFromTeam:
             return .DELETE
-        case .LeaveTeam:
+        case .leaveTeam:
             return .GET
-        case .TipsInfo:
+        case .tipsInfo:
             return .GET
-        case .AddList:
+        case .addList:
             return .POST
-        case .AddTodo:
+        case .addTodo:
             return .POST
-        case .UpdateTodo:
+        case .updateTodo:
             return .PUT
-        case .ListsInfo:
+        case .listsInfo:
             return .GET
-        case .UpdateList:
+        case .updateList:
             return .PUT
-        case .NotificationsInfo:
+        case .notificationsInfo:
             return .GET
-        case .PostNotification:
+        case .postNotification:
             return .POST
-        case .UpdateUser:
+        case .updateUser:
             return .PUT
-        case .SuggestionsInfo:
+        case .suggestionsInfo:
             return .GET
-        case .AddSuggestions:
+        case .addSuggestions:
             return .POST
         }
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
-        case .CreateUser(let firstName, let lastName, let email, let facebookId):
+        case .createUser(let firstName, let lastName, let email, let facebookId):
             var params: [String : AnyObject] = [:]
-            params["first_name"] = firstName
-            params["last_name"] = lastName
-            params["email"] = email
-            params["facebook_id"] = facebookId
+            params["first_name"] = firstName as AnyObject?
+            params["last_name"] = lastName as AnyObject?
+            params["email"] = email as AnyObject?
+            params["facebook_id"] = facebookId as AnyObject?
             return params
             
-        case .VerificateUser(let code, let email):
-            return ["code": code, "email": email]
+        case .verificateUser(let code, let email):
+            return ["code": code as AnyObject, "email": email as AnyObject]
             
-        case .SetPasswordForUser(let password, let code, let email):
-            return ["password": password, "code": code, "email": email]
+        case .setPasswordForUser(let password, let code, let email):
+            return ["password": password as AnyObject, "code": code as AnyObject, "email": email as AnyObject]
             
-        case .ResetPasswordForUser(let password, let code, let email):
-            return ["password": password, "code": code, "email": email]
+        case .resetPasswordForUser(let password, let code, let email):
+            return ["password": password as AnyObject, "code": code as AnyObject, "email": email as AnyObject]
             
-        case .LoginUser(let password, let email, let facebookId):
+        case .loginUser(let password, let email, let facebookId):
             var params: [String : AnyObject] = [:]
-            params["email"] = email
-            params["password"] = password
-            params["facebook_id"] = facebookId
+            params["email"] = email as AnyObject?
+            params["password"] = password as AnyObject?
+            params["facebook_id"] = facebookId as AnyObject?
             return params
             
-        case .ForgotPassword(let email):
-            return ["email": email]
+        case .forgotPassword(let email):
+            return ["email": email as AnyObject]
             
-        case .TeamInfo():
+        case .teamInfo():
             return nil
-        case .CreateTeam():
+        case .createTeam():
             return nil
-        case .DeleteTeam():
+        case .deleteTeam():
             return nil
-        case .LeaveTeam():
+        case .leaveTeam():
             return nil
-        case .InviteToTeam(let email):
-            return ["email": email]
-        case .AcceptInvite(let teamId):
-            return ["team_id": teamId]
-        case .RemoveFromTeam(let memberId):
-            return ["id": memberId]
+        case .inviteToTeam(let email):
+            return ["email": email as AnyObject]
+        case .acceptInvite(let teamId):
+            return ["team_id": teamId as AnyObject]
+        case .removeFromTeam(let memberId):
+            return ["id": memberId as AnyObject]
             
-        case .TipsInfo():
+        case .tipsInfo():
             return nil
             
-        case .AddList(let name):
-            return ["name": name]
-        case .AddTodo(let listId, let name, let assign_to, let date, let time):
+        case .addList(let name):
+            return ["name": name as AnyObject]
+        case .addTodo(let listId, let name, let assign_to, let date, let time):
             var params: [String : AnyObject] = [:]
-            params["list_id"] = listId
-            params["name"] = name
-            params["assign_to"] = assign_to
-            params["date"] = date
-            params["time"] = time
+            params["list_id"] = listId as AnyObject?
+            params["name"] = name as AnyObject?
+            params["assign_to"] = assign_to as AnyObject?
+            params["date"] = date as AnyObject?
+            params["time"] = time as AnyObject?
             return params
-        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time, let status):
+        case .updateTodo(let todoId, let name, let assign_to, let date, let time, let status):
             var params: [String : AnyObject] = [:]
-            params["id"] = todoId
-            params["name"] = name
-            params["assign_to"] = assign_to
-            params["date"] = date
-            params["time"] = time
-            params["status"] = status
-            return params
-
-        case .ListsInfo(_):
-            return nil
-        case .SuggestionsInfo(_):
-            return nil
-
-        case .UpdateList(let listId, let name):
-            return ["listId": listId, "name": name]
-            
-        case .NotificationsInfo():
-            return nil
-            
-        case .PostNotification(let post, let image):
-            var params: [String : AnyObject] = [:]
-            params["post"] = post
-            params["image"] = image
-            return params
-            
-        case .UpdateUser(let avatar, let firstName, let lastName):
-            var params: [String : AnyObject] = [:]
-            params["avatar"] = avatar
-            params["firts_name"] = firstName
-            params["last_name"] = lastName
+            params["id"] = todoId as AnyObject?
+            params["name"] = name as AnyObject?
+            params["assign_to"] = assign_to as AnyObject?
+            params["date"] = date as AnyObject?
+            params["time"] = time as AnyObject?
+            params["status"] = status as AnyObject?
             return params
 
-        case .AddSuggestions(let suggestions):
+        case .listsInfo(_):
+            return nil
+        case .suggestionsInfo(_):
+            return nil
+
+        case .updateList(let listId, let name):
+            return ["listId": listId as AnyObject, "name": name as AnyObject]
+            
+        case .notificationsInfo():
+            return nil
+            
+        case .postNotification(let post, let image):
+            var params: [String : AnyObject] = [:]
+            params["post"] = post as AnyObject?
+            params["image"] = image as AnyObject?
+            return params
+            
+        case .updateUser(let avatar, let firstName, let lastName):
+            var params: [String : AnyObject] = [:]
+            params["avatar"] = avatar as AnyObject?
+            params["firts_name"] = firstName as AnyObject?
+            params["last_name"] = lastName as AnyObject?
+            return params
+
+        case .addSuggestions(let suggestions):
             return ["suggestions": suggestions]
         }
     }
-    public var sampleData: NSData {
+    
+    public var sampleData: Data {
         switch self {
-        case .CreateUser(let firstName, let lastName, let email, let facebookId):
+        case .createUser(let firstName, let lastName, let email, let facebookId):
             return "{\"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
             
-        case .VerificateUser(let code, let email):
+        case .verificateUser(let code, let email):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\"}".UTF8EncodedData
             
-        case .SetPasswordForUser(let code, let email, let password ):
+        case .setPasswordForUser(let code, let email, let password ):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
-        case .ResetPasswordForUser(let code, let email, let password ):
+        case .resetPasswordForUser(let code, let email, let password ):
             return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
-        case .LoginUser(let password, let email, let facebookId):
+        case .loginUser(let password, let email, let facebookId):
             return "{\"password\": \"\(password)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
-        case .ForgotPassword(let email):
+        case .forgotPassword(let email):
              return "{\"email\": \"\(email)\"}".UTF8EncodedData
             
-        case .TeamInfo():
+        case .teamInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .CreateTeam():
+        case .createTeam():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .DeleteTeam():
+        case .deleteTeam():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .LeaveTeam():
+        case .leaveTeam():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .InviteToTeam(let email):
+        case .inviteToTeam(let email):
             return "{\"email\": \"\(email)\"}".UTF8EncodedData
-        case .AcceptInvite(let teamId):
+        case .acceptInvite(let teamId):
             return "{\"team_id\": \"\(teamId)\"}".UTF8EncodedData
-        case .RemoveFromTeam(let memberId):
+        case .removeFromTeam(let memberId):
             return "{\"id\": \"\(memberId)\"}".UTF8EncodedData
 
-        case .TipsInfo():
+        case .tipsInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
             
-        case .AddList(let name):
+        case .addList(let name):
             return "{\"name\": \"\(name)\"}".UTF8EncodedData
-        case .AddTodo(let listId, let name, let assign_to, let date, let time):
+        case .addTodo(let listId, let name, let assign_to, let date, let time):
             return "{\"list_id\": \"\(listId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\"}".UTF8EncodedData
-        case .UpdateTodo(let todoId, let name, let assign_to, let date, let time, let status):
+        case .updateTodo(let todoId, let name, let assign_to, let date, let time, let status):
             return "{\"id\": \"\(todoId)\", \"name\": \"\(name)\", \"assign_to\": \"\(assign_to)\", \"date\": \"\(date)\", \"time\": \"\(time)\", \"status\": \"\(status)\"}".UTF8EncodedData
-        case .ListsInfo(_):
+        case .listsInfo(_):
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .UpdateList(let listId,let name):
+        case .updateList(let listId,let name):
             return "{\"list_id\": \"\(listId)\",\"name\": \"\(name)\"}".UTF8EncodedData
-        case .NotificationsInfo():
+        case .notificationsInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .PostNotification(let post, let image):
+        case .postNotification(let post, let image):
             return "{\"post\": \"\(post)\",\"image\": \"\(image)\"}".UTF8EncodedData
-        case .UpdateUser(let avatar, let firstName, let lastName):
+        case .updateUser(let avatar, let firstName, let lastName):
             return "{\"avatar\": \"\(avatar)\",\"first_name\": \"\(firstName)\",\"last_name\": \"\(lastName)\"}".UTF8EncodedData
-        case .SuggestionsInfo(_):
+        case .suggestionsInfo(_):
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .AddSuggestions(let suggestions):
+        case .addSuggestions(let suggestions):
             return "{\"suggestions\": \"\(suggestions)\"}".UTF8EncodedData
         }
+        
     }
+    
+    public var task: Task{
+        return .request
+    }
+
+    
     public var multipartBody: [MultipartFormData]? {
         // Optional
         return nil
@@ -353,9 +364,9 @@ extension NetworkingService: TargetType {
 // MARK: - Helpers
 private extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
-    var UTF8EncodedData: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+    var UTF8EncodedData: Data {
+        return self.data(using: String.Encoding.utf8)!
     }
 }

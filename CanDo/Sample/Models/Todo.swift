@@ -14,10 +14,10 @@ class Todo {
     
     var name: String!
     var list: List!
-    var updatedAt: NSDate?
-    var createdAt: NSDate?
-    var date: NSDate?
-    var time: NSDate!
+    var updatedAt: Date?
+    var createdAt: Date?
+    var date: Date?
+    var time: Date!
     var status: String!
     var todoId: Int!
     var assignedTo: Person!
@@ -61,14 +61,14 @@ class Todo {
     }
     
     
-    func stringCreateUpdateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd HH:mm:ss"))
+    func stringCreateUpdateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd HH:mm:ss"))
     }
-    func stringDateToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("yyyy-MM-dd"))
+    func stringDateToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("yyyy-MM-dd"))
     }
-    func stringTimeToDate(stringDate: String) -> NSDate {
-        return NSDate(fromString:stringDate, format: .Custom("HH:mm:ss"))
+    func stringTimeToDate(_ stringDate: String) -> Date {
+        return Date(fromString: stringDate, format: .custom("HH:mm:ss"))
     }
 
     

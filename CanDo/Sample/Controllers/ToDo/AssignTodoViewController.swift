@@ -66,58 +66,58 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    func titleForEmptyDataSet(scrollView: UIScrollView) -> NSAttributedString? {
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No members"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }
-    func emptyDataSetShouldAllowScroll(scrollView: UIScrollView) -> Bool {
+    func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return persons.count
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
   
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let person : Person = persons[indexPath.row]
+        let person : Person = persons[(indexPath as NSIndexPath).row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! PersonTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! PersonTableViewCell
         
         
         if person.selected == true {
-             cell.selectButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), forState: .Normal)
+             cell.selectButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), for: UIControlState())
         }else{
-            cell.selectButton .setImage(UIImage(), forState: .Normal)
+            cell.selectButton .setImage(UIImage(), for: UIControlState())
         }
         
  
-        cell.selectButton.backgroundColor = UIColor.clearColor()
+        cell.selectButton.backgroundColor = UIColor.clear
         cell.selectButton.layer.cornerRadius = cell.selectButton.frame.size.height/2
         cell.selectButton.layer.borderWidth = 1
-        cell.selectButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).CGColor
+        cell.selectButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).cgColor
         
         cell.personAvatar.layer.cornerRadius = 5
         if person.personId == 0 {
             cell.personAvatar.image =  UIImage()
         }else{
             
-            cell.personAvatar.kf_setImageWithURL(NSURL(string:person.avatar), placeholderImage: UIImage(named: Helper.PlaceholderImage.kAvatar), optionsInfo: nil, progressBlock: nil, completionHandler: nil)
+            cell.personAvatar.kf.setImage(with: URL(string:person.avatar), placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
         }
 
         cell.personTitle.text = person.name
         
         cell.selectButton.indexPath = indexPath
-        cell.selectButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        cell.selectButton.addTarget(self, action: #selector(selectedButtonTapped(_:)), for: .touchUpInside)
       
         
         return cell
@@ -126,9 +126,9 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
 
     func runTeamInfoRequest(){
         
-        provider.request(.TeamInfo()) { result in
+        provider.request(.teamInfo()) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
@@ -138,7 +138,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                         else {
                             
                             self.personsTableView.es_stopPullToRefresh(completion: true)
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
@@ -153,7 +153,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                         }
                     }
                     let anyOnePerson = Person(name: "Anyone", personId: 0, avatar: "")
-                    self.persons.insert(anyOnePerson, atIndex: 0)
+                    self.persons.insert(anyOnePerson, at: 0)
                     
                     for person:Person in self.persons{
                         print(" currnttodo \(self.currentTodo?.assignedTo)")
@@ -175,21 +175,21 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             self.personsTableView.es_stopPullToRefresh(completion: true)
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     self.personsTableView.es_stopPullToRefresh(completion: true)
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
                 self.personsTableView.es_stopPullToRefresh(completion: true)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 
                 
             }
@@ -199,7 +199,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
 
   
     
-    @IBAction func assignTodoButtonTapped(sender: AnyObject) {
+    @IBAction func assignTodoButtonTapped(_ sender: AnyObject) {
         
         
         for person:Person in persons{
@@ -210,34 +210,34 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
             
         }
         if currentTodo?.footer != nil {
-            currentTodo?.footer?.assignTodoButton.setTitle(currentTodo?.assignedTo.name, forState: .Normal)
-            currentTodo?.footer?.assignTodoButton.setImage(nil, forState: .Normal)
+            currentTodo?.footer?.assignTodoButton.setTitle(currentTodo?.assignedTo.name, for: UIControlState())
+            currentTodo?.footer?.assignTodoButton.setImage(nil, for: UIControlState())
             
 
         
         }else{
             
             if senderViewController is TodoViewController {
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataTodo", object: nil, userInfo: ["todo":currentTodo!])
+                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataTodo"), object: nil, userInfo: ["todo":currentTodo!])
             }else if senderViewController is CalendarViewController{
-                NSNotificationCenter.defaultCenter().postNotificationName("reloadDataCalendar", object: nil, userInfo: ["todo":currentTodo!])
+                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataCalendar"), object: nil, userInfo: ["todo":currentTodo!])
             }
 
             
         }
        
-        self.navigationController!.popViewControllerAnimated(true)
+        self.navigationController!.popViewController(animated: true)
      }
     
     
-    func selectedButtonTapped(sender: ButtonWithIndexPath) {
+    func selectedButtonTapped(_ sender: ButtonWithIndexPath) {
         
         
         for person:Person in persons{
             person.selected = false
         }
         
-        let row: Int = sender.indexPath!.row
+        let row: Int = (sender.indexPath! as NSIndexPath).row
         let selectedPerson:Person = persons[row]
         selectedPerson.selected = true
  
