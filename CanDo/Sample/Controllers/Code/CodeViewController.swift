@@ -71,7 +71,7 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let secretCode = json["code"] as? String else {
                             SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)

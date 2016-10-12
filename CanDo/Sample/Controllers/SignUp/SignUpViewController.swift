@@ -192,7 +192,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 
                
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     
                     if((facebookId) == nil){
                     Helper.UserDefaults.kStandardUserDefaults.set(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
@@ -256,7 +256,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let email = json["email"] as? String,
                         let id = json["id"] as? Int,

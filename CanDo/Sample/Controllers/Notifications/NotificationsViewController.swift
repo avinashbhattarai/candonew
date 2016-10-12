@@ -67,7 +67,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         notificationTableView.layoutIfNeeded()
         
         
-        notificationTableView.es_addPullToRefresh {
+        _ = notificationTableView.es_addPullToRefresh {
             self.runNotificationsInfoRequest()
         }
         
@@ -83,7 +83,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                         self.notificationTableView.es_stopPullToRefresh(completion: true)
@@ -217,7 +217,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
                        

@@ -47,7 +47,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
        
         
-        todoTableView.es_addPullToRefresh {
+        _ = todoTableView.es_addPullToRefresh {
             
             /// Do anything you want...
             /// ...
@@ -111,7 +111,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                        self.todoTableView.es_stopPullToRefresh(completion: true)
@@ -461,7 +461,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
                         SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)

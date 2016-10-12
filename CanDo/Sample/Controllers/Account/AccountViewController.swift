@@ -74,7 +74,7 @@ class AccountViewController: BaseViewController {
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let inTeam = json["in_team"] as? Bool,
                         let invitations = json["invitations"] as? [[String: AnyObject]],

@@ -45,7 +45,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         cellTimeFormatter.timeStyle = DateFormatter.Style.short
 
         
-		toDoTableView.es_addPullToRefresh {
+		_ = toDoTableView.es_addPullToRefresh {
 
 			/// Do anything you want...
 			/// ...
@@ -105,7 +105,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 			case let .success(moyaResponse):
 
 				do {
-					try moyaResponse.filterSuccessfulStatusCodes()
+					try _ = moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
                         self.toDoTableView.es_stopPullToRefresh(completion: true)
@@ -397,7 +397,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 			case let .success(moyaResponse):
 
 				do {
-					try moyaResponse.filterSuccessfulStatusCodes()
+					try _ = moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
 						print("wrong json format")
 						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
@@ -461,7 +461,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
                         SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
@@ -553,7 +553,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
                         print("wrong json format")
                         SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
@@ -695,7 +695,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 			case let .success(moyaResponse):
 
 				do {
-					try moyaResponse.filterSuccessfulStatusCodes()
+					try _ = moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else {
 						print("wrong json format")
 						SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)

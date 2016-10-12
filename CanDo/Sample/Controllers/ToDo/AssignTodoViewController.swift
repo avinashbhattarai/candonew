@@ -45,7 +45,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
         personsTableView.emptyDataSetDelegate = self;
         personsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
-        personsTableView.es_addPullToRefresh {
+        _ = personsTableView.es_addPullToRefresh {
             
             /// Do anything you want...
             /// ...
@@ -132,7 +132,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let members = json["members"] as? [[String: AnyObject]]
                         else {

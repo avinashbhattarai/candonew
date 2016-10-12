@@ -31,7 +31,7 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
         headerLabel.text = String(format:"Here are some tips and resources\nto help you support %@", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserGroupOwner) as? String) ?? "")
         
         
-		tipsTableView.es_addPullToRefresh {
+		_ = tipsTableView.es_addPullToRefresh {
 
 			/// Do anything you want...
 			/// ...
@@ -66,7 +66,7 @@ class TipsViewController: BaseViewController, DZNEmptyDataSetSource, DZNEmptyDat
 			case let .success(moyaResponse):
 
 				do {
-					try moyaResponse.filterSuccessfulStatusCodes()
+					try _ = moyaResponse.filterSuccessfulStatusCodes()
 					guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
 						print("wrong json format")
                         self.tipsTableView.es_stopPullToRefresh(completion: true)

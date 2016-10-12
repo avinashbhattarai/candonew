@@ -258,7 +258,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]else {
                         // let secretCode = json["code"] as? String
@@ -344,7 +344,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let email = json["email"] as? String,
                         let id = json["id"] as? Int,
@@ -414,7 +414,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     @IBAction func signupButtontapped(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func cancelButtonTapped(_ sender: AnyObject) {

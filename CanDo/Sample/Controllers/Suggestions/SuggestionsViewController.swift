@@ -46,7 +46,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
         
         suggestionsTableView.contentInset = UIEdgeInsetsMake(0, 0, 94, 0)
         
-        suggestionsTableView.es_addPullToRefresh {
+        _ = suggestionsTableView.es_addPullToRefresh {
             self.runSuggestionsInfoRequest()
         }
         
@@ -63,7 +63,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [[String: AnyObject]] else {
                         print("wrong json format")
                         self.suggestionsTableView.es_stopPullToRefresh(completion: true)
@@ -214,9 +214,9 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
             case let .success(moyaResponse):
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reDownloadDataTodo"), object: nil)
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                     SVProgressHUD.dismiss()
                 }
                 catch {

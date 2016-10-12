@@ -28,15 +28,10 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         teamTableView.contentInset = UIEdgeInsetsMake(0, 0, 160, 0)
         
         
-        teamTableView.es_addPullToRefresh {
+      _ = teamTableView.es_addPullToRefresh {
          
-            /// Do anything you want...
-            /// ...
-             NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
-            /// Stop refresh when your job finished, it will reset refresh footer if completion is true
-            
-            /// Set ignore footer or not
-            // self?.teamTableView.es_stopPullToRefresh(completion: true, ignoreFooter: false)
+        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
+        
         }
        
         
@@ -139,7 +134,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
@@ -209,7 +204,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             

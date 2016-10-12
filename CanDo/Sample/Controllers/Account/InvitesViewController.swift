@@ -28,7 +28,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         
         
-         invitesTableView.es_addPullToRefresh {
+         _ = invitesTableView.es_addPullToRefresh {
             NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
         }
       
@@ -82,7 +82,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
@@ -155,7 +155,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let _ = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             

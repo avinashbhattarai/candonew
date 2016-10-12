@@ -62,7 +62,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
@@ -73,7 +73,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     SVProgressHUD.dismiss()
                     print(json)
                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                     
                 }
                 catch {
@@ -109,7 +109,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
@@ -120,7 +120,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     SVProgressHUD.dismiss()
                     print(json)
                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 }
                 catch {
                     
@@ -244,7 +244,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                    try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]
                         else {
                             
