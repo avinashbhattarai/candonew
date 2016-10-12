@@ -16,8 +16,9 @@ class SetNewPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("setNewPasswordViewController")
         newPassword.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
-        self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), atIndex: 0)
+        self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         // Do any additional setup after loading the view.
     }
 
@@ -25,20 +26,20 @@ class SetNewPasswordViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
-    override func viewWillDisappear(animated: Bool)
+    override func viewWillDisappear(_ animated: Bool)
     {
         
         super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
-    func generateGradientForFrame(frame: CGRect) -> CAGradientLayer {
+    func generateGradientForFrame(_ frame: CGRect) -> CAGradientLayer {
         let gradient: CAGradientLayer = CAGradientLayer()
         
-        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).CGColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).CGColor]
+        gradient.colors = [UIColor(red: 40/255.0, green: 235/255.0, blue: 249/255.0, alpha: 1.0).cgColor, UIColor(red: 194/255.0, green: 127/255.0, blue: 255/255.0, alpha: 1.0).cgColor]
         
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
@@ -47,47 +48,47 @@ class SetNewPasswordViewController: UIViewController {
         return gradient
     }
     
-    func configureSignUpButton(button:UIButton,showSpinner:Bool)  {
+    func configureSignUpButton(_ button:UIButton,showSpinner:Bool)  {
         if showSpinner {
             
-            button.backgroundColor = UIColor.clearColor()
-            button.setTitle("Logging in", forState: .Normal)
-            button.contentHorizontalAlignment = .Left
+            button.backgroundColor = UIColor.clear
+            button.setTitle("Logging in", for: UIControlState())
+            button.contentHorizontalAlignment = .left
             activityIndicatorView?.removeFromSuperview()
-            activityIndicatorView = NVActivityIndicatorView(frame: CGRectMake(button.frame.size.width-30, (button.frame.size.height-30)/2, 30, 30), type: .BallClipRotate, color: UIColor.whiteColor(), padding: 0)
+            activityIndicatorView = NVActivityIndicatorView(frame: CGRect(x: button.frame.size.width-30, y: (button.frame.size.height-30)/2, width: 30, height: 30), type: .ballClipRotate, color: UIColor.white, padding: 0)
             button.addSubview(activityIndicatorView!)
             activityIndicatorView!.startAnimating()
-            button.userInteractionEnabled = false
+            button.isUserInteractionEnabled = false
             
             
             
         }else{
             button.backgroundColor =  UIColor(red: 44/255.0, green: 89/255.0, blue: 134/255.0, alpha: 1.0)
-            button.setTitle("Set New Password", forState: .Normal)
+            button.setTitle("Set New Password", for: UIControlState())
             activityIndicatorView?.stopAnimating()
-            button.contentHorizontalAlignment = .Center
+            button.contentHorizontalAlignment = .center
             activityIndicatorView?.removeFromSuperview()
-            button.userInteractionEnabled = true
+            button.isUserInteractionEnabled = true
             
         }
         
     }
 
     
-    @IBAction func newPasswordTapped(sender: UIButton) {
+    @IBAction func newPasswordTapped(_ sender: UIButton) {
         
         
         configureSignUpButton(sender, showSpinner: true)
-        let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserSecretCode) as! String)!
-        let email: String = Helper.UserDefaults.kStandardUserDefaults.objectForKey(Helper.UserDefaults.kUserEmail) as! String
+        let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserSecretCode) as! String)!
+        let email: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserEmail) as! String
         
-        provider.request(.ResetPasswordForUser(password: newPassword.text!, code:code, email: email)) { result in
+        provider.request(.resetPasswordForUser(password: newPassword.text!, code:code, email: email)) { result in
             switch result {
-            case let .Success(moyaResponse):
+            case let .success(moyaResponse):
                 
                 
                 do {
-                    try moyaResponse.filterSuccessfulStatusCodes()
+                   try _ = moyaResponse.filterSuccessfulStatusCodes()
                     guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
                         let email = json["email"] as? String,
                         let id = json["id"] as? Int,
@@ -98,25 +99,25 @@ class SetNewPasswordViewController: UIViewController {
                         else {
                             
                             self.configureSignUpButton(sender,showSpinner: false)
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(email, forKey: Helper.UserDefaults.kUserEmail)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(first_name, forKey: Helper.UserDefaults.kUserFirstName)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(last_name, forKey: Helper.UserDefaults.kUserLastName)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(id, forKey: Helper.UserDefaults.kUserId)
-                    Helper.UserDefaults.kStandardUserDefaults.setObject(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.set(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.set(first_name, forKey: Helper.UserDefaults.kUserFirstName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
+                    Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
                     if var imgURL = json["avatar"] as? String{
-                        imgURL = imgURL.stringByReplacingOccurrencesOfString("\\", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                        Helper.UserDefaults.kStandardUserDefaults.setObject(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
+                        imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
+                        Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
                     }
 
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     
                     self.configureSignUpButton(sender,showSpinner: false)
-                    self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                    self.performSegue(withIdentifier: Helper.SegueKey.kToDashboardViewController, sender: self)
                     
                 }
                 catch {
@@ -126,10 +127,10 @@ class SetNewPasswordViewController: UIViewController {
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             self.configureSignUpButton(sender,showSpinner: false)
-                            SVProgressHUD.showErrorWithStatus(Helper.ErrorKey.kSomethingWentWrong)
+                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
-                    SVProgressHUD.showErrorWithStatus("\(message)")
+                    SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender,showSpinner: false)
                     
                     
@@ -137,12 +138,12 @@ class SetNewPasswordViewController: UIViewController {
                 }
                 
                 
-            case let .Failure(error):
+            case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
                 print(error.description)
-                SVProgressHUD.showErrorWithStatus("\(error.description)")
+                SVProgressHUD.showError(withStatus: "\(error.description)")
                 self.configureSignUpButton(sender,showSpinner: false)
                 
             }
