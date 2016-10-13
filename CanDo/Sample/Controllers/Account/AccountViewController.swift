@@ -50,14 +50,10 @@ class AccountViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         
-       
         runTeamInfoRequest()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataNotification(_:)), name:NSNotification.Name(rawValue: "reloadDataNotification"), object: nil)
        
-        
-        
-        
     }
     
     func reloadDataNotification(_ notification: Foundation.Notification){
