@@ -128,6 +128,9 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }
         
     }
+    func verticalOffset(forEmptyDataSet scrollView: UIScrollView) -> CGFloat {
+        return 100
+    }
 
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let str = "No notifications"
@@ -275,21 +278,26 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             SVProgressHUD.showError(withStatus: "Post or image field is empty")
             return
         }
-        var dataString:String?
-        if selectedImage != nil {
-            let data = resizeImage(selectedImage!)
+        
+         var dataString:String?
+         if selectedImage != nil {
+            SVProgressHUD.show()
+        DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
+            let data = self.resizeImage(self.selectedImage!)
             dataString = data!.toBase64()
+            
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+                self.runPostNotificationRequest(self.postTextView.text, imageData:dataString)
+            }
+        }
+         }else{
+            runPostNotificationRequest(postTextView.text, imageData:dataString)
         }
         
-        //1371322 +
-        //1498758 +
-        
-        //1635920 -
-        //1917631 -
-        
-        runPostNotificationRequest(postTextView.text, imageData:dataString)
-        
     }
+    
     func resizeImage(_ image:UIImage) -> Data? {
         let resizedImage = image.resizeWithPercentage(0.9)
         let data:Data = UIImageJPEGRepresentation(resizedImage!, 1)!
@@ -393,6 +401,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         UIView.animate(withDuration: 0.2, animations: { () -> Void in
             tblHeaderView?.frame = newRect!
             self.notificationTableView.tableHeaderView = tblHeaderView
+            
         })
     }
     
