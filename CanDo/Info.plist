@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Library discription</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera discription</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -42,7 +38,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.15</string>
+	<string>1.17</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -75,6 +71,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera discription</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Library discription</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>exljbris - MuseoSansRounded-100.otf</string>

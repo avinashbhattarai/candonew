@@ -147,7 +147,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 					guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
 						let item = json[0] as? [String: AnyObject],
 						let message = item["message"] as? String else {
-							SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+							//SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
 							self.toDoTableView.es_stopPullToRefresh(completion: true)
 							return;
 					}

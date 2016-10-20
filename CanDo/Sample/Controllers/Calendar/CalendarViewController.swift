@@ -152,7 +152,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             self.todoTableView.es_stopPullToRefresh(completion: true)
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+                           // SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
                     self.todoTableView.es_stopPullToRefresh(completion: true)
