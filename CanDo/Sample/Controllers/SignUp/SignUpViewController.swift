@@ -202,6 +202,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
                     
                     self.configureSignUpButton(sender,showSpinner: false)
+                        self.cancelButtonTapped(UIButton())
                     self.performSegue(withIdentifier: Helper.SegueKey.kToCodeViewController, sender: self)
                         SVProgressHUD.dismiss()
                     }else{
