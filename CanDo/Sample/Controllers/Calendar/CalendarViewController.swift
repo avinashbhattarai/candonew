@@ -381,6 +381,18 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         let eventStore = EKEventStore()
         let startDate = newDate
         let endDate = newDate
+
+        
+        eventStore.requestAccess(to: EKEntityType.event, completion: {
+            granted, error in
+            if granted{
+               self.createEvent(eventStore, title: todo.name, startDate: startDate ?? Date(), endDate: endDate ?? Date())
+            }else{
+                SVProgressHUD.showError(withStatus: "The app is not permitted to access reminders, make sure to grant permission in the settings and try again")
+            }
+        })
+
+        /*
         
         if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
             eventStore.requestAccess(to: .event, completion: {
@@ -390,6 +402,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         } else {
             SVProgressHUD.showError(withStatus: "The app is not permitted to access calendar, make sure to grant permission in the settings and try again")
         }
+ */
 
     }
     
@@ -404,6 +417,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         event.calendar = eventStore.defaultCalendarForNewEvents
         
         do {
+            print(event)
             try eventStore.save(event, span: .thisEvent)
            SVProgressHUD.showSuccess(withStatus: "Done.\nPlease check native app.")
         } catch {

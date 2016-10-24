@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCalendarsUsageDescription</key>
-	<string>To create a event, please allow us to access your calendar</string>
-	<key>NSRemindersUsageDescription</key>
-	<string>To create a reminder, please allow us to access your reminders</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -42,7 +38,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.18</string>
+	<string>1.21</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -75,10 +71,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>To create a event, please allow us to access your calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To use a picture, please allow us to access your camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To use a picture, please allow us to access your gallery</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>To create a reminder, please allow us to access your reminders</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>exljbris - MuseoSansRounded-100.otf</string>
