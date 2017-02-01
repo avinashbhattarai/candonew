@@ -91,6 +91,9 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
                         }
                     }
                     
+                    let firstCategory = self.sections.first
+                    firstCategory?.collapsed = false
+                    
                     self.suggestionsTableView.reloadData()
                     SVProgressHUD.dismiss()
                     self.suggestionsTableView.es_stopPullToRefresh(completion: true)

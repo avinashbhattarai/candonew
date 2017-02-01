@@ -13,12 +13,12 @@ import Moya
 
 public enum NetworkingService {
     
-    case createUser(firstName: String, lastName: String, email: String, facebookId: String?)
-    case verificateUser(code: Int, email: String)
-    case setPasswordForUser(password: String, code: Int, email: String)
-    case resetPasswordForUser(password: String, code: Int, email: String)
-    case loginUser(password: String?, email: String?, facebookId: String?)
-    case forgotPassword(email: String)
+    case createUser(firstName: String, lastName: String, email: String?, facebookId: String?, phone: String?)
+    case verificateUser(code: Int, key: String)
+    case setPasswordForUser(password: String, code: Int, key: String)
+    case resetPasswordForUser(password: String, code: Int, key: String)
+    case loginUser(password: String?, email: String?, facebookId: String?, phone: String?)
+    case forgotPassword(email: String? , phone: String?)
     
     case teamInfo()
     case createTeam()
@@ -81,7 +81,7 @@ extension NetworkingService: TargetType {
      public var path: String {
         switch self {
         
-        case .createUser(_, _, _, _):
+        case .createUser(_, _, _, _, _):
             return "/user/register"
         case .verificateUser(_, _):
             return "/user/verification"
@@ -89,11 +89,11 @@ extension NetworkingService: TargetType {
             return "/user/set-password"
         case .resetPasswordForUser(_, _,_):
             return "/user/reset"
-        case .loginUser(_, _, _):
+        case .loginUser(_, _, _, _):
             return "/user/login"
         case .updateUser(_,_,_):
             return "/user"
-        case .forgotPassword(_):
+        case .forgotPassword(_, _):
             return "/user/forgot"
         
         case .teamInfo():
@@ -195,32 +195,37 @@ extension NetworkingService: TargetType {
     }
     public var parameters: [String: Any]? {
         switch self {
-        case .createUser(let firstName, let lastName, let email, let facebookId):
+        case .createUser(let firstName, let lastName, let email, let facebookId, let phone):
             var params: [String : AnyObject] = [:]
             params["first_name"] = firstName as AnyObject?
             params["last_name"] = lastName as AnyObject?
             params["email"] = email as AnyObject?
             params["facebook_id"] = facebookId as AnyObject?
+            params["phone"] = phone as AnyObject?
             return params
             
-        case .verificateUser(let code, let email):
-            return ["code": code as AnyObject, "email": email as AnyObject]
+        case .verificateUser(let code, let key):
+            return ["code": code as AnyObject, "key": key as AnyObject]
             
-        case .setPasswordForUser(let password, let code, let email):
-            return ["password": password as AnyObject, "code": code as AnyObject, "email": email as AnyObject]
+        case .setPasswordForUser(let password, let code, let key):
+            return ["password": password as AnyObject, "code": code as AnyObject, "key": key as AnyObject]
             
-        case .resetPasswordForUser(let password, let code, let email):
-            return ["password": password as AnyObject, "code": code as AnyObject, "email": email as AnyObject]
+        case .resetPasswordForUser(let password, let code, let key):
+            return ["password": password as AnyObject, "code": code as AnyObject, "key": key as AnyObject]
             
-        case .loginUser(let password, let email, let facebookId):
+        case .loginUser(let password, let email, let facebookId, let phone):
             var params: [String : AnyObject] = [:]
             params["email"] = email as AnyObject?
             params["password"] = password as AnyObject?
             params["facebook_id"] = facebookId as AnyObject?
+            params["phone"] = phone as AnyObject?
             return params
             
-        case .forgotPassword(let email):
-            return ["email": email as AnyObject]
+        case .forgotPassword(let email, let phone):
+            var params: [String : AnyObject] = [:]
+            params["email"] = email as AnyObject?
+            params["phone"] = phone as AnyObject?
+            return params
             
         case .teamInfo():
             return nil
@@ -291,22 +296,22 @@ extension NetworkingService: TargetType {
     
     public var sampleData: Data {
         switch self {
-        case .createUser(let firstName, let lastName, let email, let facebookId):
-            return "{\"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
+        case .createUser(let firstName, let lastName, let email, let facebookId, let phone):
+            return "{\"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\", \"phone\": \"\(phone)\"}".UTF8EncodedData
             
-        case .verificateUser(let code, let email):
-            return "{\"code\": \"\(code)\", \"email\": \"\(email)\"}".UTF8EncodedData
+        case .verificateUser(let code, let key):
+            return "{\"code\": \"\(code)\", \"key\": \"\(key)\"}".UTF8EncodedData
             
-        case .setPasswordForUser(let code, let email, let password ):
-            return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
+        case .setPasswordForUser(let code, let key, let password ):
+            return "{\"code\": \"\(code)\", \"key\": \"\(key)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
-        case .resetPasswordForUser(let code, let email, let password ):
-            return "{\"code\": \"\(code)\", \"email\": \"\(email)\", \"password\":\"\(password)\"}".UTF8EncodedData
+        case .resetPasswordForUser(let code, let key, let password ):
+            return "{\"code\": \"\(code)\", \"key\": \"\(key)\", \"password\":\"\(password)\"}".UTF8EncodedData
             
-        case .loginUser(let password, let email, let facebookId):
-            return "{\"password\": \"\(password)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\"}".UTF8EncodedData
-        case .forgotPassword(let email):
-             return "{\"email\": \"\(email)\"}".UTF8EncodedData
+        case .loginUser(let password, let email, let facebookId, let phone):
+            return "{\"password\": \"\(password)\", \"email\": \"\(email)\", \"facebook_id\": \"\(facebookId)\", \"phone\": \"\(phone)\"}".UTF8EncodedData
+        case .forgotPassword(let email, let phone):
+             return "{\"email\": \"\(email)\", \"phone\": \"\(phone)\"}".UTF8EncodedData
             
         case .teamInfo():
             return "Half measures are as bad as nothing at all.".UTF8EncodedData

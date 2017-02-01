@@ -34,6 +34,10 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
 
         // Do any additional setup after loading the view.
         //test
+        
+        
+        
+        
         imagePicker.delegate = self
         postTextView.layer.cornerRadius = 5
         postTextView.layer.borderWidth = 1
@@ -128,6 +132,25 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        print("user owner id \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserGroupOwnerId))")
+        print("user id \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId))")
+        
+        let userId = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId) as? Int
+        let groupOwnerId = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserGroupOwnerId) as? Int
+        
+        if userId == groupOwnerId{
+            showHidePostNotificationPanel(show: true)
+        }else{
+            showHidePostNotificationPanel(show: false)
+        }
+        
+        
+        
+    }
+    
     func verticalOffset(forEmptyDataSet scrollView: UIScrollView) -> CGFloat {
         return 100
     }
@@ -170,6 +193,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         let notification : Notification = notifications[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NotificationTableViewCell
         
+       cell.selectionStyle = .none
        cell.nameLabel.text = notification.name
        cell.contentLabel.text = notification.text
        cell.avatarImageView.kf.setImage(with: URL(string:notification.avatar), placeholder: UIImage(named: Helper.PlaceholderImage.kAvatar), options: nil, progressBlock: nil, completionHandler: nil)
@@ -418,6 +442,28 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func showHidePostNotificationPanel(show:Bool){
+        
+        var height:CGFloat = 0
+        if show {
+            height = 90
+        }else{
+            height = 0
+        }
+        
+        var newRect = self.notificationTableView.tableHeaderView?.frame
+        newRect?.size.height = height
+        // Get the reference to the header view
+        let tblHeaderView = self.notificationTableView.tableHeaderView
+        // Animate the height change
+        UIView.animate(withDuration: 0.0, animations: { () -> Void in
+            tblHeaderView?.frame = newRect!
+            self.notificationTableView.tableHeaderView = tblHeaderView
+            
+        })
+
     }
     
    

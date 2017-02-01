@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import NVActivityIndicatorView
+import SwiftyJSON
 class SetPasswordViewController: UIViewController {
 
     @IBOutlet weak var passwordTextField: UITextField!
@@ -90,55 +91,43 @@ class SetPasswordViewController: UIViewController {
         
         configureSignUpButton(sender, showSpinner: true)
         let code :Int = Int(Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserSecretCode) as! String)!
-        let email: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserEmail) as! String
+        let key: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserKey) as! String
         
-        provider.request(.setPasswordForUser(password: passwordTextField.text!, code:code, email: email)) { result in
+        provider.request(.setPasswordForUser(password: passwordTextField.text!, code:code, key: key)) { result in
             switch result {
             case let .success(moyaResponse):
                 
                 
                 do {
                     try _ = moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
-                        let email = json["email"] as? String,
-                        let id = json["id"] as? Int,
-                        let last_name = json["last_name"] as? String,
-                        let first_name = json["first_name"] as? String,
-                        let token = json["token"] as? String
-                        
-                        else {
-                            
-                            self.configureSignUpButton(sender,showSpinner: false)
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            return;
-                    }
+                    
+                    let json = JSON(dota: moyaResponse.data)
+                    let email = json["email"].stringValue
+                    let id = json["id"].intValue
+                    let last_name = json["last_name"].stringValue
+                    let first_name = json["first_name"].stringValue
+                    let token = json["token"].stringValue
+                    let phone = json["phone"].stringValue
                     
                     Helper.UserDefaults.kStandardUserDefaults.set(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.set(phone, forKey: Helper.UserDefaults.kUserMobile)
                     Helper.UserDefaults.kStandardUserDefaults.set(first_name, forKey: Helper.UserDefaults.kUserFirstName)
                     Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
                     Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
                     Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
-                    if var imgURL = json["avatar"] as? String{
+                    if var imgURL = json["avatar"].string{
                         imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
                         Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
                     }
                     Helper.UserDefaults.kStandardUserDefaults.synchronize()
-                    
                     
                     self.configureSignUpButton(sender,showSpinner: false)
                     self.performSegue(withIdentifier: Helper.SegueKey.kToDashboardViewController, sender: self)
                     
                 }
                 catch {
-                    
-                    
-                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        let item = json[0] as? [String: AnyObject],
-                        let message = item["message"] as? String else {
-                            self.configureSignUpButton(sender,showSpinner: false)
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            return;
-                    }
+                    let json = JSON(dota: moyaResponse.data)
+                    let message = json[0]["message"].stringValue
                     SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender,showSpinner: false)
                 }

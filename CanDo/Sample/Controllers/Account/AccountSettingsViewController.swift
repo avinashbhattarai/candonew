@@ -194,6 +194,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
     
     func cleanUserDefaults() {
         
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserMobile)
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserEmail)
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserFirstName)
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserId)
@@ -202,6 +203,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserToken)
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserAvatar)
         Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserGroupOwner)
+        Helper.UserDefaults.kStandardUserDefaults.removeObject(forKey: Helper.UserDefaults.kUserGroupOwnerId)
         Helper.UserDefaults.kStandardUserDefaults.synchronize()
         
     }

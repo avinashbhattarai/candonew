@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         print("top vc 2 \(topViewController)")
                         
                         
-                        topViewController.runVerificateUserRequest(userDict!["email"]!, code: userDict!["code"]!)
+                        topViewController.runVerificateUserRequest(userDict!["key"]!, code: userDict!["code"]!)
                         
                     }else{
                         
@@ -71,11 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         navigationController.pushViewController(vc, animated: false){
                             print("Code View Controller was shown")
-                            vc.runVerificateUserRequest(userDict!["email"]!, code: userDict!["code"]!)
+                            vc.runVerificateUserRequest(userDict!["key"]!, code: userDict!["code"]!)
                            
                         }
-                        
-                        
                     }
                 }
 
@@ -89,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     navigationController.pushViewController(vc, animated: true){
                         print("Set New Password Controller was shown")
                         Helper.UserDefaults.kStandardUserDefaults.set(userDict!["code"]!, forKey: Helper.UserDefaults.kUserSecretCode)
-                        Helper.UserDefaults.kStandardUserDefaults.set(userDict!["email"]!, forKey: Helper.UserDefaults.kUserEmail)
+                        Helper.UserDefaults.kStandardUserDefaults.set(userDict!["key"]!, forKey: Helper.UserDefaults.kUserKey)
                         Helper.UserDefaults.kStandardUserDefaults.synchronize()
                         
                     }

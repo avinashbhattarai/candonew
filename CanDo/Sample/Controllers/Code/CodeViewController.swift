@@ -9,9 +9,12 @@
 import UIKit
 import IQKeyboardManagerSwift
 import SVProgressHUD
+import SwiftyJSON
 class CodeViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var codeTextField: UITextField!
+    @IBOutlet weak var infoLabel: UILabel!
+    var isMobileSignUpType: Bool = false
     
        override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,10 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
         codeTextField.delegate = self
       
         codeTextField.addDoneOnKeyboardWithTarget(self, action: #selector(doneButtonTapped))
+        
+         if isMobileSignUpType{
+            infoLabel.text = "You’ll receive a text message with a verification link"
+            }
         
         
      
@@ -48,8 +55,9 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
              print("textfield \(self.codeTextField.text)")
             codeTextField.resignFirstResponder()
             let code :String = codeTextField.text!
-            let email: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserEmail) as! String
-            runVerificateUserRequest(email, code: code)
+            let key: String = Helper.UserDefaults.kStandardUserDefaults.object(forKey: Helper.UserDefaults.kUserKey) as! String
+            runVerificateUserRequest(key, code: code)
+            
         }else{
             SVProgressHUD.showError(withStatus: "Entered code is not valid")
             
@@ -57,27 +65,25 @@ class CodeViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func runVerificateUserRequest(_ email: String, code :String) {
+    func runVerificateUserRequest(_ key: String, code :String) {
         
         
         SVProgressHUD.show()
       
-        let code :Int = Int(code)!
-        let email: String = email
-       
-        provider.request(.verificateUser(code: code, email: email)) { result in
+        let codeInt :Int = Int(code)!
+        
+        provider.request(.verificateUser(code: codeInt, key: key)) { result in
             switch result {
             case let .success(moyaResponse):
                 
                 
                 do {
                     try _ = moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
-                        let secretCode = json["code"] as? String else {
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            return;
-                    }
-                     SVProgressHUD.dismiss()
+                    
+                    let json = JSON(data: moyaResponse.data)
+                    let secretCode = json["code"].stringValue
+                    
+                    SVProgressHUD.dismiss()
                      Helper.UserDefaults.kStandardUserDefaults.set(secretCode, forKey: Helper.UserDefaults.kUserSecretCode)
                      Helper.UserDefaults.kStandardUserDefaults.synchronize()
                      self.performSegue(withIdentifier: Helper.SegueKey.kToSetPasswordViewController, sender: self)

@@ -71,10 +71,13 @@ struct Helper {
         static let kUserId = "user_id"
         static let kUserLastName = "user_last_name"
         static let kUserEmail = "user_email"
+        static let kUserMobile = "user_mobile"
+        static let kUserKey = "user_key"
         static let kUserSecretCode = "user_secret_code"
         static let kUserToken = "user_token"
         static let kUserAvatar = "user_avatar"
         static let kUserGroupOwner = "user_group_owner"
+        static let kUserGroupOwnerId = "user_group_owner_id"
         }
     
 

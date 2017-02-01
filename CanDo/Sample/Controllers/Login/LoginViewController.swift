@@ -10,8 +10,19 @@ import UIKit
 import SVProgressHUD
 import NVActivityIndicatorView
 import IQKeyboardManagerSwift
+import SwiftyJSON
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
+    enum LoginType {
+        case email
+        case mobile
+    }
+    
+    
+    
+    @IBOutlet weak var successLabel: UILabel!
+    @IBOutlet weak var orLabel: UILabel!
+    @IBOutlet weak var mobileTextField: UITextField!
     @IBOutlet weak var successContainer: UIView!
     @IBOutlet weak var resetPasswordButton: UIButton!
     @IBOutlet weak var resetPasswordContainer: UIView!
@@ -25,10 +36,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var isKeyboardOpened = false
     var activityIndicatorView: NVActivityIndicatorView?
     var facebookId: String?
+    var loginType: LoginType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        if UIScreen.main.isPhone5 {
+            ansewerLabel.isHidden = true
+        }
         
         signUpButton.setUnderlineTitle("Not yet on Can Do?")
         cancelButton.setUnderlineTitle("Cancel")
@@ -40,6 +56,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         emailTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
         passwordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        mobileTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
         resetPasswordTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -55,6 +72,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.text = ""
         passwordTextField.text = ""
         resetPasswordTextField.text = ""
+        mobileTextField.text = ""
         
     }
     
@@ -81,6 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         
         emailTextField.textAlignment = .left
+        mobileTextField.textAlignment = .left
         
         return true
         
@@ -105,23 +124,38 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillShow(_ notification: Foundation.Notification) {
         
+        
+        print("field \(mobileTextField.isFirstResponder)")
+        
         if !isKeyboardOpened {
             isKeyboardOpened = true
             print("show")
             passwordTextField.alpha = 1.0
             cancelButton.isHidden = false
             signUpButton.isHidden = true
-            let y = emailTextField.frame.origin.y-28
+            var y : CGFloat = 0
+            if mobileTextField.isFirstResponder {
+                y = mobileTextField.frame.origin.y - 28
+                orLabel.isHidden = true
+                loginType = .mobile
+            }else{
+                y = emailTextField.frame.origin.y + 77
+                mobileTextField.isHidden = true
+                orLabel.isHidden = true
+                loginType = .email
+            }
+            
             UIView.animate(withDuration: 0.2, animations: {
                 
                 for view in self.view.subviews {
-                    
-                    
                     view.translatesAutoresizingMaskIntoConstraints = true
                     view.center = CGPoint(x: view.center.x, y: view.center.y-y)
-                    
-                    
                 }
+                
+                if self.emailTextField.isFirstResponder {
+                    self.emailTextField.center = CGPoint(x: self.emailTextField.center.x, y: self.emailTextField.center.y+107)
+                }
+                
                 self.cancelButton.frame = CGRect(x: self.cancelButton.frame.origin.x, y: self.view.frame.size.height - self.cancelButton.frame.size.height - 10, width: self.cancelButton.frame.size.width, height: self.cancelButton.frame.size.height)
                 
             })
@@ -149,7 +183,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
 
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -238,7 +272,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func resetPasswordButtonTapped(_ sender: AnyObject) {
-        if !isValidEmail(resetPasswordTextField.text!) {
+        
+        if !isValidEmail(resetPasswordTextField.text!) && loginType == .email {
             SVProgressHUD.showError(withStatus: "Entered email is not valid")
             return
         }
@@ -250,9 +285,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     func runForgotPasswordRequest(_ sender:UIButton) {
         
+        
+        var email: String?
+        var phone: String?
+        
+        if loginType == .mobile {
+            phone = resetPasswordTextField.text
+        }else{
+            email = resetPasswordTextField.text
+        }
+
+        
          configureSignUpButton(sender,showSpinner: true ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
         
-        provider.request(.forgotPassword(email: resetPasswordTextField.text!)) { result in
+        provider.request(.forgotPassword(email: email, phone: phone)) { result in
             switch result {
             case let .success(moyaResponse):
                 
@@ -260,8 +306,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 do {
                     try _ = moyaResponse.filterSuccessfulStatusCodes()
                     
-                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject]else {
-                        // let secretCode = json["code"] as? String
+                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject] else{
+                        
                         self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
                         SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
@@ -269,24 +315,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     print(json)
                     self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
                     self.showSuccessView()
-                   // self.performSegueWithIdentifier(Helper.SegueKey.kToDashboardViewController, sender: self)
+                   
                     
                 }
                 catch {
                     
-                    
-                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        let item = json[0] as? [String: AnyObject],
-                        let message = item["message"] as? String else {
-                            self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            return;
-                    }
+                    let json = JSON(dota: moyaResponse.data)
+                    let message = json[0]["message"].stringValue
                     SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender,showSpinner: false ,spinnerTitle: "Reseting",nonSpinnerTitle: "Reset Password")
-                    
-                    
-                    
                 }
                 
                 
@@ -307,11 +344,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func showSuccessView(){
         resetPasswordContainer.isHidden = true
         successContainer.isHidden = false
+        if loginType == .mobile {
+            successLabel.text = "You’ll receive a password\nreset text message "
+        }else{
+            successLabel.text = "Check your mailbox, you will\nreceive a password reset email"
+        }
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         
-         if !isValidEmail(emailTextField.text!) {
+         if !isValidEmail(emailTextField.text!) && loginType == .email{
          SVProgressHUD.showError(withStatus: "Entered email is not valid")
          return
          }
@@ -324,48 +366,55 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
        facebookId = nil
         
        runLoginUserRequest(sender)
-        
-        
     }
     
     func runLoginUserRequest(_ sender:UIButton) {
         
+        var password: String?
+        var email: String?
+        var phone: String?
         
         
-         if((facebookId) == nil){
+         if facebookId == nil{
             configureSignUpButton(sender ,showSpinner: true ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
+            
+            if loginType == .mobile {
+                phone = mobileTextField.text
+            }else{
+                email = emailTextField.text
+            }
+            password = passwordTextField.text
+            
          }else{
             SVProgressHUD.show()
         }
         
-        provider.request(.loginUser(password: (passwordTextField.text!.isEmpty ? nil : passwordTextField.text!), email: (emailTextField.text!.isEmpty ? nil : emailTextField.text!), facebookId: facebookId)) { result in
+        provider.request(.loginUser(password: password, email: email, facebookId: facebookId, phone: phone)) { result in
             switch result {
             case let .success(moyaResponse):
                 
                 
                 do {
                     try _ = moyaResponse.filterSuccessfulStatusCodes()
-                    guard let json = moyaResponse.data.nsdataToJSON() as? [String: AnyObject],
-                        let email = json["email"] as? String,
-                        let id = json["id"] as? Int,
-                        let last_name = json["last_name"] as? String,
-                        let first_name = json["first_name"] as? String,
-                        let token = json["token"] as? String
-                        
-                    else {
-                        
-                        self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
-                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                        return;
-                    }
+                    
+                    
+                    let json = JSON(dota: moyaResponse.data)
+                    let email = json["email"].stringValue
+                    let uid = json["id"].intValue
+                    let last_name = json["last_name"].stringValue
+                    let first_name = json["first_name"].stringValue
+                    let token = json["token"].stringValue
+                    let phone = json["phone"].stringValue
+
                     
                     Helper.UserDefaults.kStandardUserDefaults.set(email, forKey: Helper.UserDefaults.kUserEmail)
+                    Helper.UserDefaults.kStandardUserDefaults.set(phone, forKey: Helper.UserDefaults.kUserMobile)
                     Helper.UserDefaults.kStandardUserDefaults.set(first_name, forKey: Helper.UserDefaults.kUserFirstName)
                     Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
-                    Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
+                    Helper.UserDefaults.kStandardUserDefaults.set(uid, forKey: Helper.UserDefaults.kUserId)
                     Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
                     
-                    if var imgURL = json["avatar"] as? String{
+                    if var imgURL = json["avatar"].string{
                         imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
                         Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
                     }
@@ -379,19 +428,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 catch {
                     
-                    
-                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        let item = json[0] as? [String: AnyObject],
-                        let message = item["message"] as? String else {
-                            SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
-                            return;
-                    }
+                    let json = JSON(dota: moyaResponse.data)
+                    let message = json[0]["message"].stringValue
                     SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender ,showSpinner: false ,spinnerTitle: "Logging in",nonSpinnerTitle: "Log In")
-                    
-                    
-                    
                 }
                 
                 
@@ -411,6 +451,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func forgotPasswordTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
         resetPasswordContainer.isHidden = false
+        if loginType == .mobile{
+            print("mobile")
+            resetPasswordTextField.placeholder = "Enter Mobile Number"
+            resetPasswordTextField.keyboardType = .phonePad
+            
+        }else{
+            print("email")
+            resetPasswordTextField.placeholder = "Enter Email Address"
+            resetPasswordTextField.keyboardType = .emailAddress
+        }
         
     }
     @IBAction func signupButtontapped(_ sender: AnyObject) {
@@ -420,11 +470,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
         cleanTextFields()
+        resetPasswordContainer.isHidden = true
+        orLabel.isHidden = false
+        successContainer.isHidden = true
+        mobileTextField.isHidden = false
         cancelButton.isHidden = true
         isKeyboardOpened = false
         signUpButton.isHidden = false
         passwordTextField.alpha=0
         emailTextField.textAlignment = .center
+        mobileTextField.textAlignment = .center
         for view in self.view.subviews {
             view.translatesAutoresizingMaskIntoConstraints = false
         }

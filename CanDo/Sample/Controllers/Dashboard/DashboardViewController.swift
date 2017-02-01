@@ -25,7 +25,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         
       
-        fadeViewInThenOut(helloLabel, delay: 1.0)
+        fadeViewInThenOut(helloLabel, delay: 3.0)
         
         helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
         
@@ -60,7 +60,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func fadeViewInThenOut(_ view : UIView, delay: TimeInterval) {
         
-        let animationDuration = 1.0
+        let animationDuration = 2.0
         
         // Fade out the view after a delay
         
@@ -102,7 +102,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = titles[(indexPath as NSIndexPath).row]
               cell.backgroundColor = UIColor.clear;
             cell.imageView?.image = UIImage(named: imgNames[(indexPath as NSIndexPath).row])
-      
+            cell.selectionStyle = .none
             var imageView : UIImageView
             imageView  = UIImageView(frame:CGRect(x: 0, y: 0, width: 14, height: 20))
             imageView.image = UIImage(named:"iconChevronRightWhite")

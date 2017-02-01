@@ -11,10 +11,18 @@ import SVProgressHUD
 import NVActivityIndicatorView
 import IQKeyboardManagerSwift
 import Moya
+import SwiftyJSON
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
+    enum SignupType {
+        case email
+        case mobile
+    }
+
    
+    @IBOutlet weak var orLabel: UILabel!
+    @IBOutlet weak var mobileTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -24,11 +32,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var isKeyboardOpened = false
     var facebookData : NSDictionary?
     var activityIndicatorView: NVActivityIndicatorView?
+    var signupType: SignupType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
+        if UIScreen.main.isPhone5 {
+            answerLabel.isHidden = true
+        }
+        
+        self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         hideKeyboardWhenTappedAround()
         
         if isUserLogined() {
@@ -42,6 +55,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
       emailTextfield.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
     firstNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
     lastNameTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+        mobileTextField.backgroundColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
     emailTextfield.delegate = self
     lastNameTextField.delegate = self
     firstNameTextField.delegate = self
@@ -60,6 +74,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         emailTextfield.text = ""
         firstNameTextField.text = ""
         lastNameTextField.text = ""
+        mobileTextField.text = ""
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -91,7 +106,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
    
         emailTextfield.textAlignment = .left
-        
+        mobileTextField.textAlignment = .left
         return true
         
     }
@@ -121,13 +136,27 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             firstNameTextField.alpha = 1.0
             cancelButton.isHidden = false
             loginButton.isHidden = true
-            let y = emailTextfield.frame.origin.y-28
+            orLabel.isHidden = true
+            var y : CGFloat = 0
+            if mobileTextField.isFirstResponder {
+                y = mobileTextField.frame.origin.y - 28 
+                signupType = .mobile
+            }else{
+                y = emailTextfield.frame.origin.y + 77
+                mobileTextField.isHidden = true
+                signupType = .email
+            }
             UIView.animate(withDuration: 0.2, animations: {
                 
                 for view in self.view.subviews {
                     view.translatesAutoresizingMaskIntoConstraints = true
                     view.center = CGPoint(x: view.center.x, y: view.center.y-y)
                      }
+                
+                if self.emailTextfield.isFirstResponder {
+                    self.emailTextfield.center = CGPoint(x: self.emailTextfield.center.x, y: self.emailTextfield.center.y+107)
+                }
+
                 self.cancelButton.frame = CGRect(x: self.cancelButton.frame.origin.x, y: self.view.frame.size.height - self.cancelButton.frame.size.height - 10, width: self.cancelButton.frame.size.width, height: self.cancelButton.frame.size.height)
                 
             })
@@ -144,7 +173,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
         
         
-        if !isValidEmail(emailTextfield.text!) {
+        if !isValidEmail(emailTextfield.text!) && signupType == .email {
             SVProgressHUD.showError(withStatus: "Entered email is not valid")
                  return
         }
@@ -164,18 +193,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
     }
     func runSignUpRequest(_ sender:UIButton) {
-        
+
         configureSignUpButton(sender,showSpinner: true)
         var firstName: String?
         var lastName: String?
         var email: String?
         var facebookId: String?
+        var phone: String?
         
         if((facebookData) == nil){
             firstName = firstNameTextField.text
             lastName = lastNameTextField.text
-            email = emailTextfield.text
-            facebookId = nil
+            email = signupType == .email ? emailTextfield.text : nil
+            phone = signupType == .mobile ? mobileTextField.text : nil
         }else{
             firstName = facebookData?.value(forKey: "first_name") as? String
             lastName = facebookData?.value(forKey: "last_name") as? String
@@ -186,7 +216,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
        
         
-        provider.request(.createUser(firstName: firstName!, lastName: lastName!, email: email!, facebookId:facebookId)) { result in
+        provider.request(.createUser(firstName: firstName!, lastName: lastName!, email: email, facebookId:facebookId, phone: phone)) { result in
             switch result {
             case let .success(moyaResponse):
                 
@@ -195,7 +225,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     try _ = moyaResponse.filterSuccessfulStatusCodes()
                     
                     if((facebookId) == nil){
-                    Helper.UserDefaults.kStandardUserDefaults.set(self.emailTextfield.text!, forKey: Helper.UserDefaults.kUserEmail)
+                        
+                    let json = JSON(data: moyaResponse.data)
+                    let key = json["key"].stringValue
+                    print("key \(key)")
+                    Helper.UserDefaults.kStandardUserDefaults.set(key, forKey: Helper.UserDefaults.kUserKey)
                     Helper.UserDefaults.kStandardUserDefaults.set(self.firstNameTextField.text!, forKey: Helper.UserDefaults.kUserFirstName)
                     Helper.UserDefaults.kStandardUserDefaults.set(self.lastNameTextField.text!, forKey: Helper.UserDefaults.kUserLastName)
                         
@@ -214,22 +248,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     
                 }
                 catch {
-                 
-                    
-                    guard let json = moyaResponse.data.nsdataToJSON() as? NSArray,
-                        let item = json[0] as? [String: AnyObject],
-                    let message = item["message"] as? String else {
-                        self.configureSignUpButton(sender,showSpinner: false)
-                        SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
-                            return;
-                    }
+                
+                    let json = JSON(dota: moyaResponse.data)
+                    let message = json[0]["message"].stringValue
                     SVProgressHUD.showError(withStatus: "\(message)")
                     self.configureSignUpButton(sender,showSpinner: false)
-                    
-
-                    
-                }
                 
+                }
                 
             case let .failure(error):
                 guard let error = error as? CustomStringConvertible else {
@@ -251,7 +276,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             facebookId = facebookData?.value(forKey: "id") as? String
         }
         
-        provider.request(.loginUser(password: nil, email: nil, facebookId: facebookId)) { result in
+        provider.request(.loginUser(password: nil, email: nil, facebookId: facebookId, phone: nil)) { result in
             switch result {
             case let .success(moyaResponse):
                 
@@ -266,8 +291,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         let token = json["token"] as? String
                         
                         else {
-                            
-                            
                             SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             return;
                     }
@@ -346,11 +369,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButtonTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
         cleanTextFields()
+        orLabel.isHidden = false
+        mobileTextField.isHidden = false
         cancelButton.isHidden = true
         isKeyboardOpened = false
         firstNameTextField.alpha=0
         loginButton.isHidden = false
         emailTextfield.textAlignment = .center
+        mobileTextField.textAlignment = .center
         for view in self.view.subviews {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -420,15 +446,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nextVc = segue.destination as? CodeViewController{
+            if signupType == .mobile {
+                nextVc.isMobileSignUpType = true
+            }
+        }
     }
-    */
+    
     func isValidEmail(_ testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"

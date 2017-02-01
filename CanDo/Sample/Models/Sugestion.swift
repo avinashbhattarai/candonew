@@ -14,13 +14,13 @@ class Suggestion {
     
     var name: String!
     var suggestionId: Int!
-    var collapsed: Bool! = false
+    var collapsed: Bool!
     var suggestionItems: [SuggestionsItem]?
     
     
     // MARK: Initialization
     
-    init(name: String?, suggestionId: Int, collapsed: Bool = false ) {
+    init(name: String?, suggestionId: Int, collapsed: Bool = true ) {
         self.name = name ?? ""
         self.suggestionId = suggestionId
         self.collapsed = collapsed

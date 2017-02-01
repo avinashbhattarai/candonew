@@ -32,10 +32,10 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 		self.tabBarController?.selectedIndex = selectedIndex!
 		// IQKeyboardManager.sharedManager().toolbarDoneBarButtonItemText = "Hide"
-		toDoTableView.delegate = self;
-		toDoTableView.dataSource = self;
-        toDoTableView.emptyDataSetSource = self;
-        toDoTableView.emptyDataSetDelegate = self;
+		toDoTableView.delegate = self
+		toDoTableView.dataSource = self
+        toDoTableView.emptyDataSetSource = self
+        toDoTableView.emptyDataSetDelegate = self
 		toDoTableView.separatorStyle = UITableViewCellSeparatorStyle.none
 
 		let nib = UINib(nibName: "TodoSectionFooter", bundle: nil)
@@ -60,16 +60,19 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(reDownloadDataTodo(_:)), name:NSNotification.Name(rawValue: "reDownloadDataTodo"), object: nil)
        
 	}
+    
     override func viewWillAppear(_ animated: Bool) {
-       
     }
+    
     func reDownloadDataTodo(_ n: Foundation.Notification) {
+        
         toDoTableView.es_startPullToRefresh()
     }
+    
     func reloadDataTodo(_ n: Foundation.Notification) {
         toDoTableView.reloadData()
         if ((n as NSNotification).userInfo != nil) {
-            if let todo = (n as NSNotification).userInfo!["todo"] as? Todo{
+            if let todo = (n as NSNotification).userInfo!["todo"] as? Todo {
                 
                 
                 let dateFormatter: DateFormatter = DateFormatter()
@@ -536,7 +539,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
 
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "No todos"
+        let str = "No to do"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }

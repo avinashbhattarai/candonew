@@ -93,6 +93,7 @@
 		EE1CCF3C1D898AAD00753667 /* TipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */; };
 		EE3C69121D8A84F10050A238 /* TipDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */; };
 		EE4D01D91D9BFAC000C90B0B /* unnamed.png in Resources */ = {isa = PBXBuildFile; fileRef = EE4D01D81D9BFAC000C90B0B /* unnamed.png */; };
+		EE51DDC61E3A45AA009C915E /* ScreenTypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE51DDC51E3A45A9009C915E /* ScreenTypeHelper.swift */; };
 		EE6ED9891DA26469003A2990 /* calendar-sync-512.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED9881DA26469003A2990 /* calendar-sync-512.png */; };
 		EE6ED98B1DA28F69003A2990 /* basic3-098_cloud_sync-512.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */; };
 		EE6ED98F1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */; };
@@ -193,6 +194,7 @@
 		EE1CCF3B1D898AAD00753667 /* TipTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipTableViewCell.swift; sourceTree = "<group>"; };
 		EE3C69111D8A84F10050A238 /* TipDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipDetailsViewController.swift; sourceTree = "<group>"; };
 		EE4D01D81D9BFAC000C90B0B /* unnamed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unnamed.png; sourceTree = "<group>"; };
+		EE51DDC51E3A45A9009C915E /* ScreenTypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenTypeHelper.swift; sourceTree = "<group>"; };
 		EE6ED9881DA26469003A2990 /* calendar-sync-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar-sync-512.png"; sourceTree = "<group>"; };
 		EE6ED98A1DA28F69003A2990 /* basic3-098_cloud_sync-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic3-098_cloud_sync-512.png"; sourceTree = "<group>"; };
 		EE6ED98E1DA291CD003A2990 /* nexus2cee_Sync-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nexus2cee_Sync-Thumb.png"; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				93142E2C1D76EB3C00CAC387 /* UINavigationController+Completion.swift */,
 				93142E501D7C561800CAC387 /* UIButton+UnderlineText.swift */,
 				93F163171D7ED84E00100D90 /* String+Base64.swift */,
+				EE51DDC51E3A45A9009C915E /* ScreenTypeHelper.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				98BFB8B246E3BDD154CD79DA /* [CP] Embed Pods Frameworks */,
 				4DC58AED3409CBAC1D6DF7D4 /* [CP] Copy Pods Resources */,
 				93142E291D76D43E00CAC387 /* ShellScript */,
+				DB132624D152EC1FC1A13A29 /* Tailor */,
 			);
 			buildRules = (
 			);
@@ -573,6 +577,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 2L2NN67GS6;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -683,8 +688,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		DB132624D152EC1FC1A13A29 /* Tailor */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Tailor;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exit 0\nif hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -759,6 +778,7 @@
 				938FDC3B1D6C8E8D00B2D070 /* Sugestion.swift in Sources */,
 				93F163121D7DA57E00100D90 /* InviteTableViewCell.swift in Sources */,
 				EEB18D521D897D9A007E655B /* Tip.swift in Sources */,
+				EE51DDC61E3A45AA009C915E /* ScreenTypeHelper.swift in Sources */,
 				93F97D8A1D883A790059FEE5 /* UIScrollView+EmptyDataSet.m in Sources */,
 				938FDC151D65B09200B2D070 /* BaseTabBarViewController.swift in Sources */,
 			);
@@ -887,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = CanDo/CanDo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2L2NN67GS6;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
@@ -897,8 +917,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca147548-e940-4a14-923e-41d6e4c440f8";
-				PROVISIONING_PROFILE_SPECIFIER = CanDoDevelopment;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -916,8 +936,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CanDo/CanDo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
-				DEVELOPMENT_TEAM = 2L2NN67GS6;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
@@ -927,8 +947,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1410ee3a-682e-488f-a92f-35b38f0529c5";
-				PROVISIONING_PROFILE_SPECIFIER = CanDoAdHoc1;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -25,24 +25,7 @@ class Todo {
     
     var footer: TodoTableSectionFooter?
     
-    //debug
-  //  var assignedPerson :Person!
-  //  var finished: Bool! = false
-    
-    
-    // MARK: Initialization
-    //debug
-    /*
-    init(name: String, list: List, finished: Bool = false) {
-        self.name = name
-        self.list = list
-        self.finished = finished
-    }
- */
-    
-    
-    
-  
+
     
     // MARK: Initialization
     
