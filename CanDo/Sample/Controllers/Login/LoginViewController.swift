@@ -64,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.alpha = 0;
         resetPasswordContainer.isHidden = true
         successContainer.isHidden = true
-        fadeViewInThenOut(ansewerLabel, delay: 1.0)
+        fadeViewIn(ansewerLabel, delay: 1.0)
 
         // Do any additional setup after loading the view.
     }
@@ -494,14 +494,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return emailTest.evaluate(with: testStr)
     }
     
-    func fadeViewInThenOut(_ view : UIView, delay: TimeInterval) {
+    func fadeViewIn(_ view : UIView, delay: TimeInterval) {
         
         let animationDuration = 1.0
         
         // Fade out the view after a delay
         
         UIView.animate(withDuration: animationDuration, delay: delay, options: UIViewAnimationOptions(), animations: { () -> Void in
-            view.alpha = 0
+            view.alpha = 1
             },
                                    completion: nil)
         

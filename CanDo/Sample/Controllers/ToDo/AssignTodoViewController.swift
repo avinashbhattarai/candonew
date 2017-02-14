@@ -100,7 +100,7 @@ class AssignTodoViewController: BaseSecondLineViewController,UITableViewDelegate
             cell.selectButton .setImage(UIImage(), for: UIControlState())
         }
         
- 
+        cell.selectionStyle = .none
         cell.selectButton.backgroundColor = UIColor.clear
         cell.selectButton.layer.cornerRadius = cell.selectButton.frame.size.height/2
         cell.selectButton.layer.borderWidth = 1

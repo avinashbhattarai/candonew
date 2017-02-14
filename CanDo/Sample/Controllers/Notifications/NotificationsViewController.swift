@@ -75,7 +75,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
             self.runNotificationsInfoRequest()
         }
         
-        notificationTableView.es_startPullToRefresh()
+        
 
         
     }
@@ -146,6 +146,8 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }else{
             showHidePostNotificationPanel(show: false)
         }
+        
+        notificationTableView.es_startPullToRefresh()
         
         
         

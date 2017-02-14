@@ -26,6 +26,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
         
         self.title = "Account"
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         userNameLabel.text = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserLastName) as? String) ?? "")
         
         avatarButton.layer.cornerRadius = 5
@@ -160,7 +161,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
     
     
     @IBAction func avatarButtonTapped(_ sender: AnyObject) {
-        imagePicker.allowsEditing = false
+       
         
         let optionMenu = UIAlertController(title: nil, message: "Set a Photo", preferredStyle: .actionSheet)
         
@@ -211,7 +212,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
     // MARK: - ImagePickerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             let data = resizeImage(pickedImage)
             let  dataString = data!.toBase64()
             
@@ -255,6 +256,7 @@ class AccountSettingsViewController: BaseSecondLineViewController, UIImagePicker
                     }
                     
                     SVProgressHUD.dismiss()
+                    
                     self.avatarButton .setImage(image, for: .normal)
                     if var imgURL = json["avatar"] as? String{
                          imgURL = imgURL.replacingOccurrences(of: "\\", with: "")

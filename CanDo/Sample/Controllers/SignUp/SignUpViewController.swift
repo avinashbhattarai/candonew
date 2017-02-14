@@ -83,8 +83,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        answerLabel.alpha = 1.0
-         fadeViewInThenOut(answerLabel, delay: 1.0)
+        answerLabel.alpha = 0.0
+         fadeViewIn(answerLabel, delay: 1.0)
         self.navigationController?.isNavigationBarHidden = true
         IQKeyboardManager.sharedManager().enable = false
         IQKeyboardManager.sharedManager().enableAutoToolbar = false
@@ -466,14 +466,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return emailTest.evaluate(with: testStr)
     }
     
-    func fadeViewInThenOut(_ view : UIView, delay: TimeInterval) {
+    func fadeViewIn(_ view : UIView, delay: TimeInterval) {
         
         let animationDuration = 1.0
         
       // Fade out the view after a delay
             
         UIView.animate(withDuration: animationDuration, delay: delay, options: UIViewAnimationOptions(), animations: { () -> Void in
-                view.alpha = 0
+                view.alpha = 1
                 },
                                        completion: nil)
         

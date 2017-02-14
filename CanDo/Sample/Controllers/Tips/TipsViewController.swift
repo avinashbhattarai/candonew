@@ -174,7 +174,7 @@ extension TipsViewController: UITableViewDataSource {
 
 		let tip: Tip = tipsArray[(indexPath as NSIndexPath).row]
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TipTableViewCell
-
+        cell.selectionStyle = .none
 		cell.titleLabel.text = tip.title
 		if tip.cover.characters.count > 0 && tip.image == nil {
 			loadImage(indexPath, tip: tip)

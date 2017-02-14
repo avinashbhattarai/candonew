@@ -56,9 +56,13 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             /// Stop refresh when your job finished, it will reset refresh footer if completion is true
         }
 
-         todoTableView.es_startPullToRefresh()
+         
       NotificationCenter.default.addObserver(self, selector: #selector(reloadDataCalendar(_:)), name:NSNotification.Name(rawValue: "reloadDataCalendar"), object: nil)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        todoTableView.es_startPullToRefresh()
     }
     
     func reloadDataCalendar(_ n: Foundation.Notification) {
@@ -239,7 +243,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         
         let todo: Todo = todos[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CalendarTodoTableViewCell
-        
+        cell.selectionStyle = .none
         cell.todoName.text = todo.name
         cell.todoName.delegate = self
         cell.todoName.indexPath = indexPath

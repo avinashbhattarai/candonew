@@ -43,7 +43,7 @@
                                     <constraint firstAttribute="height" constant="111" id="jeg-R3-Oo5"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goE-lU-zod">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goE-lU-zod">
                                 <rect key="frame" x="50" y="307" width="500" height="48"/>
                                 <string key="text">The answer to
 "What can I do?"</string>
@@ -273,7 +273,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65G-1i-cV5">
-                                <rect key="frame" x="40" y="104" width="100.5" height="31.5"/>
+                                <rect key="frame" x="40" y="104" width="101" height="32"/>
                                 <fontDescription key="fontDescription" name="MuseoSansRounded-500" family="Museo Sans Rounded" pointSize="26"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -989,7 +989,7 @@ how can we help today?</string>
                                     <action selector="logoutButtonTapped:" destination="iQ4-1P-0bb" eventType="touchUpInside" id="jGm-ua-QYR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0c-ce-nyl">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0c-ce-nyl">
                                 <rect key="frame" x="20" y="20" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="HqC-I5-cvG"/>
@@ -1045,7 +1045,7 @@ how can we help today?</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qYL-Zm-V2G" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Nkz-pu-qcR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4402" y="2739"/>
+            <point key="canvasLocation" x="4837" y="2609"/>
         </scene>
         <!--Tip Details View Controller-->
         <scene sceneID="exH-Xz-olZ">
@@ -1882,7 +1882,7 @@ to help you support Rachael</string>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="29T-A4-djH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1940" y="213"/>
+            <point key="canvasLocation" x="2285" y="343"/>
         </scene>
         <!--Base Auth Navigation Controller-->
         <scene sceneID="zF3-rn-yXx">
@@ -2073,7 +2073,7 @@ to help you support Rachael</string>
                                     <constraint firstAttribute="height" constant="111" id="r7R-Le-1a8"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLh-gJ-1Ie">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLh-gJ-1Ie">
                                 <rect key="frame" x="50" y="307" width="500" height="48"/>
                                 <string key="text">The answer to
 "What can I do?"</string>
@@ -2663,7 +2663,7 @@ receive a password reset email</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ylh-XR-yoD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4381" y="1403.5"/>
+            <point key="canvasLocation" x="4734" y="1200"/>
         </scene>
         <!--Invites View Controller-->
         <scene sceneID="Jc8-dd-SYz">
@@ -2778,7 +2778,7 @@ receive a password reset email</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E6u-Wi-hw1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4402" y="2064.5"/>
+            <point key="canvasLocation" x="4838" y="1941"/>
         </scene>
     </scenes>
     <resources>
@@ -2802,8 +2802,8 @@ receive a password reset email</string>
         <image name="underlineTodoList" width="334" height="2"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qO6-7u-NnB"/>
-        <segue reference="yeX-sn-hZu"/>
+        <segue reference="bzo-zy-hhf"/>
         <segue reference="y5L-Mg-VrH"/>
+        <segue reference="yeX-sn-hZu"/>
     </inferredMetricsTieBreakers>
 </document>

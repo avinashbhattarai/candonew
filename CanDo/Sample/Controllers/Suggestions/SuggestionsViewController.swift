@@ -177,6 +177,7 @@ class SuggestionsViewController: BaseSecondLineViewController, UITableViewDelega
             cell?.selectedButton.layer.borderWidth = 1
             cell?.selectedButton.layer.borderColor = UIColor(red: 185/255.0, green: 212/255.0, blue: 214/255.0, alpha: 1.0).cgColor
             cell?.selectedButton.indexPath = indexPath
+            cell?.selectionStyle = .none
             if item.selected! {
                 print(indexPath)
                 cell?.selectedButton .setImage(UIImage(named:"iconHelpAssignTickCopy"), for: UIControlState())

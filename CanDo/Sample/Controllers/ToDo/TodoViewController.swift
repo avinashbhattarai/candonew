@@ -55,13 +55,14 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		}
 
 		
-        toDoTableView.es_startPullToRefresh()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataTodo(_:)), name:NSNotification.Name(rawValue: "reloadDataTodo"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reDownloadDataTodo(_:)), name:NSNotification.Name(rawValue: "reDownloadDataTodo"), object: nil)
        
 	}
     
     override func viewWillAppear(_ animated: Bool) {
+        toDoTableView.es_startPullToRefresh()
     }
     
     func reDownloadDataTodo(_ n: Foundation.Notification) {
@@ -245,7 +246,7 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		} else {
 			cell.selectedButton .setImage(UIImage(named: "iconHelpAssignTickCopy"), for: UIControlState())
 		}
-
+        cell.selectionStyle = .none
 		cell.titleTextField.text = todo.name
 		cell.titleTextField.indexPath = indexPath
 		cell.titleTextField.delegate = self

@@ -55,7 +55,7 @@ class InvitesViewController: UIViewController,UITableViewDelegate,UITableViewDat
          let invite : Invite = invites[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! InviteTableViewCell
         
-        
+        cell.selectionStyle = .none
         cell.nameLabel.text = String(format: "%@ %@", invite.ownerFirstName, invite.ownerLastName)
         cell.acceptButton.tag = (indexPath as NSIndexPath).row
         cell.acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), for: .touchUpInside)

@@ -62,7 +62,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TeamMemberTableViewCell
         
         cell.memberName.text = String(format: "%@ %@", member.firstName, member.lastName)
-        
+        cell.selectionStyle = .none
        
         if iamOwner {
             cell.removeFromTeamButton.isHidden = false
