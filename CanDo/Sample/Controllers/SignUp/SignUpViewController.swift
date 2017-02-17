@@ -300,6 +300,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
                     Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
                     Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.set(false, forKey: Helper.UserDefaults.kIsUserGroupOwner)
+                   
+                    
                     if var imgURL = json["avatar"] as? String{
                         imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
                         Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)

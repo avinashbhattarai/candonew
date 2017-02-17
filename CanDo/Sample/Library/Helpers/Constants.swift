@@ -78,6 +78,7 @@ struct Helper {
         static let kUserAvatar = "user_avatar"
         static let kUserGroupOwner = "user_group_owner"
         static let kUserGroupOwnerId = "user_group_owner_id"
+        static let kIsUserGroupOwner = "is_user_group_owner"
         }
     
 

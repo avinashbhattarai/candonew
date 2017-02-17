@@ -25,9 +25,15 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          self.view.layer.insertSublayer(generateGradientForFrame(self.view.frame), at: 0)
         
       
-        fadeViewInThenOut(helloLabel, delay: 3.0)
+        fadeViewIn(helloLabel, delay: 1.0)
         
-        helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
+        let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
+        if isUserGroupOwner {
+            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
+        }else{
+            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can you help today?"
+        }
+        
         
         dashboardTableView.delegate = self;
         dashboardTableView.dataSource = self;
@@ -58,14 +64,14 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func fadeViewInThenOut(_ view : UIView, delay: TimeInterval) {
+    func fadeViewIn(_ view : UIView, delay: TimeInterval) {
         
         let animationDuration = 2.0
         
         // Fade out the view after a delay
         
         UIView.animate(withDuration: animationDuration, delay: delay, options: UIViewAnimationOptions(), animations: { () -> Void in
-            view.alpha = 0
+            view.alpha = 1
             },
                                    completion: nil)
         

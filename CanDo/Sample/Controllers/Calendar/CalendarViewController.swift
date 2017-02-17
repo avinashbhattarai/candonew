@@ -157,6 +157,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                         let message = item["message"] as? String else {
                             self.todoTableView.es_stopPullToRefresh(completion: true)
                            // SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+                            self.todos.removeAll()
+                            self.calendarView.reloadData()
+                            self.todoTableView.reloadData()
                             return;
                     }
                     self.todoTableView.es_stopPullToRefresh(completion: true)

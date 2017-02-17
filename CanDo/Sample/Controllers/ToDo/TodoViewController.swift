@@ -152,6 +152,8 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 						let item = json[0] as? [String: AnyObject],
 						let message = item["message"] as? String else {
 							//SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+                            self.lists.removeAll()
+                            self.toDoTableView.reloadData()
 							self.toDoTableView.es_stopPullToRefresh(completion: true)
 							return;
 					}

@@ -113,6 +113,8 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
                         let item = json[0] as? [String: AnyObject],
                         let message = item["message"] as? String else {
                             //SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
+                            self.notifications.removeAll()
+                            self.notificationTableView.reloadData()
                             self.notificationTableView.es_stopPullToRefresh(completion: true)
                             return
                     }

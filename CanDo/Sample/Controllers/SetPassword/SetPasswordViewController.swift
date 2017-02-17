@@ -108,6 +108,7 @@ class SetPasswordViewController: UIViewController {
                     let first_name = json["first_name"].stringValue
                     let token = json["token"].stringValue
                     let phone = json["phone"].stringValue
+                    let isTeamOwner = json["is_team_owner"].boolValue
                     
                     Helper.UserDefaults.kStandardUserDefaults.set(email, forKey: Helper.UserDefaults.kUserEmail)
                     Helper.UserDefaults.kStandardUserDefaults.set(phone, forKey: Helper.UserDefaults.kUserMobile)
@@ -115,6 +116,8 @@ class SetPasswordViewController: UIViewController {
                     Helper.UserDefaults.kStandardUserDefaults.set(last_name, forKey: Helper.UserDefaults.kUserLastName)
                     Helper.UserDefaults.kStandardUserDefaults.set(id, forKey: Helper.UserDefaults.kUserId)
                     Helper.UserDefaults.kStandardUserDefaults.set(token, forKey: Helper.UserDefaults.kUserToken)
+                    Helper.UserDefaults.kStandardUserDefaults.set(isTeamOwner, forKey: Helper.UserDefaults.kIsUserGroupOwner)
+                    
                     if var imgURL = json["avatar"].string{
                         imgURL = imgURL.replacingOccurrences(of: "\\", with: "")
                         Helper.UserDefaults.kStandardUserDefaults.set(imgURL, forKey: Helper.UserDefaults.kUserAvatar)
