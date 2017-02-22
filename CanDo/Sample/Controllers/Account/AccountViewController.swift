@@ -84,6 +84,8 @@ class AccountViewController: BaseViewController {
                             return;
                     }
                     
+                    print("json \(json)")
+                    
                     SVProgressHUD.dismiss()
                     
                     self.iamInTeam = inTeam
@@ -105,7 +107,7 @@ class AccountViewController: BaseViewController {
                                         
                                     }
                                 }
-                                var parsedMembersArray : [Member] = self.parseMembers(members, owner: owner)
+                                var parsedMembersArray : [Member] = self.parseMembers(members, owner: owner, iam: iam)
                                 parsedMembersArray.sort(by: {$0.owner && !$1.owner})
                                 membersVC.iamOwner = self.iamOwner
                                 membersVC.members = parsedMembersArray
@@ -165,30 +167,46 @@ class AccountViewController: BaseViewController {
 
     }
     
-    func parseMembers(_ members :[[String: AnyObject]], owner: [String: AnyObject]) -> [Member] {
+    func parseMembers(_ members :[[String: AnyObject]], owner: [String: AnyObject], iam: [String: AnyObject]) -> [Member] {
         
         var membersArray = [Member]()
         for member in members{
             if let memberId = member["id"] as? Int{
                 if let userId = member["user_id"] as? Int{
                     if let facebook = member["facebook"] as? Bool{
-                                        
-                                        var isOwner: Bool = false
-                                        if let receivedOwnerId = owner["id"] as? Int{
-                                            if receivedOwnerId == memberId{
-                                                isOwner = true
-                                            }
-                                        }
-                        
-                        let newMember = Member(memberId: memberId, userId: userId, email: member["email"] as? String, firstName: member["first_name"] as? String, lastName: member["last_name"] as? String, status: member["status"] as? String, facebook: facebook, owner: isOwner, avatar: member["avatar"] as? String)
+                        let newMember = Member(memberId: memberId, userId: userId, email: member["email"] as? String, firstName: member["first_name"] as? String, lastName: member["last_name"] as? String, status: member["status"] as? String, facebook: facebook, owner: false, avatar: member["avatar"] as? String)
                                         membersArray.append(newMember)
                     }
                 }
             }
         }
         
+        if let newMemeber = parseOwnerData(owner, isOwner: true){
+        membersArray.append(newMemeber)
+        }
+        if !iamOwner {
+            if let newMemeber = parseOwnerData(iam, isOwner: false){
+                membersArray.append(newMemeber)
+            }
+
+        }
+        
         return membersArray
         
+    }
+    
+    func parseOwnerData(_ owner: [String: AnyObject], isOwner: Bool) -> Member?{
+        
+        if let memberId = owner["id"] as? Int{
+            if let userId = owner["user_id"] as? Int{
+                if let facebook = owner["facebook"] as? Bool{
+                    let newMember = Member(memberId: memberId, userId: userId, email: owner["email"] as? String, firstName: owner["first_name"] as? String, lastName: owner["last_name"] as? String, status: owner["status"] as? String, facebook: facebook, owner: isOwner, avatar: owner["avatar"] as? String)
+                    return newMember
+                }
+            }
+        }
+        
+        return nil
     }
 
     
