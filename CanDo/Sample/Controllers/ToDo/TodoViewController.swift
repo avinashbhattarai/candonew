@@ -75,30 +75,35 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if ((n as NSNotification).userInfo != nil) {
             if let todo = (n as NSNotification).userInfo!["todo"] as? Todo {
                 
-                
-                let dateFormatter: DateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                let timeFormatter: DateFormatter = DateFormatter()
-                timeFormatter.dateFormat = "HH:mm:ss"
-                // get the date string applied date format
-                var selectedDate:String?
-                var selectedTime:String?
+                updateTodo(todo)
                
-                    if todo.date != nil {
-                        selectedDate = dateFormatter.string(from: todo.date! as Date)
-                    }else{
-                        selectedDate = nil
-                    }
-                    if todo.time != nil {
-                        selectedTime = timeFormatter.string(from: todo.time! as Date)
-                    }else{
-                        selectedTime = nil
-                    }
-
-                runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignToId: todo.assignedTo.personId,assignToName: todo.assignedTo.name, date: selectedDate, time: selectedTime,status: nil, todo: todo)
             }
 
         }
+    }
+    
+    func updateTodo(_ todo : Todo){
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let timeFormatter: DateFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        // get the date string applied date format
+        var selectedDate:String?
+        var selectedTime:String?
+        
+        if todo.date != nil {
+            selectedDate = dateFormatter.string(from: todo.date! as Date)
+        }else{
+            selectedDate = nil
+        }
+        if todo.time != nil {
+            selectedTime = timeFormatter.string(from: todo.time! as Date)
+        }else{
+            selectedTime = nil
+        }
+        
+        runUpdateTodoRequest(todo.name, todoId: todo.todoId, assignToId: todo.assignedTo.personId,assignToName: todo.assignedTo.name, date: selectedDate, time: selectedTime,status: nil, todo: todo)
     }
     
 	func runListsInfoRequest() {
@@ -303,10 +308,32 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		let row: Int = (sender.indexPath! as NSIndexPath).row
 		let list = lists[section]
 		currentTodo = list.todos![row]
-		print(currentTodo)
+        if let todo = currentTodo{
+            
+        let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
+        if !isUserGroupOwner && todo.assignedTo.personId == 0 {
+            todo.assignedTo = createCurrentUserModel()
+            
+            updateTodo(todo)
+            return
+        }
+        if !isUserGroupOwner && todo.assignedTo.personId > 0 {
+            return
+        }
+        
+		print(todo)
 		performSegue(withIdentifier: Helper.SegueKey.kToAssignTodoViewController, sender: self)
+        }
 
 	}
+    
+    func createCurrentUserModel() -> Person {
+        let myName = String(format: "%@ %@", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName) as? String) ?? "", (Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserLastName) as? String) ?? "")
+        let userId = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId) as? Int ?? 0
+        let avatar = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserAvatar) as? String
+        
+        return Person(name: myName, personId: userId, avatar: avatar)
+    }
 
 	func dateNewTodoButtonTapped(_ sender: DateUnderlineButton) {
 
@@ -318,6 +345,12 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	}
   
 	func dateButtonTapped(_ sender: ButtonWithIndexPath) {
+        
+        let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
+        if !isUserGroupOwner{
+            return
+        }
+        
 		let section: Int = (sender.indexPath! as NSIndexPath).section
 		let row: Int = (sender.indexPath! as NSIndexPath).row
 		let list = lists[section]
@@ -616,6 +649,19 @@ class TodoViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 		}
 
 	}
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if textField is TodoNameTextField  ||  textField is TodoListSectionTextField {
+            let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
+            
+            if !isUserGroupOwner {
+                return false
+            }
+            
+        }
+        return true
+    }
 
 	func textFieldDidBeginEditing(_ textField: UITextField) {
 
