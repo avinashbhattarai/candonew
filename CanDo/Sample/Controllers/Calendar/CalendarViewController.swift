@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FSCalendar
 import SVProgressHUD
 import ESPullToRefresh
 import EventKit
@@ -38,7 +37,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         
         calendarView.delegate = self
         calendarView.dataSource = self
-        //calendarView.headerDateFormat = "MMMM"
+        calendarView.appearance.headerDateFormat = "MMMM"
         calendarView.headerHeight = 64
         calendarView.appearance.headerTitleFont = UIFont(name: "MuseoSansRounded-500", size: 24)
         calendarView.appearance.weekdayFont = UIFont(name: "MuseoSansRounded-300", size: 20)
@@ -102,7 +101,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         return self.calendarView.frame.size.height/2
     }
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        let str = "No to do"
+        let str = "No to dos"
         let attrs = [NSFontAttributeName: UIFont(name: "MuseoSansRounded-300", size: 18)!, NSForegroundColorAttributeName:Helper.Colors.RGBCOLOR(104, green: 104, blue: 104)]
         return NSAttributedString(string: str, attributes: attrs)
     }

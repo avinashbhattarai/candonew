@@ -212,7 +212,7 @@ class TeamViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                             return;
                     }
                     
-                    SVProgressHUD.dismiss()
+                    SVProgressHUD.showSuccess(withStatus: "Invite sent!")
                     NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: "reloadDataNotification"), object: nil)
                     self.inviteTextField.text = ""
                     print(json)

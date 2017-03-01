@@ -137,6 +137,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
     
     override func viewWillAppear(_ animated: Bool) {
         
+        
         print("user owner id \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserGroupOwnerId))")
         print("user id \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserId))")
         
@@ -148,10 +149,11 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         }else{
             showHidePostNotificationPanel(show: false)
         }
+ 
         
         notificationTableView.es_startPullToRefresh()
         
-        
+ 
         
     }
     
@@ -452,7 +454,7 @@ class NotificationsViewController: BaseViewController, UITableViewDelegate, UITa
         
         var height:CGFloat = 0
         if show {
-            height = 90
+            height = self.notificationTableView.tableHeaderView?.frame.size.height ?? 90
         }else{
             height = 0
         }
