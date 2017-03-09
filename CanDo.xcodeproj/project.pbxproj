@@ -665,7 +665,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 2L2NN67GS6;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -1040,8 +1040,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CanDo/CanDo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Bohdan Futerko (2L2NN67GS6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 2L2NN67GS6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CanDo",
@@ -1051,8 +1051,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bvb.CanDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "43358955-9370-439f-a162-fd90cd37f4c6";
+				PROVISIONING_PROFILE_SPECIFIER = CanDoAdHoc;
 				SWIFT_OBJC_BRIDGING_HEADER = "CanDo/CanDo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
