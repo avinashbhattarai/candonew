@@ -27,12 +27,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
       
         fadeViewIn(helloLabel, delay: 1.0)
         
-        let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
-        if isUserGroupOwner {
-            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
-        }else{
-            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can you help today?"
-        }
         
         
         dashboardTableView.delegate = self;
@@ -46,7 +40,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
+        let isUserGroupOwner = Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kIsUserGroupOwner) as? Bool ?? false
+        if isUserGroupOwner {
+            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can we help today?"
+        }else{
+            helloLabel.text = "Hi \(Helper.UserDefaults.kStandardUserDefaults.value(forKey: Helper.UserDefaults.kUserFirstName)!),\nhow can you help today?"
+        }
+
         
         self.navigationController?.isNavigationBarHidden = true
         

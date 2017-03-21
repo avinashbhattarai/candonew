@@ -103,6 +103,8 @@ class AccountViewController: BaseViewController {
                                      if let receivedIamId = iam["id"] as? Int{
                                     if receivedOwnerId == receivedIamId{
                                         self.iamOwner = true
+                                        Helper.UserDefaults.kStandardUserDefaults.set(true, forKey: Helper.UserDefaults.kIsUserGroupOwner)
+                                        Helper.UserDefaults.kStandardUserDefaults.synchronize()
                                         }
                                         
                                     }

@@ -16,9 +16,11 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var todoTableView: UITableView!
     var todos = [Todo]()
+    var monthTodos = [Todo]()
     var currentTodo: Todo?
     var cellDateFormatter = DateFormatter()
     var cellTimeFormatter = DateFormatter()
+    var selectedDate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,8 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         calendarView.appearance.titleFont = UIFont(name: "MuseoSansRounded-300", size: 20)
         calendarView.clipsToBounds = true
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.0;
+        calendarView.allowsSelection = true
+        
        
         
         _ = todoTableView.es_addPullToRefresh {
@@ -51,9 +55,11 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             /// Do anything you want...
             /// ...
             let dateString = self.calendarView.currentPage.toString(.custom("YYYY-MM"))
-            self.runListsInfoRequest(dateString)
+            self.runListsInfoRequest(dateString, isDateSelected:  false)
             /// Stop refresh when your job finished, it will reset refresh footer if completion is true
         }
+        
+        todoTableView.es_startPullToRefresh()
 
          
       NotificationCenter.default.addObserver(self, selector: #selector(reloadDataCalendar(_:)), name:NSNotification.Name(rawValue: "reloadDataCalendar"), object: nil)
@@ -61,7 +67,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        todoTableView.es_startPullToRefresh()
+        
     }
     
     func reloadDataCalendar(_ n: Foundation.Notification) {
@@ -108,7 +114,7 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
-    func runListsInfoRequest(_ date:String) {
+    func runListsInfoRequest(_ date:String, isDateSelected:Bool) {
         
         
         provider.request(.listsInfo(date:date)) { result in
@@ -122,6 +128,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                        self.todoTableView.es_stopPullToRefresh(completion: true)
                         SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                         return;
+                    }
+                    if !isDateSelected{
+                       self.monthTodos = [Todo]()
                     }
                     
                     self.todos = [Todo]()
@@ -138,6 +147,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                                             person = Person(name: nil, personId: 0, avatar:"")
                                         }
                                         let newTodo = Todo(name: todo["todo"] as? String, list: newList, updatedAt: todo["updated_at"] as? String , createdAt: todo["created_at"] as? String, date: todo["date"] as? String, time:todo["time"] as? String, status: todo["status"] as? String, todoId: todoId, assignedTo: person!)
+                                        if !isDateSelected{
+                                            self.monthTodos.append(newTodo)
+                                        }
                                         self.todos.append(newTodo)
                                     }
                                     
@@ -146,7 +158,9 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                            
                         }
                     }
-                    self.calendarView.reloadData()
+                    if !isDateSelected{
+                        self.calendarView.reloadData()
+                    }
                     self.todoTableView.reloadData()
                     self.todoTableView.es_stopPullToRefresh(completion: true)
                     
@@ -159,7 +173,10 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                             self.todoTableView.es_stopPullToRefresh(completion: true)
                            // SVProgressHUD.showError(withStatus: Helper.ErrorKey.kSomethingWentWrong)
                             self.todos.removeAll()
-                            self.calendarView.reloadData()
+                            if !isDateSelected{
+                                self.monthTodos.removeAll()
+                                 self.calendarView.reloadData()
+                            }
                             self.todoTableView.reloadData()
                             return;
                     }
@@ -184,18 +201,24 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
     }
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         let dateString = calendarView.currentPage.toString(.custom("YYYY-MM"))
-        runListsInfoRequest(dateString)
+        runListsInfoRequest(dateString, isDateSelected:  false)
+        selectedDate = nil
+        
     }
   
-    func calendar(_ calendar: FSCalendar, didSelect date: Date) {
-        print(date)
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        selectedDate = date
+         let dateString = date.toString(.custom("YYYY-MM-dd"))
+        print("selected date \(dateString)")
+        runListsInfoRequest(dateString, isDateSelected:  true)
     }
    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]?{
         print("color")
       
         var set = Set<UIColor>()
-        for todo:Todo in todos {
+        for todo:Todo in monthTodos {
             if (todo.date != nil) {
                 if Calendar.current.isDate(todo.date! as Date, inSameDayAs:date) {
                     if todo.assignedTo.personId == 0 {
@@ -214,12 +237,12 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
         return CGPoint(x: 0, y: -5)
     }
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date) -> Bool{
-        return false
+        return true
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         var events = [Todo]()
-        for todo:Todo in todos {
+        for todo:Todo in monthTodos {
             if (todo.date != nil) {
                 if Calendar.current.isDate(todo.date! as Date, inSameDayAs:date) {
                     events.append(todo)
@@ -556,9 +579,16 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
                         todo.todoId = todoId
                         todo.status = json["status"] as? String ?? Helper.TodoStatusKey.kActive
                         if (todo.date != nil){
-                            if !todo.date!.isSameMonthAsDate(self.calendarView.currentPage){
-                                if let index = self.todos.index(where: {$0.todoId == todo.todoId}) {
-                                    self.todos.remove(at: index)
+                            if self.selectedDate != nil {
+                                if !todo.date!.isEqualToDateIgnoringTime(self.selectedDate!){
+                                    self.removeTodoFromArrays(todo: todo)
+                                    if todo.date!.isSameMonthAsDate(self.calendarView.currentPage){
+                                        self.monthTodos.append(todo)
+                                    }
+                                }
+                            }else{
+                                if !todo.date!.isSameMonthAsDate(self.calendarView.currentPage){
+                                    self.removeTodoFromArrays(todo: todo)
                                 }
                             }
                         }
@@ -594,6 +624,16 @@ class CalendarViewController: BaseViewController, FSCalendarDelegate, FSCalendar
             }
         }
         
+    }
+    
+    func removeTodoFromArrays(todo: Todo){
+        if let index = self.todos.index(where: {$0.todoId == todo.todoId}) {
+            self.todos.remove(at: index)
+        }
+        if let index = self.monthTodos.index(where: {$0.todoId == todo.todoId}) {
+            self.monthTodos.remove(at: index)
+        }
+
     }
     
     func stringCreateUpdateToDate(_ stringDate: String) -> Date {
